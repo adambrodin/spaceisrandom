@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6932a3416722f9429128816d6061073, type: 3}
   m_Name: PlayerBullet
   m_EditorClassIdentifier: 
-  projectileSpeed: 100
-  projectileDamage: 10
+  projectileSpeed: 30
+  projectileDamage: 0
   projectileCooldown: 0.5

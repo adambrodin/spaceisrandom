@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  startHealth: 100
-  onHit: {r: 1, g: 0, b: 0, a: 0}
+  startHealth: 2
+  blinkTime: 0
+  type: 0
+  onHitColor: {r: 1, g: 0, b: 0, a: 0}

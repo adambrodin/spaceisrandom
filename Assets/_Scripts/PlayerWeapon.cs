@@ -17,9 +17,11 @@ public class PlayerWeapon : MonoBehaviour
 
     private void CheckForInput()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && canFire)
+        if(Input.GetKey(KeyCode.Space) && canFire)
         {
-            Instantiate(bullet, transform.position, transform.rotation);
+            GameObject g = Instantiate(bullet, transform.position, transform.rotation);
+
+            g.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
 
             StartCoroutine(Cooldown());
         }

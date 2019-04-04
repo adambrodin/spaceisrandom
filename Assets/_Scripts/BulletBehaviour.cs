@@ -18,6 +18,6 @@ public class BulletBehaviour : MonoBehaviour
 
     private void Update()
     {
-        rgbd.velocity = new Vector3(0, 0, 10);
+        rgbd.velocity = new Vector3(0, 0, bullet.projectileSpeed);
     }
 }

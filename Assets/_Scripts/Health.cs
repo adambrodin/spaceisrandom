@@ -10,11 +10,20 @@ public class Health : MonoBehaviour
     private Entity.Type thisType;
     private float damage, currentHealth;
     private MeshRenderer rend;
+
+    private Color[] defaultColor;
     #endregion
 
     private void Awake()
     {
         rend = GetComponent<MeshRenderer>();
+        defaultColor = new Color[rend.materials.Length];
+
+        for(int i = 0; i < defaultColor.Length; i++)
+        {
+            defaultColor[i] = UnityEngine.Random.ColorHSV();
+            rend.materials[i].color = defaultColor[i];
+        }
     }
 
     private void Start()
@@ -60,7 +69,13 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
 
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject); // Self destruct
+        }
+
         StartCoroutine(blinkEffect());
+
     }
 
     private IEnumerator blinkEffect()
@@ -71,7 +86,6 @@ public class Health : MonoBehaviour
         {
             rend.materials[i].color = stats.onHitColor;
         }
-        //rend.material.color = stats.onHitColor;
 
         yield return new WaitForSeconds(stats.blinkTime);
 
@@ -80,7 +94,6 @@ public class Health : MonoBehaviour
             rend.materials[i].color = startColor;
         }
 
-        //rend.material.color = startColor;
 
     }
 }
