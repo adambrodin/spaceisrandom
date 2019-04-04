@@ -14,6 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   startHealth: 100
-  projectileSpeed: 10
-  projectileDamage: 10
-  projectileCooldown: 0.5
+  onHit: {r: 1, g: 0, b: 0, a: 0}

@@ -8,7 +8,15 @@ public class Entity : ScriptableObject
     public float
         moveSpeed,
         startHealth,
-        projectileSpeed,
-        projectileDamage,
-        projectileCooldown;
+        blinkTime;
+
+    public enum Type
+    {
+        Player,
+        Enemy,
+    }
+
+    public Type type; // Referring to the enum
+
+    public Color onHitColor;
 }
