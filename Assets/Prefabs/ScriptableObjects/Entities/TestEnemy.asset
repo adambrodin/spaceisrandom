@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  startHealth: 1
-  blinkTime: 0.3
+  startHealth: 5
+  blinkTime: 2
   type: 1
-  onHitColor: {r: 0, g: 1, b: 0.110634565, a: 0}

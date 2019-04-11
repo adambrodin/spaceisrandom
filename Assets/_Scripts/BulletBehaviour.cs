@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class BulletBehaviour : UnityEngine.MonoBehaviour
+public class BulletBehaviour : MonoBehaviour
 {
     #region Variables
     public Bullet bullet;

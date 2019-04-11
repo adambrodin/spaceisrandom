@@ -17,6 +17,4 @@ public class Entity : ScriptableObject
     }
 
     public Type type; // Referring to the enum
-
-    public Color onHitColor;
 }

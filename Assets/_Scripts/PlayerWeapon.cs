@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeapon : UnityEngine.MonoBehaviour
+public class PlayerWeapon : MonoBehaviour
 {
     #region Variables
     public GameObject bullet;

@@ -13,7 +13,13 @@ public class TargetTracker : MonoBehaviour
     public float moveSpeed;
     #endregion
 
-    public GameObject targetObject;
+    public string gameObjectToTarget;
+    private GameObject targetObject;
+
+    private void Start()
+    {
+        targetObject = GameObject.Find(gameObjectToTarget);
+    }
 
     public void Movement()
     {

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerBullet
   m_EditorClassIdentifier: 
   projectileSpeed: 30
-  projectileDamage: 0
+  projectileDamage: 1
   projectileCooldown: 0.5
