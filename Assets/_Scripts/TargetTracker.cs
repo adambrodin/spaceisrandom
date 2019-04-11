@@ -10,15 +10,18 @@ using UnityEngine;
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    public float moveSpeed;
+    [SerializeField]
+    private float moveSpeed;
     #endregion
 
+    public Entity stats;
     public string gameObjectToTarget;
     private GameObject targetObject;
 
     private void Start()
     {
         targetObject = GameObject.Find(gameObjectToTarget);
+        moveSpeed = stats.moveSpeed;
     }
 
     public void Movement()

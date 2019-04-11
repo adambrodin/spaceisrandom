@@ -41,10 +41,7 @@ public class Health : MonoBehaviour
             {
                 damage = col.gameObject.GetComponent<BulletBehaviour>().bullet.projectileDamage;
             }
-            catch(Exception e)
-            {
-                print(e.Data);
-            }
+            catch(Exception) { }
 
             switch(col.gameObject.tag)
             {
