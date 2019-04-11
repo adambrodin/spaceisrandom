@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : UnityEngine.MonoBehaviour
 {
     #region Variables
     public Entity stats;
