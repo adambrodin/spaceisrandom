@@ -25,9 +25,12 @@ public class TargetTracker : MonoBehaviour
     {
         if(targetObject != null)
         {
+            float step = moveSpeed * Time.deltaTime;
+
             Vector3 targetDir = targetObject.transform.position - transform.position;
+            Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, step);
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, moveSpeed * Time.deltaTime, 0.0f);
-            Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, moveSpeed * Time.deltaTime);
+
             transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
         }
     }
@@ -36,4 +39,6 @@ public class TargetTracker : MonoBehaviour
     {
         Movement();
     }
+
+
 }

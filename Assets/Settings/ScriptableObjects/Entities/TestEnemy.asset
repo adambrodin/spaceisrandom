@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  startHealth: 5
-  blinkTime: 2
+  startHealth: 2
+  blinkTime: 1
   type: 1

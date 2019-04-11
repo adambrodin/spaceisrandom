@@ -10,7 +10,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     #region Variables
-    public GameObject enemy;
+    public GameObject[] enemies;
     #endregion
 
     private void Start()
@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(1f, 3f));
 
-        Instantiate(enemy, gameObject.transform.position, enemy.transform.rotation);
+        Instantiate(enemies[0], gameObject.transform.position, enemies[0].transform.rotation);
 
         StartCoroutine(spawnEnemies());
     }

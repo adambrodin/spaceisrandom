@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     private MeshRenderer rend;
 
     private Color[] defaultColor;
+    public Color blinkColor;
     #endregion
 
     private void Awake()
@@ -29,38 +30,36 @@ public class Health : MonoBehaviour
         {
             defaultColor[i] = UnityEngine.Random.ColorHSV();
             rend.materials[i].SetColor("_BaseColor", defaultColor[i]);
-
-            print("Random color: " + defaultColor[i].ToString());
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider col)
     {
         if(thisType == Entity.Type.Player || thisType == Entity.Type.Enemy)
         {
             try
             {
-                damage = collision.gameObject.GetComponent<BulletBehaviour>().bullet.projectileDamage;
+                damage = col.gameObject.GetComponent<BulletBehaviour>().bullet.projectileDamage;
             }
             catch(Exception e)
             {
                 print(e.Data);
             }
 
-            switch(collision.gameObject.tag)
+            switch(col.gameObject.tag)
             {
                 case "EnemyBullet":
                     if(thisType == Entity.Type.Player)
                     {
                         takeDamage(damage);
-                        Destroy(collision.gameObject);
+                        Destroy(col.gameObject);
                     }
                     break;
                 case "PlayerBullet":
                     if(thisType == Entity.Type.Enemy)
                     {
                         takeDamage(damage);
-                        Destroy(collision.gameObject);
+                        Destroy(col.gameObject);
                     }
                     break;
             }
@@ -70,8 +69,6 @@ public class Health : MonoBehaviour
     private void takeDamage(float damage)
     {
         currentHealth -= damage;
-
-        print("Took damage");
 
         if(currentHealth <= 0)
         {
@@ -83,7 +80,8 @@ public class Health : MonoBehaviour
 
     private IEnumerator blinkEffect()
     {
-        Color onHitColor = Color.Lerp(Color.black, Color.white, 1f);
+        Color startColor = rend.materials[0].GetColor("_BaseColor");
+        Color onHitColor = Color.Lerp(startColor, blinkColor, 1f);
 
         for(int i = 0; i < rend.materials.Length; i++)
         {
