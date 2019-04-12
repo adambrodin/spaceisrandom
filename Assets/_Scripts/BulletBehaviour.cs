@@ -9,17 +9,23 @@ public class BulletBehaviour : MonoBehaviour
     #region Variables
     public Bullet bullet;
     private MeshRenderer meshRen;
+    private Color parentColor;
     Rigidbody rgbd;
     #endregion
 
-    void Start()
+    private void Awake()
     {
         rgbd = GetComponent<Rigidbody>();
         meshRen = GetComponent<MeshRenderer>();
-
-        meshRen.material.SetColor("_Color", Random.ColorHSV());
     }
 
+    void Start()
+    {
+        parentColor = GameObject.Find("Player").GetComponentInChildren<MeshRenderer>().material.GetColor("_BaseColor");
+        meshRen.material.SetColor("_BaseColor", parentColor);
+    }
+
+    // Move bullet
     private void Update()
     {
         rgbd.velocity = new Vector3(0, 0, bullet.projectileSpeed);
@@ -28,6 +34,6 @@ public class BulletBehaviour : MonoBehaviour
     // Destroy self when out of rendered area
     private void OnBecameInvisible()
     {
-        Destroy(this.gameObject);
+        // Destroy(this.gameObject);
     }
 }

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 75
   startHealth: 1
   blinkTime: 0
   type: 0
-  onHitColor: {r: 1, g: 0, b: 0, a: 0}

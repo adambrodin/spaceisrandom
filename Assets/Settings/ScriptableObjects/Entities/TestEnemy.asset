@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 0
   startHealth: 2
   blinkTime: 1
   type: 1
