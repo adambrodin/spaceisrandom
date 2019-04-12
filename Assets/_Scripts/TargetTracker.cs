@@ -39,6 +39,7 @@ public class TargetTracker : MonoBehaviour
         else if(targetObject == null)
         {
             print("Target not found.");
+            transform.lossyScale.Set(Mathf.Lerp(1, 0, 5), Mathf.Lerp(1, 0, 5), Mathf.Lerp(1, 0, 5));
             transform.Rotate(new Vector3(0, 360 * Time.deltaTime, 0)); // Rotate like a mad man
         }
     }

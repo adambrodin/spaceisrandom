@@ -7,11 +7,14 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-public interface IMoveable
+public class CameraShake : MonoBehaviour
 {
-    float moveSpeed { get; set; }
+    #region Variables
+    public float shakeAmount;
+    #endregion
 
-    Rigidbody rgbd { get; }
+    void Shake()
+    {
 
-    void Move();
+    }
 }

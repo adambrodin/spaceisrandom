@@ -30,15 +30,4 @@ public class PlayerMovement : EntityBase
             rgbd.velocity = new Vector3(rgbd.velocity.x, yy -= 10, rgbd.velocity.z);
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
-        {
-            print("Touched enemy. Player Dead.");
-            Destroy(gameObject);
-
-            Time.timeScale = 0f;
-        }
-    }
 }

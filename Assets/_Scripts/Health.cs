@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Health : MonoBehaviour, IKillable
 {
@@ -17,7 +16,7 @@ public class Health : MonoBehaviour, IKillable
     private Color[] defaultColor;
     public Color blinkColor;
 
-    public TextMeshProUGUI scoreText; // TODO IMPLEMENT BETTER
+    private TextMeshProUGUI scoreText; // TODO IMPLEMENT BETTER
 
     public float startHealth { get; set; }
     public float currentHealth { get; set; }
@@ -129,7 +128,7 @@ public class Health : MonoBehaviour, IKillable
         {
             Destroy(this.gameObject);
             int i = int.Parse(scoreText.text);
-            int ii = i += 1;
+            int ii = i += UnityEngine.Random.Range(1000, 2500);
             scoreText.text = ii.ToString();
         }
     }
