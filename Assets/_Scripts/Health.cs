@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IKillable
 {
     #region Variables
     public Entity stats;
     private Entity.Type thisType;
-    private float damage, currentHealth;
+    private float damage;
+    private bool isPlayer;
     private MeshRenderer rend;
 
     private Color[] defaultColor;
     public Color blinkColor;
+
+    public TextMeshProUGUI scoreText; // TODO IMPLEMENT BETTER
+
+    public float startHealth { get; set; }
+    public float currentHealth { get; set; }
     #endregion
 
     private void Awake()
@@ -22,8 +30,18 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+
         currentHealth = stats.startHealth; // Set the current health to the starting health at object creation
         thisType = stats.type;
+        if(thisType == Entity.Type.Player)
+        {
+            isPlayer = true;
+        }
+        else
+        {
+            isPlayer = false;
+        }
 
         defaultColor = new Color[rend.materials.Length];
         for(int i = 0; i < defaultColor.Length; i++)
@@ -39,37 +57,44 @@ public class Health : MonoBehaviour
         {
             try
             {
-                damage = col.gameObject.GetComponent<BulletBehaviour>().bullet.projectileDamage;
+                damage = col.gameObject.GetComponent<Player_Bullet_Default>().bullet.projectileDamage;
             }
             catch(Exception) { }
 
             switch(col.gameObject.tag)
             {
                 case "EnemyBullet":
-                    if(thisType == Entity.Type.Player)
+                    if(isPlayer)
                     {
-                        takeDamage(damage);
+                        TakeDamage(damage);
                         Destroy(col.gameObject);
                     }
                     break;
                 case "PlayerBullet":
-                    if(thisType == Entity.Type.Enemy)
+                    if(!isPlayer)
                     {
-                        takeDamage(damage);
+                        TakeDamage(damage);
                         Destroy(col.gameObject);
+                    }
+                    break;
+                case "Enemy":
+                    if(isPlayer)
+                    {
+                        TakeDamage(1);
+                        print("Player hit by Enemy. Current Health: " + currentHealth);
                     }
                     break;
             }
         }
     }
 
-    private void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
 
         if(currentHealth <= 0)
         {
-            Destroy(gameObject); // Self destruct
+            Die(); // Self destruct
         }
 
         StartCoroutine(blinkEffect());
@@ -91,7 +116,21 @@ public class Health : MonoBehaviour
         {
             rend.materials[i].SetColor("_BaseColor", defaultColor[i]);
         }
+    }
 
-
+    public void Die()
+    {
+        if(isPlayer)
+        {
+            Destroy(this.gameObject);
+            // TODO player death
+        }
+        else // If not a player -> a enemy
+        {
+            Destroy(this.gameObject);
+            int i = int.Parse(scoreText.text);
+            int ii = i += 1;
+            scoreText.text = ii.ToString();
+        }
     }
 }

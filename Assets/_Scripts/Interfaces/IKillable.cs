@@ -7,13 +7,11 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-public interface IKillable<T>
+public interface IKillable
 {
-    #region Variables
     float startHealth { get; set; }
     float currentHealth { get; set; }
 
-    void TakeDamage(T damage);
+    void TakeDamage(float damage);
     void Die();
-    #endregion
 }

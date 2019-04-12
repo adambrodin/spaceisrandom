@@ -9,9 +9,7 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    #region Variables
     float moveSpeed { get; set; }
-    #endregion
 
     void Move();
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -8,7 +9,14 @@ public class PlayerWeapon : MonoBehaviour
     public GameObject bullet;
     public Bullet stats;
     private bool canFire = true;
+    private TextMeshProUGUI scoreText;
     #endregion
+
+    private void Start()
+    {
+        scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>(); ///////////////// REMOVE TODO
+        scoreText.text = "0"; ////////////////////// REMOVE TODO
+    }
 
     void Update()
     {

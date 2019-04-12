@@ -36,6 +36,11 @@ public class TargetTracker : MonoBehaviour
 
             transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
         }
+        else if(targetObject == null)
+        {
+            print("Target not found.");
+            transform.Rotate(new Vector3(0, 360 * Time.deltaTime, 0)); // Rotate like a mad man
+        }
     }
 
     private void Update()
