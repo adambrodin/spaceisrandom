@@ -34,6 +34,6 @@ public class Player_Bullet_Default : MonoBehaviour
     // Destroy self when out of rendered area
     private void OnBecameInvisible()
     {
-        // Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 }

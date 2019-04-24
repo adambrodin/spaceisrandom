@@ -93,7 +93,7 @@ public class Health : MonoBehaviour, IKillable
 
         if(currentHealth <= 0)
         {
-            Die(); // Self destruct
+            Die(); // Dead
         }
 
         StartCoroutine(blinkEffect());
@@ -128,7 +128,7 @@ public class Health : MonoBehaviour, IKillable
         {
             Destroy(this.gameObject);
             int i = int.Parse(scoreText.text);
-            int ii = i += UnityEngine.Random.Range(1000, 2500);
+            int ii = i += 1000;
             scoreText.text = ii.ToString();
         }
     }
