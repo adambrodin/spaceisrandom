@@ -14,7 +14,7 @@ public class PlayerWeapon : WeaponBase
 
     protected override void CheckForFire()
     {
-        if (Input.GetAxis("Fire2") > 0 || Input.GetAxis("B") > 0)
+        if (Input.GetAxis("Fire1") > 0 || Input.GetButton("B") || Input.GetKey(KeyCode.Space))
         {
             if (canFire)
             {
@@ -27,8 +27,9 @@ public class PlayerWeapon : WeaponBase
 
     protected override void Fire()
     {
-        GameObject g = Instantiate(bulletObj);
-        gameObject.GetComponent<MeshRenderer>().material.color = g.GetComponent<MeshRenderer>().materials[0].color;
+        GameObject g = Instantiate(bulletObj, gameObject.transform);
+        Color parentColor = gameObject.GetComponentInChildren<MeshRenderer>().materials[0].color;
+        g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
     }
 
     private void Update()

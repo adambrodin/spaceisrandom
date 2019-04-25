@@ -108,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758333338336660}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 132.793, y: 0, z: 125}
+  m_LocalPosition: {x: 178.18529, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1758332809509855}
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: b519429a4d3524742bbbf625b8c8c625, type: 2}
+  onHitEffect: {fileID: 11400000, guid: 95306971b7f59c843906abe094fb9aba, type: 2}
 --- !u!114 &1758333338336659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,5 +170,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bad1bad28622af449783a924397d443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 25
   targetName: Player

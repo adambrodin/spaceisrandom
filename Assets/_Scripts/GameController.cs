@@ -8,6 +8,7 @@
 public class GameController : MonoBehaviour
 {
     #region Variables
+    int score = 0;
     #endregion
 
     private void Start()
@@ -17,6 +18,9 @@ public class GameController : MonoBehaviour
 
     void OnKill(GameObject obj)
     {
-        print(obj.name + " died.");
+        Destroy(obj);
+
+        score += (int)obj.GetComponent<Health>().stats.killReward;
+        //print("Score: " + score);
     }
 }

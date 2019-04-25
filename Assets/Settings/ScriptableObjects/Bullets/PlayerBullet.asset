@@ -14,4 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 1000
   projectileDamage: 1
-  projectileCooldown: 0.25

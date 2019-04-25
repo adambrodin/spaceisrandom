@@ -5,19 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Entity", menuName = "Entity")]
 public class Entity : ScriptableObject
 {
-    public Color blinkColor;
-
     public float
         moveSpeed,
         startHealth,
-        blinkTime,
-        weaponCooldown;
+        weaponCooldown,
+        killReward;
 
-    public enum Type
+    public enum EntityType
     {
         Player,
         Enemy,
     }
 
-    public Type type; // Referring to the enum
+    public EntityType type; // Referring to the enum
 }

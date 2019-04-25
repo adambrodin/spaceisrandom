@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Variables
     public GameObject[] enemies;
-    public float spawnCooldown;
+    public float minCooldown, maxCooldown;
     #endregion
 
     private void Start()
@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(spawnCooldown);
+        yield return new WaitForSeconds(Random.Range(minCooldown, maxCooldown));
 
         GameObject enemy = RandomEnemy();
 

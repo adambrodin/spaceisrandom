@@ -3,8 +3,10 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
+    [SerializeField]
     protected GameObject bulletObj;
-    public Entity stats;
+    [SerializeField]
+    protected Entity stats;
 
     protected bool canFire = true;
 
@@ -13,7 +15,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected IEnumerator Cooldown()
     {
-        if (canFire == true)
+        if (canFire)
         {
             canFire = false;
         }

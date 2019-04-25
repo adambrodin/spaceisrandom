@@ -17,6 +17,8 @@ public class BulletBase : MonoBehaviour, IMoveable
         if (col.GetComponent<Health>() != null && IsTargetTag(col.gameObject))
         {
             col.GetComponent<Health>().TakeDamage(stats.projectileDamage);
+
+            Destroy(gameObject); // Destroy the bullet after impact
         }
     }
 
@@ -46,6 +48,6 @@ public class BulletBase : MonoBehaviour, IMoveable
     // Destroy self when out of rendered area
     private void OnBecameInvisible()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

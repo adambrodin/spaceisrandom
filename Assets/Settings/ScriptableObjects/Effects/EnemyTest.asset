@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
-  m_Name: TestEnemy
+  m_Script: {fileID: 11500000, guid: 6f11192cbf3990c4dab82c365011cdbe, type: 3}
+  m_Name: EnemyTest
   m_EditorClassIdentifier: 
-  moveSpeed: 75
-  startHealth: 5
-  weaponCooldown: 0
-  killReward: 10
-  type: 1
+  effectType: 0
+  blinkColor: {r: 1, g: 0, b: 0, a: 1}
+  blinkTime: 1
