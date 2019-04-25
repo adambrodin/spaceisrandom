@@ -676,6 +676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1355905801}
   - component: {fileID: 1355905802}
+  - component: {fileID: 1355905804}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -712,6 +713,18 @@ MonoBehaviour:
   enemies:
   - {fileID: 1758333338336660, guid: 0b4fcf0a30597994f9b1479fc4f4ea70, type: 3}
   spawnCooldown: 3
+--- !u!114 &1355905804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355905800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255d5581a866beb4cb45319974ed98e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1394086561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1033,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 5a3ebe8dd92fd4e4b843f6d16b998d6e, type: 2}
-  blinkColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1649926122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,11 +1042,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1649926117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 792b85f24df20d345aa30c54ffe408b9, type: 3}
+  m_Script: {fileID: 11500000, guid: d1684d472e9bfa342a68a4cc566d5e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 8763541633293815288, guid: 79a51b8a8d4ef0f429f4bee11a9bb288, type: 3}
-  stats: {fileID: 11400000, guid: 18377bba9fd804a40b7b06bb2c18c5dc, type: 2}
+  stats: {fileID: 11400000, guid: 5a3ebe8dd92fd4e4b843f6d16b998d6e, type: 2}
 --- !u!4 &1649926123
 Transform:
   m_ObjectHideFlags: 0
@@ -1105,7 +1116,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4636856368246959294, guid: 75258560cad9fad41bd6363e7c5df0b6, type: 3}
+  - {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1181,8 +1192,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945824565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 25, y: 1, z: 14}
+  m_LocalPosition: {x: 40, y: 0, z: 0}
+  m_LocalScale: {x: 17.5, y: 1, z: 14}
   m_Children:
   - {fileID: 1945989399}
   m_Father: {fileID: 393798596}

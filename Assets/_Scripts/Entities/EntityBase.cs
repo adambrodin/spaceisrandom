@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public abstract class EntityBase : MonoBehaviour, IMoveable
@@ -9,7 +7,7 @@ public abstract class EntityBase : MonoBehaviour, IMoveable
 
     public Rigidbody rgbd => GetComponent<Rigidbody>();
 
-    public float moveSpeed { get; set; }
+    public float MoveSpeed { get; set; }
 
     public abstract void Move();
 }

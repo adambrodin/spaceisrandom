@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -9,7 +7,7 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    float moveSpeed { get; set; }
+    float MoveSpeed { get; set; }
 
     Rigidbody rgbd { get; }
 

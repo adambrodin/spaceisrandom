@@ -1,49 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerWeapon : MonoBehaviour
+/* 
+ * Developed by Adam Brodin
+ * https://github.com/AdamBrodin
+ */
+
+public class PlayerWeapon : WeaponBase
 {
-    #region Variables
-    public GameObject bullet;
-    public Bullet stats;
-    private bool canFire = true;
-    private TextMeshProUGUI scoreText;
-    #endregion
-
     private void Start()
     {
-        scoreText = GameObject.Find("Score").GetComponent<TextMeshProUGUI>(); ///////////////// REMOVE TODO
-        scoreText.text = "0"; ////////////////////// REMOVE TODO
+        StartCoroutine(Cooldown());
     }
 
-    void Update()
+    protected override void CheckForFire()
     {
-        CheckForInput();
-    }
-
-    private void CheckForInput()
-    {
-        if(Input.GetKey(KeyCode.Space) || Input.GetButton("Fire2"))
+        if (Input.GetAxis("Fire2") > 0 || Input.GetAxis("B") > 0)
         {
-            if(canFire)
+            if (canFire)
             {
-                GameObject g = Instantiate(bullet, transform.position, transform.rotation);
-
-                g.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+                Fire();
 
                 StartCoroutine(Cooldown());
             }
         }
     }
 
-    private IEnumerator Cooldown()
+    protected override void Fire()
     {
-        canFire = false;
+        GameObject g = Instantiate(bulletObj);
+        gameObject.GetComponent<MeshRenderer>().material.color = g.GetComponent<MeshRenderer>().materials[0].color;
+    }
 
-        yield return new WaitForSeconds(stats.projectileCooldown);
-
-        canFire = true;
+    private void Update()
+    {
+        CheckForFire();
     }
 }

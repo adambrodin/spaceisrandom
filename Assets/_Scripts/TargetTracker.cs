@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -10,23 +8,19 @@ using UnityEngine;
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    private float moveSpeed;
+    public float moveSpeed;
+    public string targetName;
+    private GameObject targetObject;
     #endregion
 
-    public Entity stats;
-    public string gameObjectToTarget;
-    private GameObject targetObject;
-
-    private void Start()
+    private void Awake()
     {
-        targetObject = GameObject.Find(gameObjectToTarget);
-        moveSpeed = stats.moveSpeed;
+        targetObject = GameObject.Find(targetName);
     }
 
-    public void Movement()
+    public void MoveToTarget()
     {
-        if(targetObject != null)
+        if (targetObject != null)
         {
             float step = moveSpeed * Time.deltaTime;
 
@@ -36,17 +30,16 @@ public class TargetTracker : MonoBehaviour
 
             transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
         }
-        else if(targetObject == null)
+        else if (targetObject == null)
         {
             print("Target not found.");
-            transform.localScale = new Vector3(Mathf.Lerp(1, 0, 5), Mathf.Lerp(1, 0, 5), Mathf.Lerp(1, 0, 5));
-            transform.Rotate(new Vector3(0, 360 * Time.deltaTime, 0)); // Rotate like a mad man
+            Destroy(gameObject); // Destroy self
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Movement();
+        MoveToTarget();
     }
 
 

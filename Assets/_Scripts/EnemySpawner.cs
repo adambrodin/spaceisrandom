@@ -11,30 +11,33 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Variables
     public GameObject[] enemies;
-    private GameObject playerObj;
-
     public float spawnCooldown;
     #endregion
-
-    private void Awake()
-    {
-        playerObj = GameObject.Find("Player");
-    }
 
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
     }
 
+    private GameObject RandomEnemy()
+    {
+        GameObject e = enemies[Random.Range(0, enemies.Length)];
+
+        Vector3 spawnPos = transform.position;
+        spawnPos.x += Random.Range(-transform.position.x / 2, transform.position.x / 2);
+
+        e.transform.position = spawnPos;
+
+        return e;
+    }
+
     IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(spawnCooldown);
 
-        int randomEnemy = Random.Range(0, enemies.Length);
-        float xPos = transform.position.x;
-        Vector3 randomSpawn = new Vector3(xPos += Random.Range(-5, 5), transform.position.y, transform.position.z);
+        GameObject enemy = RandomEnemy();
 
-        Instantiate(enemies[randomEnemy], randomSpawn, enemies[randomEnemy].transform.rotation);
+        Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
 
         StartCoroutine(SpawnEnemies());
     }

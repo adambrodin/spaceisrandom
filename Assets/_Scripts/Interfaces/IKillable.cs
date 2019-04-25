@@ -7,11 +7,12 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-public interface IKillable
+public interface IKillable<T>
 {
-    float startHealth { get; set; }
-    float currentHealth { get; set; }
+    float StartHealth { get; set; }
+    float CurrentHealth { get; set; }
 
-    void TakeDamage(float damage);
+    void TakeDamage(T damage);
+    bool IsDead();
     void Die();
 }
