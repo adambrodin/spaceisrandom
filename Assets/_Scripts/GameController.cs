@@ -21,6 +21,6 @@ public class GameController : MonoBehaviour
         Destroy(obj);
 
         score += (int)obj.GetComponent<Health>().stats.killReward;
-        //print("Score: " + score);
+        print("Score: " + score);
     }
 }

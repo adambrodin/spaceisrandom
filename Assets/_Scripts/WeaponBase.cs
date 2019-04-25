@@ -7,8 +7,10 @@ public abstract class WeaponBase : MonoBehaviour
     protected GameObject bulletObj;
     [SerializeField]
     protected Entity stats;
-
     protected bool canFire = true;
+    [SerializeField]
+
+    protected GameObject[] firepoints;
 
     protected abstract void CheckForFire();
     protected abstract void Fire();

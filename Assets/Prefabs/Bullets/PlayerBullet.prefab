@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 8763541633293815173}
   - component: {fileID: 8763541633293815174}
   - component: {fileID: 8763541633293815175}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &8763541633293815170
 Transform:
