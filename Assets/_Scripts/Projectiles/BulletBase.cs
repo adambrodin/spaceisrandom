@@ -5,7 +5,7 @@ public class BulletBase : MonoBehaviour, IMoveable
 {
     #region Variables
     public Bullet stats;
-    public Rigidbody rgbd => GetComponent<Rigidbody>();
+    public Rigidbody Rgbd => GetComponent<Rigidbody>();
     public string[] targetTags;
 
     [SerializeField]
@@ -37,7 +37,7 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        rgbd.velocity = Vector3.forward * MoveSpeed;
+        Rgbd.velocity = Vector3.forward * MoveSpeed;
     }
 
     private void FixedUpdate()

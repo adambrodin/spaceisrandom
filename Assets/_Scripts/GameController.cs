@@ -8,19 +8,28 @@
 public class GameController : MonoBehaviour
 {
     #region Variables
-    int score = 0;
+    public TMPro.TextMeshProUGUI scoreText;
+    private int score = 0;
     #endregion
 
     private void Start()
     {
         Health.entityKilled += OnKill;
+
+        scoreText.text = "";
     }
 
     void OnKill(GameObject obj)
     {
-        Destroy(obj);
+        ChangeScore((int)obj.GetComponent<Health>().stats.killReward);
 
-        score += (int)obj.GetComponent<Health>().stats.killReward;
-        print("Score: " + score);
+        Destroy(obj);
+    }
+
+    void ChangeScore(int value)
+    {
+        score += value;
+
+        scoreText.text = score.ToString();
     }
 }

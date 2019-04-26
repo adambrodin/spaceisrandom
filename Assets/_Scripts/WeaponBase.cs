@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/* 
+ * Developed by Adam Brodin
+ * https://github.com/AdamBrodin
+ */
+
 public abstract class WeaponBase : MonoBehaviour
 {
     [SerializeField]

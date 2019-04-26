@@ -8,7 +8,7 @@
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    public float moveSpeed;
+    public float moveSpeed, followMaxDistance;
     public string targetName;
     private GameObject targetObject;
     #endregion
@@ -18,19 +18,24 @@ public class TargetTracker : MonoBehaviour
         targetObject = GameObject.Find(targetName);
     }
 
-    public void MoveToTarget()
+    private void MoveToTarget()
     {
         if (targetObject != null)
         {
             float step = moveSpeed * Time.deltaTime;
-
-            Vector3 targetDir = targetObject.transform.position - transform.position;
-            Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, step);
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, moveSpeed * Time.deltaTime, 0.0f);
-
-            transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
+            if (Vector3.Distance(transform.position, targetObject.transform.position) <= followMaxDistance)
+            {
+                Vector3 targetDir = targetObject.transform.position - transform.position;
+                Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, step);
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, moveSpeed * Time.deltaTime, 0.0f);
+                transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
+            }
+            else if (Vector3.Distance(transform.position, targetObject.transform.position) > followMaxDistance)
+            {
+                transform.Translate(Vector3.forward);
+            }
         }
-        else if (targetObject == null)
+        else
         {
             print("Target not found.");
             Destroy(gameObject); // Destroy self

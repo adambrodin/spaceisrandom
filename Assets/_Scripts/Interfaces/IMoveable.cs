@@ -9,7 +9,7 @@ public interface IMoveable
 {
     float MoveSpeed { get; set; }
 
-    Rigidbody rgbd { get; }
+    Rigidbody Rgbd { get; }
 
     void Move();
 }

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1758333338336658}
   - component: {fileID: 1758333338336657}
   - component: {fileID: 1758333338336656}
-  - component: {fileID: 1758333338336659}
+  - component: {fileID: 4964746565179017817}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -107,14 +107,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758333338336660}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 93.381645, y: 0, z: 200}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 165.03876, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1758332809509855}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &1758333338336658
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: b519429a4d3524742bbbf625b8c8c625, type: 2}
   onHitEffect: {fileID: 11400000, guid: 95306971b7f59c843906abe094fb9aba, type: 2}
---- !u!114 &1758333338336659
+--- !u!114 &4964746565179017817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,8 +167,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758333338336660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bad1bad28622af449783a924397d443, type: 3}
+  m_Script: {fileID: 11500000, guid: a74539402446c8243a3507598dc84b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 25
+  followMaxDistance: 100
   targetName: Player

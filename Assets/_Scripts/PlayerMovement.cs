@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+/* 
+ * Developed by Adam Brodin
+ * https://github.com/AdamBrodin
+ */
 
 public class PlayerMovement : EntityBase
 {
     #region Variables
     public float tiltValue;
     #endregion
+
+    private void Start()
+    {
+        RandomizeColors();
+    }
 
     private void FixedUpdate()
     {
@@ -16,7 +23,12 @@ public class PlayerMovement : EntityBase
 
     public override void Move()
     {
-        rgbd.velocity = new Vector3(Input.GetAxis("Horizontal") * stats.moveSpeed, 0, Input.GetAxis("Vertical") * stats.moveSpeed);
-        rgbd.rotation = Quaternion.Euler(0.0f, 0.0f, rgbd.velocity.x * -tiltValue);
+        Vector3 movement = new Vector3(
+            Input.GetAxis("Horizontal"),
+            Rgbd.velocity.y,
+            Input.GetAxis("Vertical"));
+
+        Rgbd.velocity = movement * MoveSpeed;
+        Rgbd.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, Rgbd.velocity.x * -tiltValue);
     }
 }
