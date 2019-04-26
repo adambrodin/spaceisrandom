@@ -93,8 +93,9 @@ GameObject:
   - component: {fileID: 1758333338336657}
   - component: {fileID: 1758333338336656}
   - component: {fileID: 4964746565179017817}
+  - component: {fileID: 5853763963067833780}
   m_Layer: 10
-  m_Name: Enemy
+  m_Name: DefaultEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758333338336660}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 165.03876, y: 0, z: 200}
+  m_LocalPosition: {x: 77.67654, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1758332809509855}
@@ -156,6 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836278ef18acc24891e3290b40f0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startHealth: 0
+  currentHealth: 0
   stats: {fileID: 11400000, guid: b519429a4d3524742bbbf625b8c8c625, type: 2}
   onHitEffect: {fileID: 11400000, guid: 95306971b7f59c843906abe094fb9aba, type: 2}
 --- !u!114 &4964746565179017817
@@ -167,9 +170,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758333338336660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a74539402446c8243a3507598dc84b77, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ba51612ff9257f4f9d47aad7bf00a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 25
-  followMaxDistance: 100
+  stats: {fileID: 11400000, guid: b519429a4d3524742bbbf625b8c8c625, type: 2}
+--- !u!114 &5853763963067833780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758333338336660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2e8ecf384248b4d89f4a556e2a0051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 50
+  followMaxDistance: 40
   targetName: Player

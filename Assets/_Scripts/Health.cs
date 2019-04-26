@@ -13,7 +13,9 @@ public class Health : MonoBehaviour, IKillable<float>
     public float StartHealth { get => startHealth; set => startHealth = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
-    public static event Action<GameObject> entityKilled;
+    public static event Action<GameObject> EntityKilled;
+
+    [SerializeField]
     private float startHealth, currentHealth;
     public Entity stats;
 
@@ -92,7 +94,7 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public void Die()
     {
-        entityKilled?.Invoke(gameObject);
+        EntityKilled?.Invoke(gameObject);
     }
 
     public bool IsDead()

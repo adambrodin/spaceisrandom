@@ -9,8 +9,6 @@ using UnityEngine;
 
 public class EnemyMovement : TargetTracker
 {
-    private void Start()
-    {
-
-    }
+    #region Variables
+    #endregion
 }

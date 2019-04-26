@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BulletBase : MonoBehaviour, IMoveable
+public class BulletBase : UnityEngine.MonoBehaviour, IMoveable
 {
     #region Variables
     public Bullet stats;

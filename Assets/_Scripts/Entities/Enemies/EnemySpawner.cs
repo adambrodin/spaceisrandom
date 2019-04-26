@@ -11,12 +11,18 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Variables
     public GameObject[] enemies;
-    public float minCooldown, maxCooldown;
+    public float minCooldown, maxCooldown, difficulty = 0.1f;
     #endregion
 
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
+        GameController.ChangeDifficulty += ChangeDifficulty;
+    }
+
+    private void ChangeDifficulty(float value)
+    {
+        difficulty *= value;
     }
 
     private GameObject RandomEnemy()
@@ -33,11 +39,15 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(Random.Range(minCooldown, maxCooldown));
+        yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
+
+        print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s");
 
         GameObject enemy = RandomEnemy();
 
         Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
+
+        //enemy.GetComponent<EntityBase>().RandomizeColors();
 
         StartCoroutine(SpawnEnemies());
     }

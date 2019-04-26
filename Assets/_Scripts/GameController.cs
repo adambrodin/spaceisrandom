@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -9,14 +11,18 @@ public class GameController : MonoBehaviour
 {
     #region Variables
     public TMPro.TextMeshProUGUI scoreText;
+    [SerializeField]
     private int score = 0;
+    public static event Action<float> ChangeDifficulty;
+    public float increaseDifficultyTime, minIncrease, maxIncrease;
     #endregion
 
     private void Start()
     {
-        Health.entityKilled += OnKill;
-
+        Health.EntityKilled += OnKill;
         scoreText.text = "";
+
+        StartCoroutine(IncreaseDifficulty());
     }
 
     void OnKill(GameObject obj)
@@ -32,4 +38,13 @@ public class GameController : MonoBehaviour
 
         scoreText.text = score.ToString();
     }
+
+    private IEnumerator IncreaseDifficulty()
+    {
+        yield return new WaitForSeconds(increaseDifficultyTime);
+        ChangeDifficulty?.Invoke(UnityEngine.Random.Range(minIncrease, maxIncrease));
+
+        StartCoroutine(IncreaseDifficulty());
+    }
 }
+

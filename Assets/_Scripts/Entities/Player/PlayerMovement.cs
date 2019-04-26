@@ -5,15 +5,18 @@
  * https://github.com/AdamBrodin
  */
 
-public class PlayerMovement : EntityBase
+public class PlayerMovement : MonoBehaviour, IMoveable
 {
     #region Variables
     public float tiltValue;
+    public float MoveSpeed { get; set; }
+
+    public Rigidbody Rgbd => GetComponent<Rigidbody>();
     #endregion
 
     private void Start()
     {
-        RandomizeColors();
+        MoveSpeed = GetComponent<Player>().stats.moveSpeed;
     }
 
     private void FixedUpdate()
@@ -21,7 +24,7 @@ public class PlayerMovement : EntityBase
         Move();
     }
 
-    public override void Move()
+    public void Move()
     {
         Vector3 movement = new Vector3(
             Input.GetAxis("Horizontal"),

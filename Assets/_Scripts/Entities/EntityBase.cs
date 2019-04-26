@@ -6,22 +6,20 @@
  */
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class EntityBase : MonoBehaviour, IMoveable
+public abstract class EntityBase : MonoBehaviour
 {
-    [SerializeField]
-    protected Entity stats;
+    public Entity stats;
 
-    public Rigidbody Rgbd => GetComponent<Rigidbody>();
-
-    public float MoveSpeed { get => stats.moveSpeed; set => stats.moveSpeed = value; }
-
-    public abstract void Move();
+    protected virtual void Start()
+    {
+        RandomizeColors();
+    }
 
     protected void RandomizeColors()
     {
         foreach (Material m in GetComponentInChildren<MeshRenderer>().materials)
         {
-            m.SetColor("_BaseColor", UnityEngine.Random.ColorHSV());
+            m.SetColor("_BaseColor", Random.ColorHSV());
         }
     }
 }

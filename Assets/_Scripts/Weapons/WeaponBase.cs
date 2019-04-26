@@ -6,7 +6,7 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-public abstract class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : UnityEngine.MonoBehaviour
 {
     [SerializeField]
     protected GameObject bulletObj;
