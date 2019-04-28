@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /* 
@@ -41,13 +40,11 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
 
-        print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s");
+        if (Debug.isDebugBuild) print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s");
 
         GameObject enemy = RandomEnemy();
 
         Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
-
-        //enemy.GetComponent<EntityBase>().RandomizeColors();
 
         StartCoroutine(SpawnEnemies());
     }

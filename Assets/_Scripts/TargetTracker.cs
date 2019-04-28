@@ -37,7 +37,7 @@ public class TargetTracker : MonoBehaviour
         }
         else
         {
-            print("Target not found.");
+            if (Debug.isDebugBuild) print("Target not found.");
             Destroy(gameObject); // Destroy self
         }
     }

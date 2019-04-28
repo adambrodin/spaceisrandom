@@ -6,15 +6,12 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-public abstract class WeaponBase : UnityEngine.MonoBehaviour
+public abstract class WeaponBase : MonoBehaviour
 {
     [SerializeField]
     protected GameObject bulletObj;
-    [SerializeField]
-    protected Entity stats;
     protected bool canFire = true;
     [SerializeField]
-
     protected GameObject[] firepoints;
 
     protected abstract void CheckForFire();
@@ -31,7 +28,7 @@ public abstract class WeaponBase : UnityEngine.MonoBehaviour
             yield break; // Exit the couroutine to save resources
         }
 
-        yield return new WaitForSeconds(stats.weaponCooldown);
+        yield return new WaitForSeconds(GetComponent<EntityBase>().getStats().weaponCooldown);
 
         canFire = true;
     }

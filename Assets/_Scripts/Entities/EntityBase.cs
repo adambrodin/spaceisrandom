@@ -15,6 +15,11 @@ public abstract class EntityBase : MonoBehaviour
         RandomizeColors();
     }
 
+    public Entity getStats()
+    {
+        return stats;
+    }
+
     protected void RandomizeColors()
     {
         foreach (Material m in GetComponentInChildren<MeshRenderer>().materials)

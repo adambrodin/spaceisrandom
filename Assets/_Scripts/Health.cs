@@ -17,7 +17,6 @@ public class Health : MonoBehaviour, IKillable<float>
 
     [SerializeField]
     private float startHealth, currentHealth;
-    public Entity stats;
 
     public OnHitEffect onHitEffect;
     #endregion
@@ -26,12 +25,12 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         try
         {
-            StartHealth = stats.startHealth;
+            StartHealth = GetComponent<EntityBase>().getStats().startHealth;
             CurrentHealth = StartHealth;
         }
         catch (Exception e)
         {
-            print("Exception: " + e.Data);
+            if (Debug.isDebugBuild) print("Exception: " + e.Data);
         }
     }
 
@@ -55,7 +54,7 @@ public class Health : MonoBehaviour, IKillable<float>
                 StartCoroutine(ColorBlink(onHitEffect.blinkColor, onHitEffect.blinkTime));
                 break;
             default:
-                print("No OnHitEffect found.");
+                if (Debug.isDebugBuild) print("No OnHitEffect found.");
                 break;
         }
     }
@@ -79,7 +78,7 @@ public class Health : MonoBehaviour, IKillable<float>
         }
         catch (Exception e)
         {
-            print("Exception: " + e.Data);
+            if(Debug.isDebugBuild) print("Exception: " + e.Data);
             yield break;
         }
 
@@ -105,7 +104,7 @@ public class Health : MonoBehaviour, IKillable<float>
     // Make sure the values remain the same whenever they are changed
     private void OnValidate()
     {
-        StartHealth = StartHealth;
+        StartHealth = startHealth;
         CurrentHealth = currentHealth;
     }
 }

@@ -995,8 +995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74431a9c45287e479475dedc86a9945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 5a3ebe8dd92fd4e4b843f6d16b998d6e, type: 2}
-  tiltValue: 1
+  tiltValue: 0.5
 --- !u!54 &1649926119
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1040,7 +1039,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 0
   currentHealth: 0
-  stats: {fileID: 11400000, guid: 5a3ebe8dd92fd4e4b843f6d16b998d6e, type: 2}
   onHitEffect: {fileID: 11400000, guid: 95306971b7f59c843906abe094fb9aba, type: 2}
 --- !u!114 &1649926122
 MonoBehaviour:
@@ -1056,7 +1054,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletObj: {fileID: 8763541633293815288, guid: 79a51b8a8d4ef0f429f4bee11a9bb288,
     type: 3}
-  stats: {fileID: 11400000, guid: 5a3ebe8dd92fd4e4b843f6d16b998d6e, type: 2}
   firepoints:
   - {fileID: 1714300401}
   - {fileID: 2017895264}

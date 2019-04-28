@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        Health.EntityKilled += OnKill;
         scoreText.text = "";
 
         StartCoroutine(IncreaseDifficulty());
@@ -27,9 +26,22 @@ public class GameController : MonoBehaviour
 
     void OnKill(GameObject obj)
     {
-        ChangeScore((int)obj.GetComponent<Health>().stats.killReward);
+        ChangeScore((int)obj.GetComponent<EntityBase>().getStats().killReward);
 
         Destroy(obj);
+    }
+
+    /// <summary>
+    /// Removes the event delegate to save performance
+    /// </summary>
+    private void OnDisable()
+    {
+        Health.EntityKilled -= OnKill;
+    }
+
+    private void OnEnable()
+    {
+        Health.EntityKilled += OnKill;
     }
 
     void ChangeScore(int value)
