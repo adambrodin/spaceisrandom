@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
 
-        if (Debug.isDebugBuild) print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s");
+        //if (Debug.isDebugBuild) print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s"); TODO REMOVE
 
         GameObject enemy = RandomEnemy();
 

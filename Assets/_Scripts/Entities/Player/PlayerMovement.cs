@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     {
         MoveSpeed = GetComponent<Player>().getStats().moveSpeed;
     }
-     
+
     private void OnEnable()
     {
         Player.OnGetMovement += OnGetMovement;
