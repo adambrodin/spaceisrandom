@@ -25,7 +25,6 @@ public class Player : EntityBase, InputController.IPlayerActions
     public void OnMovement(InputAction.CallbackContext context)
     {
         OnGetMovement?.Invoke(context.ReadValue<Vector2>());
-        if (Debug.isDebugBuild) print("Read Value: " + context.ReadValue<Vector2>());////////////  TODO REMOVE
     }
 
     public void OnShooting(InputAction.CallbackContext context)

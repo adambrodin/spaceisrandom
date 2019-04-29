@@ -9,6 +9,7 @@
 public abstract class EntityBase : MonoBehaviour
 {
     public Entity stats;
+    public Color[] entityColors;
 
     protected virtual void Start()
     {
@@ -22,9 +23,12 @@ public abstract class EntityBase : MonoBehaviour
 
     protected void RandomizeColors()
     {
-        foreach (Material m in GetComponentInChildren<MeshRenderer>().materials)
+        entityColors = new Color[GetComponentInChildren<MeshRenderer>().materials.Length];
+
+        for (int i = 0; i < entityColors.Length; i++)
         {
-            m.SetColor("_BaseColor", Random.ColorHSV());
+            entityColors[i] = Random.ColorHSV();
+            GetComponentInChildren<MeshRenderer>().materials[i].SetColor("_BaseColor", entityColors[i]);
         }
     }
 }

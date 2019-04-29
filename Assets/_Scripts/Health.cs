@@ -7,6 +7,7 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
+[RequireComponent(typeof(MeshRenderer))]
 public class Health : MonoBehaviour, IKillable<float>
 {
     #region Variables
@@ -18,7 +19,7 @@ public class Health : MonoBehaviour, IKillable<float>
     [SerializeField]
     private float startHealth, currentHealth;
 
-    public OnHitEffect onHitEffect;
+    public EntityEffect[] effects;
     #endregion
 
     private void Start()
@@ -38,7 +39,7 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         CurrentHealth -= damage;
 
-        OnTookDamage();
+        PlayEffect(effects[0]);
 
         if (IsDead())
         {
@@ -46,29 +47,26 @@ public class Health : MonoBehaviour, IKillable<float>
         }
     }
 
-    public void OnTookDamage()
+    public void PlayEffect(EntityEffect e)
     {
-        switch (onHitEffect.effectType)
+        if (e != null)
         {
-            case OnHitEffect.EffectType.colorBlink:
-                StartCoroutine(ColorBlink(onHitEffect.blinkColor, onHitEffect.blinkTime));
-                break;
-            default:
-                if (Debug.isDebugBuild) print("No OnHitEffect found.");
-                break;
+            switch (e.effectType)
+            {
+                case EntityEffect.EffectType.colorBlink:
+                    StartCoroutine(ColorBlink(e.blinkColor, e.blinkTime));
+                    break;
+                case EntityEffect.EffectType.explosion:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     public IEnumerator ColorBlink(Color blinkCol, float blinkTime)
     {
-        Color[] orgColors = new Color[GetComponentInChildren<MeshRenderer>().materials.Length];
-
         // Fetch all colors in all materials from the MeshRenderer
-        for (int i = 0; i < orgColors.Length; i++)
-        {
-            orgColors[i] = GetComponentInChildren<MeshRenderer>().materials[i].color;
-        }
-
         try
         {
             foreach (Material m in GetComponentInChildren<MeshRenderer>().materials)
@@ -78,16 +76,16 @@ public class Health : MonoBehaviour, IKillable<float>
         }
         catch (Exception e)
         {
-            if(Debug.isDebugBuild) print("Exception: " + e.Data);
+            if (Debug.isDebugBuild) print("Exception: " + e.Data);
             yield break;
         }
 
         yield return new WaitForSeconds(blinkTime);
 
         // Set the materials colors back to how they originally were
-        for (int i = 0; i < orgColors.Length; i++)
+        for (int i = 0; i < GetComponent<EntityBase>().entityColors.Length; i++)
         {
-            GetComponentInChildren<MeshRenderer>().materials[i].SetColor("_BaseColor", orgColors[i]);
+            GetComponentInChildren<MeshRenderer>().materials[i].SetColor("_BaseColor", GetComponent<EntityBase>().entityColors[i]);
         }
     }
 

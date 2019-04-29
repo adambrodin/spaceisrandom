@@ -5,6 +5,7 @@
  * https://github.com/AdamBrodin
  */
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IMoveable
 {
     #region Variables
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
     private Vector2 direction;
+    private Vector3 movement;
     #endregion
 
     private void Start()
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        Vector3 movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
+        movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
 
         Rgbd.velocity = movement * MoveSpeed;
         Rgbd.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, Rgbd.velocity.x * -tiltValue);
@@ -46,5 +48,12 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     private void OnGetMovement(Vector2 dir)
     {
         direction = dir;
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Border")
+        {
+        }
     }
 }

@@ -31,9 +31,7 @@ public class GameController : MonoBehaviour
         Destroy(obj);
     }
 
-    /// <summary>
-    /// Removes the event delegate to save performance
-    /// </summary>
+    // Removes the event delegate to save performance
     private void OnDisable()
     {
         Health.EntityKilled -= OnKill;

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f11192cbf3990c4dab82c365011cdbe, type: 3}
-  m_Name: EnemyTest
+  m_Name: Player
   m_EditorClassIdentifier: 
   effectType: 0
-  blinkColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkTime: 1
+  blinkColor: {r: 1, g: 0, b: 0, a: 0}
+  blinkTime: 0.5

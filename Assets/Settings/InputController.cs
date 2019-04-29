@@ -22,8 +22,8 @@ public class InputController : IInputActionCollection
                 {
                     ""name"": ""Movement"",
                     ""id"": ""754ccb8f-e7fb-46e6-9fe8-25d6661278d0"",
-                    ""expectedControlLayout"": """",
-                    ""continuous"": false,
+                    ""expectedControlLayout"": ""Vector2"",
+                    ""continuous"": true,
                     ""passThrough"": false,
                     ""initialStateCheck"": false,
                     ""processors"": """",

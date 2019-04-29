@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BulletBase : UnityEngine.MonoBehaviour, IMoveable
+public class BulletBase : MonoBehaviour, IMoveable
 {
     #region Variables
     public Bullet stats;
@@ -37,7 +37,9 @@ public class BulletBase : UnityEngine.MonoBehaviour, IMoveable
 
     public void Move()
     {
-        Rgbd.velocity = Vector3.forward * MoveSpeed;
+        // Rgbd.velocity = Vector3.forward * MoveSpeed;
+
+        Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.Force);
     }
 
     private void FixedUpdate()

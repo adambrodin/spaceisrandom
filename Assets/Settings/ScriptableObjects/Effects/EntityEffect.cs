@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "OnHitEffect", menuName = "OnHitEffect")]
-public class OnHitEffect : ScriptableObject
+[CreateAssetMenu(fileName = "EntiyEffect", menuName = "EntiyEffect")]
+public class EntityEffect : ScriptableObject
 {
     public enum EffectType
     {
         colorBlink,
+        explosion,
     }
 
     public EffectType effectType;

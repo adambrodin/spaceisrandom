@@ -10,7 +10,8 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Variables
     public GameObject[] enemies;
-    public float minCooldown, maxCooldown, difficulty = 0.1f;
+    public float minCooldown, maxCooldown;
+    private float difficulty = 0;
     #endregion
 
     private void Start()
@@ -21,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void ChangeDifficulty(float value)
     {
-        difficulty *= value;
+        difficulty += value;
     }
 
     private GameObject RandomEnemy()
@@ -39,8 +40,6 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
-
-        //if (Debug.isDebugBuild) print("Current Min: " + (minCooldown - difficulty).ToString() + "s Current Max: " + (maxCooldown - difficulty).ToString() + "s"); TODO REMOVE
 
         GameObject enemy = RandomEnemy();
 
