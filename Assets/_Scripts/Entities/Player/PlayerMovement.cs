@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+
+[System.Serializable]
+public class Bounds
+{
+    public float xMin, xMax, zMin, zMax;
+}
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IMoveable
@@ -13,9 +20,11 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
+    public Bounds bounds;
     private Vector2 direction;
     private Vector3 movement;
     #endregion
+
 
     private void Start()
     {
@@ -42,18 +51,18 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
 
         Rgbd.velocity = movement * MoveSpeed;
-        Rgbd.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, Rgbd.velocity.x * -tiltValue);
+        Rgbd.position = new Vector3
+        (
+            Mathf.Clamp(Rgbd.position.x, bounds.xMin, bounds.xMax),
+            0.0f,
+            Mathf.Clamp(Rgbd.position.z, bounds.zMin, bounds.zMax)
+        );
+
+        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
     }
 
     private void OnGetMovement(Vector2 dir)
     {
         direction = dir;
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Border")
-        {
-        }
     }
 }

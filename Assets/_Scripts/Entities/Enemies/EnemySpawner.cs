@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 {
     #region Variables
     public GameObject[] enemies;
-    public float minCooldown, maxCooldown;
+    public float minCooldown, maxCooldown, spawnMaxOffset;
     private float difficulty = 0;
     #endregion
 
@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject e = enemies[Random.Range(0, enemies.Length)];
 
         Vector3 spawnPos = transform.position;
-        spawnPos.x += Random.Range(-transform.position.x / 2, transform.position.x / 2);
+        spawnPos.x += Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
 
         e.transform.position = spawnPos;
 
