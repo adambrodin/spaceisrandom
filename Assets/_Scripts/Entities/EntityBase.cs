@@ -9,6 +9,7 @@
 public abstract class EntityBase : MonoBehaviour
 {
     public Entity stats;
+    [HideInInspector]
     public Color[] entityColors;
 
     protected virtual void Start()

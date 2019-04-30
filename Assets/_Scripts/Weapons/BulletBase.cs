@@ -39,7 +39,7 @@ public class BulletBase : MonoBehaviour, IMoveable
     {
         // Rgbd.velocity = Vector3.forward * MoveSpeed;
 
-        Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.Force);
+        Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
     }
 
     private void FixedUpdate()
