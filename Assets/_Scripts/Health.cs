@@ -66,10 +66,12 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public IEnumerator ColorBlink(Color blinkCol, float blinkTime)
     {
+        MeshRenderer meshRen = GetComponentInChildren<MeshRenderer>();
+
         // Fetch all colors in all materials from the MeshRenderer
         try
         {
-            foreach (Material m in GetComponentInChildren<MeshRenderer>().materials)
+            foreach (Material m in meshRen.materials)
             {
                 m.SetColor("_BaseColor", blinkCol);
             }
@@ -85,7 +87,7 @@ public class Health : MonoBehaviour, IKillable<float>
         // Set the materials colors back to how they originally were
         for (int i = 0; i < GetComponent<EntityBase>().entityColors.Length; i++)
         {
-            GetComponentInChildren<MeshRenderer>().materials[i].SetColor("_BaseColor", GetComponent<EntityBase>().entityColors[i]);
+            meshRen.materials[i].SetColor("_BaseColor", GetComponent<EntityBase>().entityColors[i]);
         }
     }
 

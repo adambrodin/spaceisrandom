@@ -19,14 +19,13 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        scoreText.text = "";
-
         StartCoroutine(IncreaseDifficulty());
     }
 
     void OnKill(GameObject obj)
     {
-        ChangeScore((int)obj.GetComponent<EntityBase>().getStats().killReward);
+        int killReward = (int)obj.GetComponent<EntityBase>().getStats().killReward;
+        if (killReward > 0) ChangeScore(killReward);
 
         Destroy(obj);
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BulletBase : MonoBehaviour, IMoveable
@@ -14,12 +15,18 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.GetComponent<Health>() != null && IsTargetTag(col.gameObject))
+        try
         {
-            col.GetComponent<Health>().TakeDamage(stats.projectileDamage);
+            Health h = col.GetComponent<Health>();
 
-            Destroy(gameObject); // Destroy the bullet after impact
+            if (IsTargetTag(col.gameObject))
+            {
+                h.TakeDamage(stats.projectileDamage);
+
+                Destroy(gameObject); // Destroy the bullet after impact
+            }
         }
+        catch (Exception) { }
     }
 
     private bool IsTargetTag(GameObject obj)
@@ -37,9 +44,8 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        // Rgbd.velocity = Vector3.forward * MoveSpeed;
-
-        Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
+        // Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
+        Rgbd.velocity = Vector3.forward * MoveSpeed;
     }
 
     private void FixedUpdate()
