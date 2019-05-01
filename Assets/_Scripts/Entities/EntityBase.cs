@@ -8,7 +8,7 @@
 [RequireComponent(typeof(Rigidbody))]
 public abstract class EntityBase : MonoBehaviour
 {
-    public Entity stats;
+    public EntityStats stats;
     [HideInInspector]
     public Color[] entityColors;
 
@@ -17,7 +17,7 @@ public abstract class EntityBase : MonoBehaviour
         RandomizeColors();
     }
 
-    public Entity getStats()
+    public EntityStats getStats()
     {
         return stats;
     }

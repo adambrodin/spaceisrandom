@@ -14,7 +14,7 @@ public class TargetTracker : MonoBehaviour
     private GameObject targetObject;
     #endregion
 
-    private void Awake()
+    private void Start()
     {
         targetObject = GameObject.Find(targetName);
     }

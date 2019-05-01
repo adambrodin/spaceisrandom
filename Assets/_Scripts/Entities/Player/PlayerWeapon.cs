@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -9,8 +12,10 @@ public class PlayerWeapon : WeaponBase
 {
     private int firepointToUse = 0; // Which firepoint to shoot from
     private bool isFiring;
-    private void Start()
+
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(Cooldown());
     }
 
@@ -39,7 +44,16 @@ public class PlayerWeapon : WeaponBase
 
     protected override void Fire()
     {
-        GameObject g = Instantiate(bulletObj, firepoints[firepointToUse].transform.position, bulletObj.transform.rotation);
+        //GameObject g = Instantiate(bulletObj, firepoints[firepointToUse].transform.position, bulletObj.transform.rotation);
+
+        for (int i = 0; i <= 100; i++)
+        {
+            var e = entityManager.Instantiate(bulletEntity);
+            print("Instantiated Entity");
+        }
+        //float3 position = transform.TransformPoint(firepoints[firepointToUse].transform.position);
+        //entityManager.SetComponentData(e, new Translation { Value = position });
+        //print("Entity position changed");
 
         firepointToUse++;
         if (firepointToUse >= firepoints.Length)
@@ -47,8 +61,8 @@ public class PlayerWeapon : WeaponBase
             firepointToUse = 0;
         }
 
-        Color parentColor = GetComponentInChildren<MeshRenderer>().materials[0].color;
-        g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
+        //Color parentColor = GetComponentInChildren<MeshRenderer>().materials[0].color;
+        //g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
 
         StartCoroutine(Cooldown());
     }

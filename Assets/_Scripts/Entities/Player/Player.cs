@@ -23,7 +23,7 @@ public class Player : EntityBase, InputController.IPlayerActions
         {
             if (instance == null)
             {
-                instance = GameObject.FindObjectOfType(typeof(Player)) as Player;
+                instance = FindObjectOfType(typeof(Player)) as Player;
             }
             return instance;
         }
@@ -40,7 +40,6 @@ public class Player : EntityBase, InputController.IPlayerActions
     public void OnMovement(InputAction.CallbackContext context)
     {
         OnGetMovement?.Invoke(context.ReadValue<Vector2>());
-        print("Movement - Vector2: " + context.ReadValue<Vector2>());
     }
 
     public void OnShooting(InputAction.CallbackContext context)
