@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class PlayerWeapon : WeaponBase
 {
-    private int firepointToUse = 0; // Which firepoint to shoot from
+    private int firepointToUse;
     private bool isFiring;
 
     protected override void Start()
@@ -46,14 +46,11 @@ public class PlayerWeapon : WeaponBase
     {
         //GameObject g = Instantiate(bulletObj, firepoints[firepointToUse].transform.position, bulletObj.transform.rotation);
 
-        for (int i = 0; i <= 100; i++)
-        {
-            var e = entityManager.Instantiate(bulletEntity);
-            print("Instantiated Entity");
-        }
-        //float3 position = transform.TransformPoint(firepoints[firepointToUse].transform.position);
-        //entityManager.SetComponentData(e, new Translation { Value = position });
-        //print("Entity position changed");
+        var e = entityManager.Instantiate(bulletEntity);
+        float3 position = transform.TransformPoint(firepoints[firepointToUse].transform.position);
+        Quaternion rotation = firepoints[firepointToUse].transform.rotation;
+        entityManager.SetComponentData(e, new Translation { Value = position });
+        entityManager.SetComponentData(e, new Rotation { Value = rotation });
 
         firepointToUse++;
         if (firepointToUse >= firepoints.Length)
