@@ -10,14 +10,29 @@ using UnityEngine.Experimental.Input;
 public class Player : EntityBase, InputController.IPlayerActions
 {
     #region Variables
-    public static event Action<bool> OnGetShooting;
-    public static event Action<Vector2> OnGetMovement;
+    public event Action<bool> OnGetShooting;
+    public event Action<Vector2> OnGetMovement;
 
+    private static Player instance;
     private InputController playerInput;
     #endregion
 
+    public static Player Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindObjectOfType(typeof(Player)) as Player;
+            }
+            return instance;
+        }
+    }
+
     private void Awake()
     {
+        instance = this;
+
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
     }
@@ -25,6 +40,7 @@ public class Player : EntityBase, InputController.IPlayerActions
     public void OnMovement(InputAction.CallbackContext context)
     {
         OnGetMovement?.Invoke(context.ReadValue<Vector2>());
+        print("Movement - Vector2: " + context.ReadValue<Vector2>());
     }
 
     public void OnShooting(InputAction.CallbackContext context)

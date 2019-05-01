@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
-        GameController.ChangeDifficulty += ChangeDifficulty;
+        GameController.instance.ChangeDifficulty += ChangeDifficulty;
     }
 
     private void ChangeDifficulty(float value)
@@ -27,14 +27,18 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject RandomEnemy()
     {
-        GameObject e = enemies[Random.Range(0, enemies.Length)];
+        if (enemies.Length > 0)
+        {
+            GameObject e = enemies[Random.Range(0, enemies.Length)];
 
-        Vector3 spawnPos = transform.position;
-        spawnPos.x += Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
+            Vector3 spawnPos = transform.position;
+            spawnPos.x += Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
 
-        e.transform.position = spawnPos;
+            e.transform.position = spawnPos;
 
-        return e;
+            return e;
+        }
+        return null;
     }
 
     IEnumerator SpawnEnemies()

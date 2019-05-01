@@ -8,7 +8,8 @@
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    public float moveSpeed, followMaxDistance, damping;
+    public float movementMulitplier, followMaxDistance, damping;
+    protected float moveSpeed;
     public string targetName;
     private GameObject targetObject;
     #endregion
@@ -28,7 +29,7 @@ public class TargetTracker : MonoBehaviour
             if (distanceToTarget <= followMaxDistance)
             {
                 Vector3 targetDir = targetObject.transform.position - transform.position;
-                Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, step * distanceToTarget / 100);
+                Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, (step * distanceToTarget) * movementMulitplier);
                 Vector3 newDir = Vector3.Lerp(transform.forward, targetDir, damping * Time.deltaTime);
 
                 transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
@@ -40,6 +41,7 @@ public class TargetTracker : MonoBehaviour
         }
         else
         {
+            if (Debug.isDebugBuild) Debug.LogWarning("No target found");
             Destroy(gameObject); // Destroy self
         }
     }

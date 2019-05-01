@@ -7,15 +7,30 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
+[Serializable]
+public class RandomColorRange
+{
+    public float hueMin, hueMax, saturationMin, saturationMax, valueMin, valueMax, alphaMin = 1f, alphaMax = 1f;
+}
+
 public class GameController : MonoBehaviour
 {
     #region Variables
     public TMPro.TextMeshProUGUI scoreText;
-    [SerializeField]
-    private int score = 0;
-    public static event Action<float> ChangeDifficulty;
+    public static GameController instance;
+    public event Action<float> ChangeDifficulty;
+    public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
+    [SerializeField]
+    private int score;
+
+
     #endregion
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {

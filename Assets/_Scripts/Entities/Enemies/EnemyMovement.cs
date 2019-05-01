@@ -10,5 +10,9 @@ using UnityEngine;
 public class EnemyMovement : TargetTracker
 {
     #region Variables
+    private void Start()
+    {
+        moveSpeed = GetComponent<Enemy>().getStats().moveSpeed;
+    }
     #endregion
 }

@@ -1,11 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
+/* 
+ * Developed by Adam Brodin
+ * https://github.com/AdamBrodin
+ */
+
 [RequireComponent(typeof(Rigidbody))]
 public class BulletBase : MonoBehaviour, IMoveable
 {
     #region Variables
     public Bullet stats;
+    [HideInInspector]
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
     public string[] targetTags;
 
@@ -22,7 +28,6 @@ public class BulletBase : MonoBehaviour, IMoveable
             if (IsTargetTag(col.gameObject))
             {
                 h.TakeDamage(stats.projectileDamage);
-
                 Destroy(gameObject); // Destroy the bullet after impact
             }
         }
@@ -44,7 +49,7 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        // Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
+        // Rgbd.AddForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange); TODO maybe maybe
         Rgbd.velocity = Vector3.forward * MoveSpeed;
     }
 

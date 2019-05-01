@@ -16,12 +16,12 @@ public class PlayerWeapon : WeaponBase
 
     private void OnEnable()
     {
-        Player.OnGetShooting += OnGetShooting;
+        Player.Instance.OnGetShooting += OnGetShooting;
     }
 
     private void OnDisable()
     {
-        Player.OnGetShooting -= OnGetShooting;
+        Player.Instance.OnGetShooting -= OnGetShooting;
     }
 
     private void OnGetShooting(bool value)

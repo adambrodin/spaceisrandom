@@ -7,7 +7,6 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
-[RequireComponent(typeof(MeshRenderer))]
 public class Health : MonoBehaviour, IKillable<float>
 {
     #region Variables
@@ -29,17 +28,14 @@ public class Health : MonoBehaviour, IKillable<float>
             StartHealth = GetComponent<EntityBase>().getStats().startHealth;
             CurrentHealth = StartHealth;
         }
-        catch (Exception e)
-        {
-            if (Debug.isDebugBuild) print("Exception: " + e.Data);
-        }
+        catch (Exception e) { if (Debug.isDebugBuild) print("Exception: " + e.Data); }
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
 
-        PlayEffect(effects[0]);
+        if (effects.Length > 0) PlayEffect(effects[0]);
 
         if (IsDead())
         {
@@ -57,8 +53,6 @@ public class Health : MonoBehaviour, IKillable<float>
                     StartCoroutine(ColorBlink(e.blinkColor, e.blinkTime));
                     break;
                 case EntityEffect.EffectType.explosion:
-                    break;
-                default:
                     break;
             }
         }
@@ -85,9 +79,11 @@ public class Health : MonoBehaviour, IKillable<float>
         yield return new WaitForSeconds(blinkTime);
 
         // Set the materials colors back to how they originally were
-        for (int i = 0; i < GetComponent<EntityBase>().entityColors.Length; i++)
+        Color[] eCol = GetComponent<EntityBase>().entityColors;
+
+        for (int i = 0; i < eCol.Length; i++)
         {
-            meshRen.materials[i].SetColor("_BaseColor", GetComponent<EntityBase>().entityColors[i]);
+            meshRen.materials[i].SetColor("_BaseColor", eCol[i]);
         }
     }
 

@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     private Vector3 movement;
     #endregion
 
-
     private void Start()
     {
         MoveSpeed = GetComponent<Player>().getStats().moveSpeed;
@@ -33,12 +32,12 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     private void OnEnable()
     {
-        Player.OnGetMovement += OnGetMovement;
+        Player.Instance.OnGetMovement += OnGetMovement;
     }
 
     private void OnDisable()
     {
-        Player.OnGetMovement -= OnGetMovement;
+        Player.Instance.OnGetMovement -= OnGetMovement;
     }
 
     private void FixedUpdate()
