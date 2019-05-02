@@ -14,7 +14,7 @@ public class TargetTracker : MonoBehaviour
     private GameObject targetObject;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         targetObject = GameObject.Find(targetName);
     }
@@ -42,7 +42,11 @@ public class TargetTracker : MonoBehaviour
         else
         {
             if (Debug.isDebugBuild) Debug.LogWarning("No target found");
-            Destroy(gameObject);
+            GameObject[] objects = GameObject.FindGameObjectsWithTag(gameObject.tag);
+            foreach(GameObject g in objects)
+            {
+                Destroy(g);
+            }
         }
     }
 

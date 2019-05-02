@@ -23,8 +23,6 @@ public class GameController : MonoBehaviour
     public float increaseDifficultyTime, minIncrease, maxIncrease;
     [SerializeField]
     private int score;
-
-
     #endregion
 
     private void Awake()
@@ -34,6 +32,12 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        // Hide the cursor on release build
+        if (!Debug.isDebugBuild)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         StartCoroutine(IncreaseDifficulty());
     }
 
