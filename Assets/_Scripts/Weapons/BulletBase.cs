@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -21,17 +20,15 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     private void OnTriggerEnter(Collider col)
     {
-        try
+        var k = col.GetComponent<IKillable<float>>();
         {
-            Health h = col.GetComponent<Health>();
-
             if (IsTargetTag(col.gameObject))
             {
-                h.TakeDamage(stats.projectileDamage);
+                k.TakeDamage(stats.projectileDamage);
                 Destroy(gameObject); // Destroy the bullet after impact
             }
         }
-        catch (Exception) { }
+        return;
     }
 
     private bool IsTargetTag(GameObject obj)

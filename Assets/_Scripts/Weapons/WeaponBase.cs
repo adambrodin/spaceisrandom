@@ -41,6 +41,5 @@ public abstract class WeaponBase : MonoBehaviour
     {
         bulletEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletObj, World.Active);
         entityManager = World.Active.EntityManager;
-        print("Converted prefab to Entity");
     }
 }

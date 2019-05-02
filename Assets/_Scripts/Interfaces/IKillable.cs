@@ -8,7 +8,7 @@ public interface IKillable<T>
     float StartHealth { get; set; }
     float CurrentHealth { get; set; }
 
-    void TakeDamage(T damage);
+    void TakeDamage(float T);
     bool IsDead();
     void Die();
 }

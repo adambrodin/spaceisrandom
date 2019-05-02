@@ -23,12 +23,8 @@ public class Health : MonoBehaviour, IKillable<float>
 
     private void Start()
     {
-        try
-        {
-            StartHealth = GetComponent<EntityBase>().getStats().startHealth;
-            CurrentHealth = StartHealth;
-        }
-        catch (Exception e) { if (Debug.isDebugBuild) print("Exception: " + e.Data); }
+        if (GetComponent<EntityBase>() != null) StartHealth = GetComponent<EntityBase>().getStats().startHealth;
+        CurrentHealth = StartHealth;
     }
 
     public void TakeDamage(float damage)

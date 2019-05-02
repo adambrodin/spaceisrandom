@@ -42,7 +42,7 @@ public class TargetTracker : MonoBehaviour
         else
         {
             if (Debug.isDebugBuild) Debug.LogWarning("No target found");
-            Destroy(gameObject); // Destroy self
+            Destroy(gameObject);
         }
     }
 
