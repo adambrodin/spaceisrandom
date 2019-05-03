@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
 {
     #region Variables
     public TMPro.TextMeshProUGUI scoreText;
-    public static GameController instance;
+    private static GameController instance;
     public event Action<float> ChangeDifficulty;
     public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
@@ -25,9 +25,16 @@ public class GameController : MonoBehaviour
     private int score;
     #endregion
 
-    private void Awake()
+    public static GameController Instance
     {
-        instance = this;
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType(typeof(GameController)) as GameController;
+            }
+            return instance;
+        }
     }
 
     private void Start()
@@ -60,7 +67,7 @@ public class GameController : MonoBehaviour
         Health.EntityKilled += OnKill;
     }
 
-    void ChangeScore(int value)
+    public void ChangeScore(int value)
     {
         score += value;
 

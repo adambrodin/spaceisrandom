@@ -24,13 +24,23 @@ public abstract class EntityBase : MonoBehaviour
 
     protected void RandomizeColors()
     {
-        entityColors = new Color[GetComponentInChildren<MeshRenderer>().materials.Length];
-        RandomColorRange r = GameController.instance.randomColorRange;
+        MeshRenderer meshRen;
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            meshRen = GetComponent<MeshRenderer>();
+        }
+        else
+        {
+            meshRen = GetComponentInChildren<MeshRenderer>();
+        }
+
+        entityColors = new Color[meshRen.materials.Length];
+        RandomColorRange r = GameController.Instance.randomColorRange;
 
         for (int i = 0; i < entityColors.Length; i++)
         {
             entityColors[i] = Random.ColorHSV(r.hueMin, r.hueMax, r.saturationMin, r.saturationMax, r.valueMin, r.valueMax, r.alphaMin, r.alphaMax);
-            GetComponentInChildren<MeshRenderer>().materials[i].SetColor("_BaseColor", entityColors[i]);
+            meshRen.materials[i].SetColor("_BaseColor", entityColors[i]);
         }
     }
 }

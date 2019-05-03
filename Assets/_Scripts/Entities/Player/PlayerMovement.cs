@@ -58,6 +58,15 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         );
 
         Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
+
+        MoveScore();
+    }
+
+    private void MoveScore()
+    {
+        int moveScore = (int)(direction.x + direction.y);
+        if (moveScore < 0) moveScore *= -1;
+        GameController.Instance.ChangeScore(moveScore);
     }
 
     private void OnGetMovement(Vector2 dir)

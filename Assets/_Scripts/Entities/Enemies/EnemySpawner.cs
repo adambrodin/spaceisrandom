@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
-        GameController.instance.ChangeDifficulty += ChangeDifficulty;
+        GameController.Instance.ChangeDifficulty += ChangeDifficulty;
     }
 
     private void ChangeDifficulty(float value)
@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
         return null;
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
 

@@ -7,6 +7,7 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyMovement : TargetTracker
 {
     #region Variables

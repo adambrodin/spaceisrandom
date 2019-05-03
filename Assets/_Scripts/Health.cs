@@ -46,7 +46,7 @@ public class Health : MonoBehaviour, IKillable<float>
             switch (e.effectType)
             {
                 case EntityEffect.EffectType.colorBlink:
-                    StartCoroutine(ColorBlink(e.blinkColor, e.blinkTime));
+                    StartCoroutine(ColorBlink(e.blinkTime));
                     break;
                 case EntityEffect.EffectType.explosion:
                     break;
@@ -54,16 +54,26 @@ public class Health : MonoBehaviour, IKillable<float>
         }
     }
 
-    public IEnumerator ColorBlink(Color blinkCol, float blinkTime)
+    public IEnumerator ColorBlink(float blinkTime)
     {
-        MeshRenderer meshRen = GetComponentInChildren<MeshRenderer>();
+        MeshRenderer meshRen;
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            meshRen = GetComponent<MeshRenderer>();
+        }
+        else
+        {
+            meshRen = GetComponentInChildren<MeshRenderer>();
+        }
+
+        Color[] eCol = GetComponent<EntityBase>().entityColors;
 
         // Fetch all colors in all materials from the MeshRenderer
         try
         {
-            foreach (Material m in meshRen.materials)
+            for (int i = 0; i < meshRen.materials.Length; i++)
             {
-                m.SetColor("_BaseColor", blinkCol);
+                meshRen.materials[i].SetColor("_BaseColor", InvertColor(meshRen.materials[i].color));
             }
         }
         catch (Exception e)
@@ -75,8 +85,6 @@ public class Health : MonoBehaviour, IKillable<float>
         yield return new WaitForSeconds(blinkTime);
 
         // Set the materials colors back to how they originally were
-        Color[] eCol = GetComponent<EntityBase>().entityColors;
-
         for (int i = 0; i < eCol.Length; i++)
         {
             meshRen.materials[i].SetColor("_BaseColor", eCol[i]);
@@ -98,5 +106,10 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         StartHealth = startHealth;
         CurrentHealth = currentHealth;
+    }
+
+    private Color InvertColor(Color orgColor) ////// TODO
+    {
+        return Color.white;
     }
 }

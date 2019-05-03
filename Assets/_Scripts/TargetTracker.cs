@@ -5,48 +5,51 @@
  * https://github.com/AdamBrodin
  */
 
+[RequireComponent(typeof(Rigidbody))]
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    public float movementMulitplier, followMaxDistance, damping;
+    public float followMaxDistance, damping;
+    private float step, distanceToTarget;
     protected float moveSpeed;
     public string targetName;
     private GameObject targetObject;
+    private Rigidbody rgbd, targetRgbd;
+    public bool positionBasedVelocity;
     #endregion
 
     private void Awake()
     {
         targetObject = GameObject.Find(targetName);
+        rgbd = GetComponent<Rigidbody>();
     }
 
     private void MoveToTarget()
     {
         if (targetObject != null)
         {
-            float distanceToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
-            float step = moveSpeed * Time.deltaTime;
+            Rigidbody targetRgbd = targetObject.GetComponent<Rigidbody>();
 
-            if (distanceToTarget <= followMaxDistance)
+            distanceToTarget = Vector3.Distance(rgbd.position, targetRgbd.position);
+            step = moveSpeed * Time.fixedDeltaTime;
+
+            if (distanceToTarget <= followMaxDistance && distanceToTarget > 10)
             {
-                Vector3 targetDir = targetObject.transform.position - transform.position;
-                Vector3 targetPos = Vector3.MoveTowards(transform.position, targetObject.transform.position, (step * distanceToTarget) * movementMulitplier);
-                Vector3 newDir = Vector3.Lerp(transform.forward, targetDir, damping * Time.deltaTime);
+                Vector3 targetDir = targetRgbd.position - rgbd.position;
+                Vector3 targetPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step);
+                Vector3 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
 
-                transform.SetPositionAndRotation(targetPos, Quaternion.LookRotation(newDir));
+                rgbd.position = targetPos;
+                rgbd.rotation = Quaternion.LookRotation(newDir);
             }
-            else if (Vector3.Distance(transform.position, targetObject.transform.position) > followMaxDistance)
+            else if (Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance)
             {
-                transform.Translate(Vector3.forward);
+                rgbd.velocity = Vector3.back * moveSpeed;
             }
         }
         else
         {
-            if (Debug.isDebugBuild) Debug.LogWarning("No target found");
-            GameObject[] objects = GameObject.FindGameObjectsWithTag(gameObject.tag);
-            foreach(GameObject g in objects)
-            {
-                Destroy(g);
-            }
+            Destroy(this);
         }
     }
 
