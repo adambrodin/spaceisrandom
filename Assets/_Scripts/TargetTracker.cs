@@ -10,18 +10,17 @@ public class TargetTracker : MonoBehaviour
 {
     #region Variables
     public float followMaxDistance, damping;
-    private float step, distanceToTarget;
-    protected float moveSpeed;
+    protected float moveSpeed, step, distanceToTarget;
     public string targetName;
     private GameObject targetObject;
-    private Rigidbody rgbd, targetRgbd;
-    public bool positionBasedVelocity;
+    private Rigidbody targetRgbd;
+    private Rigidbody Rgbd => GetComponent<Rigidbody>();
+    private Vector3 targetDir, targetPos, newDir;
     #endregion
 
     private void Awake()
     {
         targetObject = GameObject.Find(targetName);
-        rgbd = GetComponent<Rigidbody>();
     }
 
     private void MoveToTarget()
@@ -35,16 +34,17 @@ public class TargetTracker : MonoBehaviour
 
             if (distanceToTarget <= followMaxDistance && distanceToTarget > 10)
             {
-                Vector3 targetDir = targetRgbd.position - rgbd.position;
-                Vector3 targetPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step);
-                Vector3 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+                targetDir = targetRgbd.position - rgbd.position;
+                targetPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step / 2);
+                newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
 
                 rgbd.position = targetPos;
                 rgbd.rotation = Quaternion.LookRotation(newDir);
             }
             else if (Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance)
             {
-                rgbd.velocity = Vector3.back * moveSpeed;
+                Vector3 targetPos = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
+                rgbd.position = Vector3.MoveTowards(rgbd.position, targetPos, step);
             }
         }
         else

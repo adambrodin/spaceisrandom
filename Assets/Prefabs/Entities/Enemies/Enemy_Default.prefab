@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5422051540554909034}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -43.460175, y: 0, z: 200}
+  m_LocalPosition: {x: 44.505714, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_Children:
   - {fileID: 5422051540967147437}
@@ -83,7 +83,6 @@ MonoBehaviour:
   followMaxDistance: 75
   damping: 10
   targetName: Player
-  positionBasedVelocity: 1
 --- !u!114 &5422051540554909036
 MonoBehaviour:
   m_ObjectHideFlags: 0

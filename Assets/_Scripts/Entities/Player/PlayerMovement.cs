@@ -6,12 +6,6 @@ using System.Collections;
  * https://github.com/AdamBrodin
  */
 
-[System.Serializable]
-public class Bounds
-{
-    public float xMin, xMax, zMin, zMax;
-}
-
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IMoveable
 {
@@ -20,14 +14,15 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
-    public Bounds bounds;
     private Vector2 direction;
     private Vector3 movement;
+    private Bounds bounds;
     #endregion
 
     private void Start()
     {
         MoveSpeed = GetComponent<Player>().getStats().moveSpeed;
+        bounds = GameController.Instance.bounds;
     }
 
     private void OnEnable()

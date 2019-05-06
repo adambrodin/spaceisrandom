@@ -13,6 +13,13 @@ public class RandomColorRange
     public float hueMin, hueMax, saturationMin, saturationMax, valueMin, valueMax, alphaMin = 1f, alphaMax = 1f;
 }
 
+
+[Serializable]
+public class Bounds
+{
+    public float xMin, xMax, zMin, zMax;
+}
+
 public class GameController : MonoBehaviour
 {
     #region Variables
@@ -23,6 +30,7 @@ public class GameController : MonoBehaviour
     public float increaseDifficultyTime, minIncrease, maxIncrease;
     [SerializeField]
     private int score;
+    public Bounds bounds;
     #endregion
 
     public static GameController Instance
