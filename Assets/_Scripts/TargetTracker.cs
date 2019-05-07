@@ -29,22 +29,22 @@ public class TargetTracker : MonoBehaviour
         {
             Rigidbody targetRgbd = targetObject.GetComponent<Rigidbody>();
 
-            distanceToTarget = Vector3.Distance(rgbd.position, targetRgbd.position);
+            distanceToTarget = Vector3.Distance(Rgbd.position, targetRgbd.position);
             step = moveSpeed * Time.fixedDeltaTime;
 
             if (distanceToTarget <= followMaxDistance && distanceToTarget > 10)
             {
-                targetDir = targetRgbd.position - rgbd.position;
-                targetPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step / 2);
+                targetDir = targetRgbd.position - Rgbd.position;
+                targetPos = Vector3.MoveTowards(Rgbd.position, targetRgbd.position, step / 2);
                 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
 
-                rgbd.position = targetPos;
-                rgbd.rotation = Quaternion.LookRotation(newDir);
+                Rgbd.position = targetPos;
+                Rgbd.rotation = Quaternion.LookRotation(newDir);
             }
-            else if (Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance)
+            else if (Vector3.Distance(Rgbd.position, targetRgbd.position) > followMaxDistance)
             {
-                Vector3 targetPos = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
-                rgbd.position = Vector3.MoveTowards(rgbd.position, targetPos, step);
+                Vector3 targetPos = new Vector3(Rgbd.position.x, Rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
+                Rgbd.position = Vector3.MoveTowards(Rgbd.position, targetPos, step);
             }
         }
         else
