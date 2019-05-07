@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /* 
  * Developed by Adam Brodin
@@ -9,10 +10,9 @@
 public class TargetTracker : MonoBehaviour
 {
     #region Variables
-    public float followMaxDistance, damping;
-    protected float moveSpeed, step, distanceToTarget;
+    [SerializeField]
+    protected float moveSpeed, step, distanceToTarget, followMaxDistance, damping;
     public string targetName;
-    private GameObject targetObject;
     private Rigidbody targetRgbd;
     private Rigidbody Rgbd => GetComponent<Rigidbody>();
     private Vector3 targetDir, targetPos, newDir;
@@ -20,42 +20,40 @@ public class TargetTracker : MonoBehaviour
 
     private void Awake()
     {
-        targetObject = GameObject.Find(targetName);
-    }
-
-    private void MoveToTarget()
-    {
-        if (targetObject != null)
+        try
         {
-            Rigidbody targetRgbd = targetObject.GetComponent<Rigidbody>();
-
-            distanceToTarget = Vector3.Distance(Rgbd.position, targetRgbd.position);
-            step = moveSpeed * Time.fixedDeltaTime;
-
-            if (distanceToTarget <= followMaxDistance && distanceToTarget > 10)
-            {
-                targetDir = targetRgbd.position - Rgbd.position;
-                targetPos = Vector3.MoveTowards(Rgbd.position, targetRgbd.position, step / 2);
-                newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
-
-                Rgbd.position = targetPos;
-                Rgbd.rotation = Quaternion.LookRotation(newDir);
-            }
-            else if (Vector3.Distance(Rgbd.position, targetRgbd.position) > followMaxDistance)
-            {
-                Vector3 targetPos = new Vector3(Rgbd.position.x, Rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
-                Rgbd.position = Vector3.MoveTowards(Rgbd.position, targetPos, step);
-            }
+            targetRgbd = GameObject.Find(targetName).GetComponent<Rigidbody>();
         }
-        else
+        catch (Exception)
         {
             Destroy(this);
         }
     }
 
+    private void MoveToTarget()
+    {
+        distanceToTarget = Vector3.Distance(Rgbd.position, targetRgbd.position);
+        step = moveSpeed * Time.deltaTime;
+
+        if (distanceToTarget <= followMaxDistance && distanceToTarget > 25)
+        {
+            targetDir = targetRgbd.position - Rgbd.position;
+            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+            targetPos = Vector3.MoveTowards(Rgbd.position, targetRgbd.position, step / 2);
+        }
+        else if (Vector3.Distance(Rgbd.position, targetRgbd.position) > followMaxDistance)
+        {
+            targetPos = new Vector3(Rgbd.position.x, Rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
+            newDir = Vector3.Lerp(Rgbd.position, targetPos, damping * Time.deltaTime);
+        }
+
+        Rgbd.position = Vector3.MoveTowards(Rgbd.position, targetPos, step);
+        Rgbd.rotation = Quaternion.LookRotation(newDir);
+    }
+
     private void FixedUpdate()
     {
-        MoveToTarget();
+        if (Rgbd != null && targetRgbd != null) MoveToTarget();
     }
 
 

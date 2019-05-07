@@ -30,6 +30,10 @@ public class EnemySpawner : MonoBehaviour
         if (enemies.Length > 0)
         {
             GameObject e = enemies[Random.Range(0, enemies.Length)];
+            do
+            {
+                e = enemies[Random.Range(0, enemies.Length)];
+            } while (e.gameObject == null);
 
             Vector3 spawnPos = transform.position;
             spawnPos.x += Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);

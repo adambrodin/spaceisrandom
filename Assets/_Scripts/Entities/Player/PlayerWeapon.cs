@@ -48,12 +48,6 @@ public class PlayerWeapon : WeaponBase
         Color parentColor = GetComponentInChildren<MeshRenderer>().materials[0].color;
         g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
 
-        /*var e = entityManager.Instantiate(bulletEntity);
-        float3 position = transform.TransformPoint(firepoints[firepointToUse].transform.position);
-        Quaternion rotation = firepoints[firepointToUse].transform.rotation;
-        entityManager.SetComponentData(e, new Translation { Value = position });
-        entityManager.SetComponentData(e, new Rotation { Value = rotation });*/
-
         firepointToUse++;
         if (firepointToUse >= firepoints.Length)
         {

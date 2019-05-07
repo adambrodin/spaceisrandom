@@ -13,7 +13,6 @@ public class RandomColorRange
     public float hueMin, hueMax, saturationMin, saturationMax, valueMin, valueMax, alphaMin = 1f, alphaMax = 1f;
 }
 
-
 [Serializable]
 public class Bounds
 {

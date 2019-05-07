@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
@@ -14,9 +12,8 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
-    private Vector2 direction;
-    private Vector3 movement;
     private Bounds bounds;
+    private Vector3 movement, direction;
     #endregion
 
     private void Start()
