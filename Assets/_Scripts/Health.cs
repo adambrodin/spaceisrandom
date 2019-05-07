@@ -12,14 +12,25 @@ public class Health : MonoBehaviour, IKillable<float>
     #region Variables
     public float StartHealth { get => startHealth; set => startHealth = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-
-    public static event Action<GameObject> EntityKilled;
-
     [SerializeField]
     private float startHealth, currentHealth;
+    public event Action<GameObject> EntityKilled;
+    [SerializeField]
+    private EntityEffect[] effects;
 
-    public EntityEffect[] effects;
+    private static Health instance;
     #endregion
+    public static Health Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType(typeof(Health)) as Health;
+            }
+            return instance;
+        }
+    }
 
     private void Start()
     {

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4023221733684774607}
   - component: {fileID: 4023221733684774608}
   - component: {fileID: 4023221733684774610}
-  - component: {fileID: 4023221733142703791}
   - component: {fileID: 4023221733684774611}
+  - component: {fileID: 235297374}
   m_Layer: 0
   m_Name: Enemy_Default
   m_TagString: Enemy
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4023221733684774612}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -60.435696, y: 0, z: 200}
+  m_LocalPosition: {x: 23.626312, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_Children:
   - {fileID: 4023221734365709331}
@@ -66,8 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 0
   currentHealth: 0
-  effects:
-  - {fileID: 11400000, guid: 95306971b7f59c843906abe094fb9aba, type: 2}
+  effects: []
 --- !u!114 &4023221733684774610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +81,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: b519429a4d3524742bbbf625b8c8c625, type: 2}
   entityColors: []
---- !u!114 &4023221733142703791
+--- !u!65 &4023221733684774611
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4023221733684774612}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.825, y: 4.626504, z: 17.20291}
+  m_Center: {x: -2.162501, y: 2.036751, z: -3.798546}
+--- !u!114 &235297374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,22 +109,11 @@ MonoBehaviour:
   moveSpeed: 0
   step: 0
   distanceToTarget: 0
-  followMaxDistance: 75
-  damping: 10
   targetName: Player
---- !u!65 &4023221733684774611
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023221733684774612}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 13.825, y: 4.626504, z: 17.20291}
-  m_Center: {x: -2.162501, y: 2.036751, z: -3.798546}
+  slowDownDistance: 30
+  slowSpeedMultiplier: 0.5
+  followMaxDistance: 75
+  damping: 15
 --- !u!1 &4023221734365709332
 GameObject:
   m_ObjectHideFlags: 0

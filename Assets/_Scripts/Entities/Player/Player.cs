@@ -31,8 +31,6 @@ public class Player : EntityBase, InputController.IPlayerActions
 
     private void Awake()
     {
-        instance = this;
-
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
     }

@@ -7,21 +7,21 @@ using UnityEngine;
  */
 
 [RequireComponent(typeof(Rigidbody))]
-public class TargetTracker : MonoBehaviour
+public abstract class TargetTracker : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    protected float moveSpeed, step, distanceToTarget, followMaxDistance, damping;
-    public string targetName;
-    private Rigidbody targetRgbd;
-    private Rigidbody Rgbd => GetComponent<Rigidbody>();
-    private Vector3 targetDir, targetPos, newDir;
+    protected float moveSpeed, step, distanceToTarget;
+    [SerializeField]
+    protected string targetName;
+    protected Vector3 targetDir, targetPos, newDir;
+    protected Rigidbody rgbd, targetRgbd;
     #endregion
-
-    private void Awake()
+    protected virtual void Awake()
     {
         try
         {
+            rgbd = GetComponent<Rigidbody>();
             targetRgbd = GameObject.Find(targetName).GetComponent<Rigidbody>();
         }
         catch (Exception)
@@ -30,31 +30,20 @@ public class TargetTracker : MonoBehaviour
         }
     }
 
-    private void MoveToTarget()
+    protected abstract void CalculateMovement();
+
+    protected virtual void FixedUpdate()
     {
-        distanceToTarget = Vector3.Distance(Rgbd.position, targetRgbd.position);
-        step = moveSpeed * Time.deltaTime;
-
-        if (distanceToTarget <= followMaxDistance && distanceToTarget > 25)
+        if (rgbd != null && targetRgbd != null)
         {
-            targetDir = targetRgbd.position - Rgbd.position;
-            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
-            targetPos = Vector3.MoveTowards(Rgbd.position, targetRgbd.position, step / 2);
+            // Calculate distance to target, movement speed and movement path
+            distanceToTarget = Vector3.Distance(rgbd.position, targetRgbd.position);
+            step = moveSpeed * Time.deltaTime;
+            CalculateMovement();
+
+            // Move the object
+            if (targetPos != null) rgbd.position = Vector3.MoveTowards(rgbd.position, targetPos, step);
+            if (newDir != null) rgbd.rotation = Quaternion.LookRotation(newDir);
         }
-        else if (Vector3.Distance(Rgbd.position, targetRgbd.position) > followMaxDistance)
-        {
-            targetPos = new Vector3(Rgbd.position.x, Rgbd.position.y, GameController.Instance.bounds.zMin -= 10);
-            newDir = Vector3.Lerp(Rgbd.position, targetPos, damping * Time.deltaTime);
-        }
-
-        Rgbd.position = Vector3.MoveTowards(Rgbd.position, targetPos, step);
-        Rgbd.rotation = Quaternion.LookRotation(newDir);
     }
-
-    private void FixedUpdate()
-    {
-        if (Rgbd != null && targetRgbd != null) MoveToTarget();
-    }
-
-
 }

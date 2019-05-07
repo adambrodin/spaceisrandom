@@ -55,23 +55,23 @@ public class GameController : MonoBehaviour
         StartCoroutine(IncreaseDifficulty());
     }
 
-    void OnKill(GameObject obj)
+    // Removes the event delegate to save performance
+    private void OnDisable()
+    {
+        Health.Instance.EntityKilled -= OnKill;
+    }
+
+    private void OnEnable()
+    {
+        Health.Instance.EntityKilled += OnKill;
+    }
+
+    private void OnKill(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<EntityBase>().getStats().killReward;
         if (killReward > 0) ChangeScore(killReward);
 
         Destroy(obj);
-    }
-
-    // Removes the event delegate to save performance
-    private void OnDisable()
-    {
-        Health.EntityKilled -= OnKill;
-    }
-
-    private void OnEnable()
-    {
-        Health.EntityKilled += OnKill;
     }
 
     public void ChangeScore(int value)

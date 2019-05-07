@@ -9,23 +9,33 @@
 public class BulletBase : MonoBehaviour, IMoveable
 {
     #region Variables
-    public Bullet stats;
+    [SerializeField]
+    protected Bullet stats;
     [HideInInspector]
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
-    public string[] targetTags;
-
     [SerializeField]
+    protected string[] targetTags;
+
     public float MoveSpeed { get => stats.projectileSpeed; set => stats.projectileSpeed = value; }
+    [SerializeField]
+    protected float selfDestructTime;
     #endregion
+
+    private void Start()
+    {
+        // Destroy self automatically after selfDestructTime seconds
+        Invoke("OnBecameInvisible", selfDestructTime);
+    }
 
     private void OnTriggerEnter(Collider col)
     {
-        var k = col.GetComponent<IKillable<float>>();
+        var killable = col.GetComponent<IKillable<float>>();
         {
             if (IsTargetTag(col.gameObject))
             {
-                k.TakeDamage(stats.projectileDamage);
-                Destroy(gameObject); // Destroy the bullet after impact
+                killable.TakeDamage(stats.projectileDamage);
+                // Destroy the bullet after impact
+                Destroy(gameObject);
             }
         }
         return;
@@ -41,7 +51,8 @@ public class BulletBase : MonoBehaviour, IMoveable
             }
         }
 
-        return false; // If no tag similarity is found
+        // If no tag similarity is found
+        return false;
     }
 
     public void Move()

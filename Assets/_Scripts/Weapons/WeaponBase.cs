@@ -10,8 +10,7 @@ using UnityEngine;
 public abstract class WeaponBase : MonoBehaviour
 {
     #region Variables
-    protected static EntityManager entityManager;
-    protected Entity bulletEntity;
+    protected EntityManager entityManager;
     protected bool canFire = true;
     [SerializeField]
     protected GameObject bulletObj;
@@ -29,7 +28,8 @@ public abstract class WeaponBase : MonoBehaviour
         }
         else
         {
-            yield break; // Exit the couroutine to save resources
+            // Exit the couroutine to save resources
+            yield break;
         }
 
         yield return new WaitForSeconds(GetComponent<EntityBase>().getStats().weaponCooldown);
@@ -39,7 +39,6 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        bulletEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletObj, World.Active);
         entityManager = World.Active.EntityManager;
     }
 }
