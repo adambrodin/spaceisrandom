@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemies.Length > 0)
         {
-            GameObject e = enemies[Random.Range(0, enemies.Length)];
+            GameObject e;
             do
             {
                 e = enemies[Random.Range(0, enemies.Length)];

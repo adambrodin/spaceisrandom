@@ -23,22 +23,24 @@ public class GameController : MonoBehaviour
 {
     #region Variables
     public TMPro.TextMeshProUGUI scoreText;
-    private static GameController instance;
     public event Action<float> ChangeDifficulty;
     public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
     [SerializeField]
     private int score;
     public Bounds bounds;
+
+    private static GameController instance;
     #endregion
 
+    // Singleton
     public static GameController Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType(typeof(GameController)) as GameController;
+                instance = FindObjectOfType<GameController>();
             }
             return instance;
         }
@@ -55,20 +57,9 @@ public class GameController : MonoBehaviour
         StartCoroutine(IncreaseDifficulty());
     }
 
-    // Removes the event delegate to save performance
-    private void OnDisable()
+    public void OnKill(GameObject obj)
     {
-        Health.Instance.EntityKilled -= OnKill;
-    }
-
-    private void OnEnable()
-    {
-        Health.Instance.EntityKilled += OnKill;
-    }
-
-    private void OnKill(GameObject obj)
-    {
-        int killReward = (int)obj.GetComponent<EntityBase>().getStats().killReward;
+        int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
         if (killReward > 0) ChangeScore(killReward);
 
         Destroy(obj);
@@ -77,7 +68,6 @@ public class GameController : MonoBehaviour
     public void ChangeScore(int value)
     {
         score += value;
-
         scoreText.text = score.ToString();
     }
 

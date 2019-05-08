@@ -20,7 +20,7 @@ public class EnemyMovement : TargetTracker
 
     private void Start()
     {
-        moveSpeed = GetComponent<Enemy>().getStats().moveSpeed;
+        moveSpeed = GetComponent<EntityBase>().stats.moveSpeed;
     }
 
     protected override void FixedUpdate()

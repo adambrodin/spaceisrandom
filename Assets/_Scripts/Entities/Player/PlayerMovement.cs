@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     private void Start()
     {
-        MoveSpeed = GetComponent<Player>().getStats().moveSpeed;
+        MoveSpeed = Player.Instance.GetComponent<EntityBase>().stats.moveSpeed;
         bounds = GameController.Instance.bounds;
     }
 
@@ -39,9 +39,11 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     public void Move()
     {
+        // Move the player
         movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
-
         Rgbd.velocity = movement * MoveSpeed;
+
+        // Set movement boundries for the level
         Rgbd.position = new Vector3
         (
             Mathf.Clamp(Rgbd.position.x, bounds.xMin, bounds.xMax),
@@ -51,18 +53,36 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
         Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
 
+        // Add score whenever the player moves inside the level
         MoveScore();
     }
 
     private void MoveScore()
     {
-        int moveScore = (int)(direction.x + direction.y);
-        if (moveScore < 0) moveScore *= -1;
-        GameController.Instance.ChangeScore(moveScore);
+        // If the player is within the level bounds
+        if
+        (
+            Rgbd.position.x != bounds.xMin && Rgbd.position.x != bounds.xMax
+            &&
+            Rgbd.position.z != bounds.zMin && Rgbd.position.z != bounds.zMax
+        )
+        {
+            // Get the input values as absolute numbers (only positive)
+            int moveScore = (int)(Mathf.Abs(direction.x) + Mathf.Abs(direction.y));
+
+            // Avoid constantly changing score by 0 when not moving
+            if (moveScore != 0) GameController.Instance.ChangeScore(moveScore);
+        }
+        else
+        {
+            // Outside of level bounds
+            return;
+        }
     }
 
     private void OnGetMovement(Vector2 dir)
     {
+        // Get the input vector2 values
         direction = dir;
     }
 }

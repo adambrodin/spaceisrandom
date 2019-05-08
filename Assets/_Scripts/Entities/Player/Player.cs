@@ -13,10 +13,11 @@ public class Player : EntityBase, InputController.IPlayerActions
     public event Action<bool> OnGetShooting;
     public event Action<Vector2> OnGetMovement;
 
-    private static Player instance;
     private InputController playerInput;
+    private static Player instance;
     #endregion
 
+    // Singleton
     public static Player Instance
     {
         get
@@ -31,21 +32,27 @@ public class Player : EntityBase, InputController.IPlayerActions
 
     private void Awake()
     {
+        // Set this as a receiver for all player inputs
+
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
     }
 
+    // Whenever any movement input is received
     public void OnMovement(InputAction.CallbackContext context)
     {
         OnGetMovement?.Invoke(context.ReadValue<Vector2>());
     }
 
+    // Whenever any shooting input is received
     public void OnShooting(InputAction.CallbackContext context)
     {
+        // If the input is currently being pressed down
         if (context.performed)
         {
             OnGetShooting?.Invoke(true);
         }
+        // when the input is released 
         else if (context.cancelled)
         {
             OnGetShooting?.Invoke(false);
@@ -54,11 +61,13 @@ public class Player : EntityBase, InputController.IPlayerActions
 
     private void OnEnable()
     {
+        // Receive input
         playerInput.Enable();
     }
 
     private void OnDisable()
     {
+        // Stop receiving input
         playerInput.Disable();
     }
 }

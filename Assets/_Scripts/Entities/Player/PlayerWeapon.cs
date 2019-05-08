@@ -23,10 +23,6 @@ public class PlayerWeapon : WeaponBase
     protected override void Start()
     {
         base.Start();
-        StartCoroutine(Cooldown());
-
-        // bulletMesh = bulletObj.GetComponent<Mesh>();
-        // bulletMaterial = bulletObj.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     private void OnEnable()

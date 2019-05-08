@@ -16,6 +16,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected GameObject bulletObj;
     [SerializeField]
     protected GameObject[] firepoints;
+
+    protected float WeaponCooldown => GetComponent<EntityBase>().stats.weaponCooldown;
     #endregion
 
     protected abstract void CheckForFire();
@@ -28,17 +30,17 @@ public abstract class WeaponBase : MonoBehaviour
         }
         else
         {
-            // Exit the couroutine to save resources
+            // Exit the couroutine to prevent unnecessary compiling
             yield break;
         }
 
-        yield return new WaitForSeconds(GetComponent<EntityBase>().getStats().weaponCooldown);
-
+        yield return new WaitForSeconds(WeaponCooldown);
         canFire = true;
     }
 
     protected virtual void Start()
     {
+        // Get the EntityManager of the world
         entityManager = World.Active.EntityManager;
     }
 }

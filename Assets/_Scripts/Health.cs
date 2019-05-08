@@ -12,21 +12,23 @@ public class Health : MonoBehaviour, IKillable<float>
     #region Variables
     public float StartHealth { get => startHealth; set => startHealth = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-    [SerializeField]
-    private float startHealth, currentHealth;
+    public float KillReward { get => killReward; set => killReward = value; }
+
+    public float startHealth, currentHealth, killReward;
+
     public event Action<GameObject> EntityKilled;
-    [SerializeField]
-    private EntityEffect[] effects;
+    public EntityEffect[] effects;
 
     private static Health instance;
     #endregion
+
     public static Health Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType(typeof(Health)) as Health;
+                instance = FindObjectOfType<Health>();
             }
             return instance;
         }
@@ -34,20 +36,23 @@ public class Health : MonoBehaviour, IKillable<float>
 
     private void Start()
     {
-        if (GetComponent<EntityBase>() != null) StartHealth = GetComponent<EntityBase>().getStats().startHealth;
+        if (GetComponent<EntityBase>().stats != null)
+        {
+            var stats = GetComponent<EntityBase>().stats;
+            StartHealth = stats.startHealth;
+            KillReward = stats.killReward;
+        }
+
         CurrentHealth = StartHealth;
+        EntityKilled += GameController.Instance.OnKill;
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
 
-        if (effects.Length > 0) PlayEffect(effects[0]);
-
-        if (IsDead())
-        {
-            Die();
-        }
+        if (effects.Length > 0) { PlayEffect(effects[0]); }
+        if (IsDead()) { Die(); }
     }
 
     public void PlayEffect(EntityEffect e)
@@ -119,8 +124,12 @@ public class Health : MonoBehaviour, IKillable<float>
         CurrentHealth = currentHealth;
     }
 
-    private Color InvertColor(Color orgColor) ////// TODO
+    private Color InvertColor(Color orgColor)
     {
-        return Color.white;
+        Color.RGBToHSV(orgColor, out float H, out float S, out float V);
+
+        H -= 0.5f;
+
+        return Color.HSVToRGB(H, S, V);
     }
 }

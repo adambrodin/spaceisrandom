@@ -17,11 +17,10 @@ public abstract class EntityBase : MonoBehaviour
         RandomizeColors();
     }
 
-    public EntityStats getStats()
-    {
-        return stats;
-    }
-
+    /// <summary>
+    /// Finds the correct MeshRenderer and sets a randomized color
+    /// based on a set color scheme (RandomColorRange) for all materials in the renderer
+    /// </summary>
     protected void RandomizeColors()
     {
         MeshRenderer meshRen;
