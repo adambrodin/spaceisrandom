@@ -77,9 +77,13 @@ public class Health : MonoBehaviour, IKillable<float>
         {
             meshRen = GetComponent<MeshRenderer>();
         }
-        else
+        else if (GetComponentInChildren<MeshRenderer>() != null)
         {
             meshRen = GetComponentInChildren<MeshRenderer>();
+        }
+        else
+        {
+            yield break;
         }
 
         Color[] eCol = GetComponent<EntityBase>().entityColors;

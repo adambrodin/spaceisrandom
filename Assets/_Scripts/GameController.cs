@@ -62,7 +62,17 @@ public class GameController : MonoBehaviour
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
         if (killReward > 0) ChangeScore(killReward);
 
+        if (obj.tag == "Player")
+        {
+            GameOver();
+        }
+
         Destroy(obj);
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0.0f;
     }
 
     public void ChangeScore(int value)

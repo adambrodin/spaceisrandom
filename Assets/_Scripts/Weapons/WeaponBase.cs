@@ -22,6 +22,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected abstract void CheckForFire();
     protected abstract void Fire();
+
     protected IEnumerator Cooldown()
     {
         if (canFire)

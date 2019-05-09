@@ -84,10 +84,7 @@ public class PlayerWeapon : WeaponBase
             g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
 
             firepointToUse++;
-            if (firepointToUse >= firepoints.Length)
-            {
-                firepointToUse = 0;
-            }
+            if (firepointToUse >= firepoints.Length) { firepointToUse = 0; }
 
             StartCoroutine(Cooldown());
         }
