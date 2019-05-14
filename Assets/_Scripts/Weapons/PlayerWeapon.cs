@@ -81,7 +81,7 @@ public class PlayerWeapon : WeaponBase
         {
             GameObject g = Instantiate(bulletObj, firepoints[firepointToUse].transform.position, bulletObj.transform.rotation);
             Color parentColor = GetComponentInChildren<MeshRenderer>().materials[0].color;
-            g.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
+            g.GetComponentInChildren<MeshRenderer>().material.SetColor("_BaseColor", parentColor);
 
             firepointToUse++;
             if (firepointToUse >= firepoints.Length) { firepointToUse = 0; }

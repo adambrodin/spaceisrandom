@@ -29,14 +29,14 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     private void OnTriggerEnter(Collider col)
     {
+        if (col.GetComponent<IKillable<float>>() == null) { return; }
         var killable = col.GetComponent<IKillable<float>>();
+
+        if (IsTargetTag(col.gameObject))
         {
-            if (IsTargetTag(col.gameObject))
-            {
-                killable.TakeDamage(stats.projectileDamage);
-                // Destroy the bullet after impact
-                Destroy(gameObject);
-            }
+            killable.TakeDamage(stats.projectileDamage);
+            // Destroy the bullet after impact
+            Destroy(gameObject);
         }
         return;
     }
