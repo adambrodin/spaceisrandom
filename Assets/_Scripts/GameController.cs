@@ -23,7 +23,8 @@ public class GameController : MonoBehaviour
 {
     #region Variables
     public TMPro.TextMeshProUGUI scoreText;
-    public event Action<float> ChangeDifficulty;
+    public event Action<float> OnChangeDifficulty;
+    public event Action OnGameOver;
     public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
     [SerializeField]
@@ -62,17 +63,28 @@ public class GameController : MonoBehaviour
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
         if (killReward > 0) ChangeScore(killReward);
 
+        // If the player has died, end the game
         if (obj.tag == "Player")
         {
+            Destroy(obj);
             GameOver();
+            return;
         }
 
-        Destroy(obj);
+        // Destroy the parent object if necessary (to prevent leftover models in scene)
+        try
+        {
+            Destroy(obj.transform.parent.gameObject);
+        }
+        catch (Exception)
+        {
+            Destroy(obj);
+        }
     }
 
     private void GameOver()
     {
-        Time.timeScale = 0.0f;
+        OnGameOver?.Invoke();
     }
 
     public void ChangeScore(int value)
@@ -84,7 +96,7 @@ public class GameController : MonoBehaviour
     private IEnumerator IncreaseDifficulty()
     {
         yield return new WaitForSeconds(increaseDifficultyTime);
-        ChangeDifficulty?.Invoke(UnityEngine.Random.Range(minIncrease, maxIncrease));
+        OnChangeDifficulty?.Invoke(UnityEngine.Random.Range(minIncrease, maxIncrease));
 
         StartCoroutine(IncreaseDifficulty());
     }

@@ -36,12 +36,12 @@ public class Health : MonoBehaviour, IKillable<float>
 
     private void Start()
     {
-        if (GetComponent<EntityBase>().stats != null)
+        try
         {
             var stats = GetComponent<EntityBase>().stats;
             StartHealth = stats.startHealth;
             KillReward = stats.killReward;
-        }
+        } catch (Exception) { return; }
 
         CurrentHealth = StartHealth;
         EntityKilled += GameController.Instance.OnKill;

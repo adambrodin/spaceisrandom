@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         // Move the player
         movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
         Rgbd.velocity = movement * MoveSpeed;
+        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
 
         // Set movement boundries for the level
         Rgbd.position = new Vector3
@@ -50,8 +51,6 @@ public class PlayerMovement : MonoBehaviour, IMoveable
             0.0f,
             Mathf.Clamp(Rgbd.position.z, bounds.zMin, bounds.zMax)
         );
-
-        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
 
         // Add score whenever the player moves inside the level
         MoveScore();

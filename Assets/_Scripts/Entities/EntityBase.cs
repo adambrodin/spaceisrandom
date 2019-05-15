@@ -5,7 +5,6 @@
  * https://github.com/AdamBrodin
  */
 
-[RequireComponent(typeof(Rigidbody))]
 public abstract class EntityBase : MonoBehaviour
 {
     public EntityStats stats;

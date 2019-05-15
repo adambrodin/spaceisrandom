@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 /* 
@@ -17,12 +18,32 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
-        GameController.Instance.ChangeDifficulty += ChangeDifficulty;
+        GameController.Instance.OnChangeDifficulty += ChangeDifficulty;
+        GameController.Instance.OnGameOver += GameOver;
     }
 
     private void ChangeDifficulty(float value)
     {
         difficulty += value;
+    }
+
+    private void GameOver()
+    {
+        // Destroy self, stop spawning enemies
+        GameObject[] enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject g in enemiesInScene)
+        {
+            try
+            {
+                Destroy(g.transform.parent.gameObject);
+            }
+            catch (Exception)
+            {
+                Destroy(g);
+            }
+        }
+
+        Destroy(gameObject);
     }
 
     private GameObject RandomEnemy()
@@ -32,11 +53,11 @@ public class EnemySpawner : MonoBehaviour
             GameObject e;
             do
             {
-                e = enemies[Random.Range(0, enemies.Length)];
+                e = enemies[UnityEngine.Random.Range(0, enemies.Length)];
             } while (e.gameObject == null);
 
             Vector3 spawnPos = transform.position;
-            spawnPos.x += Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
+            spawnPos.x += UnityEngine.Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
 
             e.transform.position = spawnPos;
 
@@ -47,10 +68,9 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
 
         GameObject enemy = RandomEnemy();
-
         Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
 
         StartCoroutine(SpawnEnemies());

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6932a3416722f9429128816d6061073, type: 3}
-  m_Name: PlayerBullet
+  m_Name: TurretBullet
   m_EditorClassIdentifier: 
-  projectileSpeed: 50
+  projectileSpeed: 10
   projectileDamage: 1
