@@ -40,6 +40,7 @@ public class BulletBase : MonoBehaviour, IMoveable
         if (IsTargetTag(col.gameObject))
         {
             killable.TakeDamage(stats.projectileDamage);
+
             // Destroy the bullet after impact
             Destroy(gameObject);
         }

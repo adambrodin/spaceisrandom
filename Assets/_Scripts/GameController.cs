@@ -66,6 +66,7 @@ public class GameController : MonoBehaviour
         // If the player has died, end the game
         if (obj.tag == "Player")
         {
+            print("player died");
             Destroy(obj);
             GameOver();
             return;

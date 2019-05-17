@@ -7,12 +7,23 @@ using UnityEngine;
  * https://github.com/AdamBrodin
  */
 
+[Serializable]
+public class EnemyObject
+{
+    // The object to spawn
+    public GameObject gObject;
+    // Spawn chance (0-100%)
+    public int spawnChance;
+}
+
+
 public class EnemySpawner : MonoBehaviour
 {
     #region Variables
-    public GameObject[] enemies;
+    public EnemyObject[] enemies;
     public float minCooldown, maxCooldown, spawnMaxOffset;
     private float difficulty = 0;
+    private static System.Random randomizer;
     #endregion
 
     private void Start()
@@ -31,48 +42,72 @@ public class EnemySpawner : MonoBehaviour
     {
         // Destroy self, stop spawning enemies
         GameObject[] enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject g in enemiesInScene)
+        foreach (GameObject enemy in enemiesInScene)
         {
             try
             {
-                Destroy(g.transform.parent.gameObject);
+                Destroy(enemy.transform.parent.gameObject);
             }
             catch (Exception)
             {
-                Destroy(g);
+                Destroy(enemy);
             }
         }
 
         Destroy(gameObject);
     }
 
+    private bool ChanceChecker(int chance)
+    {
+        if (randomizer == null) { randomizer = new System.Random(); }
+
+        if (randomizer.Next(100) < chance)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private GameObject RandomEnemy()
     {
         if (enemies.Length > 0)
         {
-            GameObject e;
-            do
+            GameObject gameObj = null;
+            foreach (EnemyObject enemyObj in enemies)
             {
-                e = enemies[UnityEngine.Random.Range(0, enemies.Length)];
-            } while (e.gameObject == null);
+                if (ChanceChecker(enemyObj.spawnChance))
+                {
+                    gameObj = enemyObj.gObject;
+                    break;
+                }
+            }
 
-            Vector3 spawnPos = transform.position;
-            spawnPos.x += UnityEngine.Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
+            if (gameObj != null)
+            {
+                Vector3 spawnPos = transform.position;
+                spawnPos.x += UnityEngine.Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
 
-            e.transform.position = spawnPos;
+                gameObj.transform.position = spawnPos;
 
-            return e;
+                return gameObj;
+            }
         }
+
+        // If the enemy array is empty
         return null;
     }
 
     private IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(minCooldown - difficulty, maxCooldown - difficulty));
-
-        GameObject enemy = RandomEnemy();
-        Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
-
+        try
+        {
+            GameObject enemy = RandomEnemy();
+            Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
+        }
+        catch (Exception) { }
         StartCoroutine(SpawnEnemies());
     }
 }
+

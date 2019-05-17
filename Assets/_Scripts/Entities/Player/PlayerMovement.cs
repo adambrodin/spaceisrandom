@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
@@ -39,18 +40,18 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        // Move the player
-        movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
-        Rgbd.velocity = movement * MoveSpeed;
-        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
-
         // Set movement boundries for the level
         Rgbd.position = new Vector3
         (
             Mathf.Clamp(Rgbd.position.x, bounds.xMin, bounds.xMax),
-            0.0f,
+            Rgbd.position.y,
             Mathf.Clamp(Rgbd.position.z, bounds.zMin, bounds.zMax)
         );
+
+        // Move the player
+        movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
+        Rgbd.velocity = movement * MoveSpeed;
+        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
 
         // Add score whenever the player moves inside the level
         MoveScore();

@@ -1,4 +1,6 @@
-﻿public class Turret : EntityBase
+﻿using UnityEngine;
+
+public class Turret : EntityBase
 {
 
 }

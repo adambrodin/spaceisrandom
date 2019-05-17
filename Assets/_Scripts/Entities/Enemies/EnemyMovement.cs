@@ -26,6 +26,12 @@ public class EnemyMovement : TargetTracker
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        if (rgbd.position.z <= GameController.Instance.bounds.zMin)
+        {
+            print("enemy died");
+            Destroy(gameObject);
+        }
     }
 
     protected override void CalculateMovement()
