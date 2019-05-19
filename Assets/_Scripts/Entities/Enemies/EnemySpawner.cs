@@ -28,9 +28,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemies());
         GameController.Instance.OnChangeDifficulty += ChangeDifficulty;
         GameController.Instance.OnGameOver += GameOver;
+        StartCoroutine(SpawnEnemies());
     }
 
     private void ChangeDifficulty(float value)
@@ -89,7 +89,6 @@ public class EnemySpawner : MonoBehaviour
                 spawnPos.x += UnityEngine.Random.Range(transform.position.x - spawnMaxOffset, transform.position.x + spawnMaxOffset);
 
                 gameObj.transform.position = spawnPos;
-
                 return gameObj;
             }
         }
@@ -106,7 +105,10 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = RandomEnemy();
             Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
         }
-        catch (Exception) { }
+        catch (Exception e)
+        {
+            print(e.Data);
+        }
         StartCoroutine(SpawnEnemies());
     }
 }

@@ -22,10 +22,7 @@ public class Player : EntityBase, InputController.IPlayerActions
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType(typeof(Player)) as Player;
-            }
+            if (instance == null) { instance = FindObjectOfType<Player>(); }
             return instance;
         }
     }

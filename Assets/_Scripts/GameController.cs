@@ -27,9 +27,8 @@ public class GameController : MonoBehaviour
     public event Action OnGameOver;
     public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
-    [SerializeField]
-    private int score;
     public Bounds bounds;
+    private int score;
 
     private static GameController instance;
     #endregion
@@ -39,10 +38,7 @@ public class GameController : MonoBehaviour
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<GameController>();
-            }
+            if (instance == null) { instance = FindObjectOfType<GameController>(); }
             return instance;
         }
     }
@@ -58,6 +54,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(IncreaseDifficulty());
     }
 
+
     public void OnKill(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
@@ -66,7 +63,6 @@ public class GameController : MonoBehaviour
         // If the player has died, end the game
         if (obj.tag == "Player")
         {
-            print("player died");
             Destroy(obj);
             GameOver();
             return;
@@ -81,6 +77,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(obj);
         }
+
+        print(obj.name + " has died");
     }
 
     private void GameOver()

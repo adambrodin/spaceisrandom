@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -575,11 +575,10 @@ MonoBehaviour:
   increaseDifficultyTime: 1
   minIncrease: 0.01
   maxIncrease: 0.03
-  score: 0
   bounds:
-    xMin: -170
-    xMax: 170
-    zMin: -80
+    xMin: -150
+    xMax: 150
+    zMin: -90
     zMax: 90
 --- !u!1 &1394086561
 GameObject:
@@ -735,7 +734,7 @@ PrefabInstance:
     - target: {fileID: 5461883236194543801, guid: 2f5726c6c7590f840aabb5e1dc7cabfc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5461883236194543801, guid: 2f5726c6c7590f840aabb5e1dc7cabfc,
         type: 3}
@@ -771,6 +770,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6603452673725456780, guid: 2f5726c6c7590f840aabb5e1dc7cabfc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f5726c6c7590f840aabb5e1dc7cabfc, type: 3}
@@ -890,7 +894,7 @@ Transform:
   - {fileID: 2017895265}
   - {fileID: 855500811}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1649926124
 MonoBehaviour:

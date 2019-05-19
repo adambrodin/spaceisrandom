@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_1_Default
   m_EditorClassIdentifier: 
   moveSpeed: 60
-  startHealth: 3
+  startHealth: 5
   weaponCooldown: 0
   killReward: 10
   type: 1

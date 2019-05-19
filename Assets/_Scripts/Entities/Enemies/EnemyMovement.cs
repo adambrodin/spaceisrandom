@@ -10,7 +10,7 @@ public class EnemyMovement : TargetTracker
 {
     #region Variables
     [SerializeField]
-    protected float slowDownDistance, slowSpeedMultiplier, followMaxDistance, damping;
+    protected float slowDownDistance, slowSpeedMultiplier, followMaxDistance, damping, boundsOffset;
     #endregion
 
     protected override void Awake()
@@ -27,9 +27,8 @@ public class EnemyMovement : TargetTracker
     {
         base.FixedUpdate();
 
-        if (rgbd.position.z <= GameController.Instance.bounds.zMin)
+        if (rgbd.position.z <= GameController.Instance.bounds.zMin - boundsOffset)
         {
-            print("enemy died");
             Destroy(gameObject);
         }
     }
@@ -44,8 +43,10 @@ public class EnemyMovement : TargetTracker
         }
         else if (Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance)
         {
-            targetPos = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin -= rgbd.position.z);
-            newDir = Vector3.Lerp(rgbd.position, targetPos, damping * Time.deltaTime);
+            Vector3 target = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin - boundsOffset);
+            targetDir = target - rgbd.position;
+            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+            targetPos = Vector3.MoveTowards(rgbd.position, target, step);
         }
     }
 }

@@ -26,10 +26,7 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<Health>();
-            }
+            if (instance == null) { instance = FindObjectOfType<Health>(); }
             return instance;
         }
     }
@@ -41,7 +38,8 @@ public class Health : MonoBehaviour, IKillable<float>
             var stats = GetComponent<EntityBase>().stats;
             StartHealth = stats.startHealth;
             KillReward = stats.killReward;
-        } catch (Exception) { return; }
+        }
+        catch (Exception) { return; }
 
         CurrentHealth = StartHealth;
         EntityKilled += GameController.Instance.OnKill;

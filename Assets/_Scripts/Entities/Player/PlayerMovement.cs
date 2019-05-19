@@ -13,14 +13,12 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
-    private Bounds bounds;
     private Vector3 movement, direction;
     #endregion
 
     private void Start()
     {
         MoveSpeed = Player.Instance.GetComponent<EntityBase>().stats.moveSpeed;
-        bounds = GameController.Instance.bounds;
     }
 
     private void OnEnable()
@@ -43,9 +41,9 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         // Set movement boundries for the level
         Rgbd.position = new Vector3
         (
-            Mathf.Clamp(Rgbd.position.x, bounds.xMin, bounds.xMax),
+            Mathf.Clamp(Rgbd.position.x, GameController.Instance.bounds.xMin, GameController.Instance.bounds.xMax),
             Rgbd.position.y,
-            Mathf.Clamp(Rgbd.position.z, bounds.zMin, bounds.zMax)
+            Mathf.Clamp(Rgbd.position.z, GameController.Instance.bounds.zMin, GameController.Instance.bounds.zMax)
         );
 
         // Move the player
@@ -62,9 +60,9 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         // If the player is within the level bounds
         if
         (
-            Rgbd.position.x != bounds.xMin && Rgbd.position.x != bounds.xMax
+            Rgbd.position.x != GameController.Instance.bounds.xMin && Rgbd.position.x != GameController.Instance.bounds.xMax
             &&
-            Rgbd.position.z != bounds.zMin && Rgbd.position.z != bounds.zMax
+            Rgbd.position.z != GameController.Instance.bounds.zMin && Rgbd.position.z != GameController.Instance.bounds.zMax
         )
         {
             // Get the input values as absolute numbers (only positive)
