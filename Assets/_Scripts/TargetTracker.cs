@@ -17,6 +17,7 @@ public abstract class TargetTracker : MonoBehaviour
     protected Vector3 targetDir, targetPos, newDir;
     protected Rigidbody rgbd, targetRgbd;
     #endregion
+    
     protected virtual void Awake()
     {
         try
