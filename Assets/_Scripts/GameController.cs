@@ -77,14 +77,9 @@ public class GameController : MonoBehaviour
         {
             Destroy(obj);
         }
-
-        print(obj.name + " has died");
     }
 
-    private void GameOver()
-    {
-        OnGameOver?.Invoke();
-    }
+    private void GameOver() => OnGameOver?.Invoke();
 
     public void ChangeScore(int value)
     {
