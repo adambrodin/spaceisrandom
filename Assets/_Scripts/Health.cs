@@ -109,10 +109,7 @@ public class Health : MonoBehaviour, IKillable<float>
         }
     }
 
-    public void Die()
-    {
-        EntityKilled?.Invoke(gameObject);
-    }
+    public void Die() => EntityKilled?.Invoke(gameObject);
 
     public bool IsDead()
     {

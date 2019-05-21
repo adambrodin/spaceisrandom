@@ -574,7 +574,7 @@ MonoBehaviour:
     alphaMax: 1
   increaseDifficultyTime: 1
   minIncrease: 0.01
-  maxIncrease: 0.03
+  maxIncrease: 0.05
   bounds:
     xMin: -150
     xMax: 150
