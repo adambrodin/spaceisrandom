@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6932a3416722f9429128816d6061073, type: 3}
   m_Name: TurretBullet
   m_EditorClassIdentifier: 
-  projectileSpeed: 10
+  projectileSpeed: 7
   projectileDamage: 1

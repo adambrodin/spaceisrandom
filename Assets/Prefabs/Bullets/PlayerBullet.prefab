@@ -48,7 +48,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 18377bba9fd804a40b7b06bb2c18c5dc, type: 2}
   targetTags:
   - Enemy
-  selfDestructTime: 5
+  selfDestructTime: 2
 --- !u!54 &888839252346973060
 Rigidbody:
   m_ObjectHideFlags: 0

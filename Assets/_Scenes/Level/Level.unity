@@ -546,13 +546,13 @@ MonoBehaviour:
   enemies:
   - gObject: {fileID: 6192401850424276424, guid: 3ac57a6a1700bb3478fba6f803ac7175,
       type: 3}
-    spawnChance: 33
+    spawnChance: 30
   - gObject: {fileID: 3384302382684526262, guid: 36d017e7f6163684b841b8ab394a914e,
       type: 3}
-    spawnChance: 33
+    spawnChance: 50
   - gObject: {fileID: 112263170020122674, guid: efbe14906f0445a4396e1d47a535e018,
       type: 3}
-    spawnChance: 33
+    spawnChance: 20
   minCooldown: 0.25
   maxCooldown: 3
   spawnMaxOffset: 150
