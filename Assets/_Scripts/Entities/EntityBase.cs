@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 public abstract class EntityBase : MonoBehaviour
 {
     public EntityStats stats;
     [HideInInspector]
     public Color[] entityColors;
 
-    protected virtual void Start()
-    {
-        RandomizeColors();
-    }
+    protected virtual void Start() => RandomizeColors();
 
     /// <summary>
     /// Finds the correct MeshRenderer and sets a randomized color

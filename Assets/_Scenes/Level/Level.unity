@@ -544,10 +544,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - gObject: {fileID: 8070753156349161648, guid: 268e40b4cd7a56243a34c359b5f90174,
+  - gObject: {fileID: 6192401850424276424, guid: 3ac57a6a1700bb3478fba6f803ac7175,
       type: 3}
-    spawnChance: 100
-  minCooldown: 0.1
+    spawnChance: 40
+  - gObject: {fileID: 3384302382684526262, guid: 36d017e7f6163684b841b8ab394a914e,
+      type: 3}
+    spawnChance: 60
+  minCooldown: 0.25
   maxCooldown: 3
   spawnMaxOffset: 150
 --- !u!114 &1355905803
@@ -568,7 +571,7 @@ MonoBehaviour:
     hueMax: 1
     saturationMin: 1
     saturationMax: 1
-    valueMin: 0.2
+    valueMin: 0.1
     valueMax: 1
     alphaMin: 1
     alphaMax: 1
@@ -854,9 +857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836278ef18acc24891e3290b40f0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 0
-  currentHealth: 0
-  killReward: 0
   effects:
   - {fileID: 11400000, guid: 3bd395008fc77364ba2d807ea70114cc, type: 2}
 --- !u!114 &1649926122
@@ -876,9 +876,6 @@ MonoBehaviour:
   firepoints:
   - {fileID: 1714300401}
   - {fileID: 2017895264}
-  bulletMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  bulletMaterial: {fileID: 2100000, guid: cb4cfa716466c2742a8a0f73f4cdd6b0, type: 2}
-  useEcs: 0
 --- !u!4 &1649926123
 Transform:
   m_ObjectHideFlags: 0

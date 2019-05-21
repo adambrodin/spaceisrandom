@@ -4,7 +4,6 @@ using UnityEngine;
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IMoveable
 {
@@ -16,25 +15,16 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     private Vector3 movement, direction;
     #endregion
 
-    private void Start()
-    {
-        MoveSpeed = Player.Instance.GetComponent<EntityBase>().stats.moveSpeed;
-    }
+    private void Start() => MoveSpeed = Player.Instance.GetComponent<EntityBase>().stats.moveSpeed;
 
-    private void OnEnable()
-    {
-        Player.Instance.OnGetMovement += OnGetMovement;
-    }
+    private void OnEnable() => Player.Instance.OnGetMovement += OnGetMovement;
 
-    private void OnDisable()
-    {
-        Player.Instance.OnGetMovement -= OnGetMovement;
-    }
+    private void OnDisable() => Player.Instance.OnGetMovement -= OnGetMovement;
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+    // Get the input vector2 values
+    private void OnGetMovement(Vector2 dir) => direction = dir;
+
+    private void FixedUpdate() => Move();
 
     public void Move()
     {
@@ -76,11 +66,5 @@ public class PlayerMovement : MonoBehaviour, IMoveable
             // Outside of level bounds
             return;
         }
-    }
-
-    private void OnGetMovement(Vector2 dir)
-    {
-        // Get the input vector2 values
-        direction = dir;
     }
 }

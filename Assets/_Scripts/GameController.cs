@@ -6,7 +6,6 @@ using UnityEngine;
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 [Serializable]
 public class RandomColorRange
 {
@@ -32,7 +31,6 @@ public class GameController : MonoBehaviour
 
     private static GameController instance;
     #endregion
-
     // Singleton
     public static GameController Instance
     {
@@ -53,7 +51,6 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(IncreaseDifficulty());
     }
-
 
     public void OnKill(GameObject obj)
     {

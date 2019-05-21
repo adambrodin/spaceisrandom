@@ -1,11 +1,9 @@
 ﻿using System;
 using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 [RequireComponent(typeof(Rigidbody))]
 public class BulletBase : MonoBehaviour, IMoveable
 {
@@ -22,11 +20,8 @@ public class BulletBase : MonoBehaviour, IMoveable
     protected float selfDestructTime;
     #endregion
 
-    private void Start()
-    {
-        // Destroy self automatically after selfDestructTime seconds
-        Invoke("OnBecameInvisible", selfDestructTime);
-    }
+    // Destroy self automatically after selfDestructTime seconds
+    private void Start() => Invoke("OnBecameInvisible", selfDestructTime);
 
     private void OnTriggerEnter(Collider col)
     {
@@ -61,19 +56,9 @@ public class BulletBase : MonoBehaviour, IMoveable
         return false;
     }
 
-    public void Move()
-    {
-        Rgbd.AddRelativeForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
+    public void Move() => Rgbd.AddRelativeForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
+    private void FixedUpdate() => Move();
 
     // Destroy self when out of rendered area
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+    private void OnBecameInvisible() => Destroy(gameObject);
 }

@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 public class Health : MonoBehaviour, IKillable<float>
 {
     #region Variables
     public float StartHealth { get => startHealth; set => startHealth = value; }
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public float KillReward { get => killReward; set => killReward = value; }
-
-    public float startHealth, currentHealth, killReward;
+    private float startHealth, currentHealth, killReward;
 
     public event Action<GameObject> EntityKilled;
     public EntityEffect[] effects;
@@ -111,10 +108,7 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public void Die() => EntityKilled?.Invoke(gameObject);
 
-    public bool IsDead()
-    {
-        return CurrentHealth <= 0;
-    }
+    public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed
     private void OnValidate()

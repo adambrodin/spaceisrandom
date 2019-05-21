@@ -1,11 +1,9 @@
 ﻿using System;
 using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 [RequireComponent(typeof(Rigidbody))]
 public abstract class TargetTracker : MonoBehaviour
 {
@@ -17,7 +15,6 @@ public abstract class TargetTracker : MonoBehaviour
     protected Vector3 targetDir, targetPos, newDir;
     protected Rigidbody rgbd, targetRgbd;
     #endregion
-    
     protected virtual void Awake()
     {
         try
@@ -32,7 +29,6 @@ public abstract class TargetTracker : MonoBehaviour
     }
 
     protected abstract void CalculateMovement();
-
     protected virtual void FixedUpdate()
     {
         if (rgbd != null && targetRgbd != null)

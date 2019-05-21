@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 [Serializable]
 public class EnemyObject
 {
@@ -15,7 +13,6 @@ public class EnemyObject
     // Spawn chance (0-100%)
     public int spawnChance;
 }
-
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -33,10 +30,7 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemies());
     }
 
-    private void ChangeDifficulty(float value)
-    {
-        difficulty += value;
-    }
+    private void ChangeDifficulty(float value) => difficulty += value;
 
     private void GameOver()
     {
@@ -105,10 +99,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = RandomEnemy();
             Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
         }
-        catch (Exception e)
-        {
-            print(e.Data);
-        }
+        catch (Exception) { }
         StartCoroutine(SpawnEnemies());
     }
 }

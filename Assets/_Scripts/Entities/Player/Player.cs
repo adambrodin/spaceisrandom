@@ -1,12 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Experimental.Input;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 public class Player : EntityBase, InputController.IPlayerActions
 {
     #region Variables
@@ -30,16 +28,12 @@ public class Player : EntityBase, InputController.IPlayerActions
     private void Awake()
     {
         // Set this as a receiver for all player inputs
-
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
     }
 
     // Whenever any movement input is received
-    public void OnMovement(InputAction.CallbackContext context)
-    {
-        OnGetMovement?.Invoke(context.ReadValue<Vector2>());
-    }
+    public void OnMovement(InputAction.CallbackContext context) => OnGetMovement?.Invoke(context.ReadValue<Vector2>());
 
     // Whenever any shooting input is received
     public void OnShooting(InputAction.CallbackContext context)
@@ -56,15 +50,9 @@ public class Player : EntityBase, InputController.IPlayerActions
         }
     }
 
-    private void OnEnable()
-    {
-        // Receive input
-        playerInput.Enable();
-    }
+    // Receive input
+    private void OnEnable() => playerInput.Enable();
 
-    private void OnDisable()
-    {
-        // Stop receiving input
-        playerInput.Disable();
-    }
+    // Stop receiving input
+    private void OnDisable() => playerInput.Disable();
 }

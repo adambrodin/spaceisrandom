@@ -2,12 +2,10 @@
 using UnityEngine;
 #pragma warning disable 649 // Disable incorrect warnings in the console (for serializefield private objects)
 #pragma warning disable IDE0044 // ^ but for visual studio
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
 public class TurretWeapon : TargetTracker
 {
     #region Variables
@@ -20,20 +18,7 @@ public class TurretWeapon : TargetTracker
     private GameObject[] firepoints;
     #endregion
 
-    private void Start()
-    {
-        StartCoroutine(Shoot());
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
+    private void Start() => StartCoroutine(Shoot());
 
     protected override void CalculateMovement()
     {

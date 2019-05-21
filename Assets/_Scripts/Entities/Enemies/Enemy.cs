@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Collider))]
 public class Enemy : EntityBase
 {
     private void OnTriggerEnter(Collider col)
@@ -13,7 +13,6 @@ public class Enemy : EntityBase
         if (col != null && col.gameObject.tag == "Player")
         {
             col.GetComponent<IKillable<float>>().TakeDamage(1);
-
             Destroy(gameObject);
         }
     }

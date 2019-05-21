@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+/* 
+ * Developed by Adam Brodin
+ * https://github.com/AdamBrodin
+ */
 public class TurretMovement : MonoBehaviour
 {
     private Rigidbody rgbd;
@@ -11,8 +14,5 @@ public class TurretMovement : MonoBehaviour
         moveSpeed = GetComponentInChildren<EntityBase>().stats.moveSpeed;
     }
 
-    private void FixedUpdate()
-    {
-        rgbd.AddForce(Vector3.back * moveSpeed, ForceMode.Acceleration);
-    }
+    private void FixedUpdate() => rgbd.AddForce(Vector3.back * moveSpeed, ForceMode.Acceleration);
 }
