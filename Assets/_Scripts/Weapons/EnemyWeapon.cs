@@ -1,29 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-public class EnemyWeapon : MonoBehaviour
+using System.Collections;
+using UnityEngine;
+
+public class EnemyWeapon : WeaponBase
 {
-
-    //TODO IMPLEMENT BETTER
-    #region Variables
-    public GameObject bullet;
-    #endregion
-
     private void Start()
     {
-        StartCoroutine(shoot());
+        StartCoroutine(StartShooting());
     }
 
-    IEnumerator shoot()
+    private IEnumerator StartShooting()
     {
-        yield return new WaitForSeconds(0.75f);
-
-        Instantiate(bullet, transform.position, transform.rotation);
-
-        StartCoroutine(shoot());
+        yield return new WaitUntil(() => GetComponent<Rigidbody>().position.z <= GameController.Instance.bounds.zMax);
+        Shoot();
     }
 }

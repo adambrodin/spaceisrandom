@@ -16,6 +16,7 @@ public class Health : MonoBehaviour, IKillable<float>
     public event Action<GameObject> EntityKilled;
     public EntityEffect[] effects;
 
+    private MeshRenderer meshRen, childMeshRen;
     private static Health instance;
     #endregion
 
@@ -67,47 +68,38 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public IEnumerator ColorBlink(float blinkTime)
     {
-        MeshRenderer meshRen;
-        if (GetComponent<MeshRenderer>() != null)
-        {
-            meshRen = GetComponent<MeshRenderer>();
-        }
-        else if (GetComponentInChildren<MeshRenderer>() != null)
-        {
-            meshRen = GetComponentInChildren<MeshRenderer>();
-        }
-        else
-        {
-            yield break;
-        }
-
         Color[] eCol = GetComponent<EntityBase>().entityColors;
 
+        if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
+        if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
+
         // Fetch all colors in all materials from the MeshRenderer
-        try
+        if (meshRen != null)
         {
             for (int i = 0; i < meshRen.materials.Length; i++)
             {
                 meshRen.materials[i].SetColor("_BaseColor", InvertColor(meshRen.materials[i].color));
             }
         }
-        catch (Exception e)
-        {
-            if (Debug.isDebugBuild) print("Exception: " + e.Data);
-            yield break;
-        }
 
+        if (childMeshRen != null)
+        {
+            for (int i = 0; i < childMeshRen.materials.Length; i++)
+            {
+                childMeshRen.materials[i].SetColor("_BaseColor", InvertColor(childMeshRen.materials[i].color));
+            }
+        }
         yield return new WaitForSeconds(blinkTime);
 
         // Set the materials colors back to how they originally were
         for (int i = 0; i < eCol.Length; i++)
         {
-            meshRen.materials[i].SetColor("_BaseColor", eCol[i]);
+            if (meshRen != null) meshRen.materials[i].SetColor("_BaseColor", eCol[i]);
+            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_BaseColor", eCol[i]);
         }
     }
 
     public void Die() => EntityKilled?.Invoke(gameObject);
-
     public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed
@@ -123,6 +115,9 @@ public class Health : MonoBehaviour, IKillable<float>
 
         H -= 0.5f;
 
-        return Color.HSVToRGB(H, S, V);
+        //return Color.HSVToRGB(H, S, V);
+
+        // TODO FIX PROPER INVERTION
+        return Color.white;
     }
 }

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1265400006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265400007}
+  m_Layer: 0
+  m_Name: Firepoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265400007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265400006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3384302382684526257}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3384302382684526262
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,7 +44,7 @@ GameObject:
   - component: {fileID: 3384302382684526157}
   - component: {fileID: 3384302382684526259}
   - component: {fileID: 645366204}
-  - component: {fileID: 1881457501718392961}
+  - component: {fileID: 6097041809926867753}
   m_Layer: 0
   m_Name: Enemy_MovingShooting
   m_TagString: Enemy
@@ -30,10 +60,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3384302382684526262}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -51.799377, y: 0, z: 200}
+  m_LocalPosition: {x: 26.75291, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3384302382543275243}
+  - {fileID: 1265400007}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -116,7 +147,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 19.75, y: 4.750002, z: 16.500006}
   m_Center: {x: 0, y: 2, z: 0}
---- !u!114 &1881457501718392961
+--- !u!114 &6097041809926867753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +159,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a7418b313ad764b885b485bf786bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 888839252346973066, guid: 9842c017a6d0ca540891621e78605b8e, type: 3}
+  autoShoot: 1
+  changeBulletToParentColor: 0
+  bulletObj: {fileID: 888839252346973066, guid: 9842c017a6d0ca540891621e78605b8e,
+    type: 3}
+  firepoints:
+  - {fileID: 1265400006}
+  firingMode: 0
 --- !u!1001 &3384302382543674987
 PrefabInstance:
   m_ObjectHideFlags: 0

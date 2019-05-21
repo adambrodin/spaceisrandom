@@ -12,9 +12,10 @@ public abstract class TargetTracker : MonoBehaviour
     protected float moveSpeed, step, distanceToTarget;
     [SerializeField]
     protected string targetName;
-    protected Vector3 targetDir, targetPos, newDir;
+    protected Vector3 targetDir, newPos, newDir;
     protected Rigidbody rgbd, targetRgbd;
     #endregion
+
     protected virtual void Awake()
     {
         try
@@ -31,16 +32,16 @@ public abstract class TargetTracker : MonoBehaviour
     protected abstract void CalculateMovement();
     protected virtual void FixedUpdate()
     {
-        if (rgbd != null && targetRgbd != null)
+        if (rgbd != null)
         {
             // Calculate distance to target, movement speed and movement path
-            distanceToTarget = Vector3.Distance(rgbd.position, targetRgbd.position);
+            if (targetRgbd != null) distanceToTarget = Vector3.Distance(rgbd.position, targetRgbd.position);
             step = moveSpeed * Time.deltaTime;
             CalculateMovement();
 
-            // Move the object
-            if (targetPos != null) rgbd.position = Vector3.MoveTowards(rgbd.position, targetPos, step);
-            if (newDir != null) rgbd.rotation = Quaternion.LookRotation(newDir);
+            // Move and rotate the object
+            if (newPos != Vector3.zero) rgbd.position = Vector3.MoveTowards(rgbd.position, newPos, step);
+            if (newDir != Vector3.zero) rgbd.rotation = Quaternion.LookRotation(newDir);
         }
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
   m_Name: Enemy_Turret
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 50
   startHealth: 20
   weaponCooldown: 0.75
-  killReward: 50
+  killReward: 1000
   type: 1

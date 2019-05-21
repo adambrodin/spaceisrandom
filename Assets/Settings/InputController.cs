@@ -4,8 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Input;
-using UnityEngine.Experimental.Input.Utilities;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 public class InputController : IInputActionCollection
 {
@@ -246,44 +246,54 @@ public class InputController : IInputActionCollection
         m_Player_Movement = m_Player.GetAction("Movement");
         m_Player_Shooting = m_Player.GetAction("Shooting");
     }
+
     ~InputController()
     {
         UnityEngine.Object.Destroy(asset);
     }
+
     public InputBinding? bindingMask
     {
         get => asset.bindingMask;
         set => asset.bindingMask = value;
     }
+
     public ReadOnlyArray<InputDevice>? devices
     {
         get => asset.devices;
         set => asset.devices = value;
     }
+
     public ReadOnlyArray<InputControlScheme> controlSchemes
     {
         get => asset.controlSchemes;
     }
+
     public bool Contains(InputAction action)
     {
         return asset.Contains(action);
     }
+
     public IEnumerator<InputAction> GetEnumerator()
     {
         return asset.GetEnumerator();
     }
+
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
     }
+
     public void Enable()
     {
         asset.Enable();
     }
+
     public void Disable()
     {
         asset.Disable();
     }
+
     // Player
     private InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
@@ -307,20 +317,20 @@ public class InputController : IInputActionCollection
             {
                 Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                Movement.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 Shooting.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShooting;
                 Shooting.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShooting;
-                Shooting.cancelled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShooting;
+                Shooting.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShooting;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
                 Movement.started += instance.OnMovement;
                 Movement.performed += instance.OnMovement;
-                Movement.cancelled += instance.OnMovement;
+                Movement.canceled += instance.OnMovement;
                 Shooting.started += instance.OnShooting;
                 Shooting.performed += instance.OnShooting;
-                Shooting.cancelled += instance.OnShooting;
+                Shooting.canceled += instance.OnShooting;
             }
         }
     }

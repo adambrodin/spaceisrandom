@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Experimental.Input;
+using UnityEngine.InputSystem;
 /* 
- * Developed by Adam Brodin
- * https://github.com/AdamBrodin
- */
+* Developed by Adam Brodin
+* https://github.com/AdamBrodin
+*/
 public class Player : EntityBase, InputController.IPlayerActions
 {
     #region Variables
@@ -44,7 +44,7 @@ public class Player : EntityBase, InputController.IPlayerActions
             OnGetShooting?.Invoke(true);
         }
         // when the input is released 
-        else if (context.cancelled)
+        else if (context.canceled)
         {
             OnGetShooting?.Invoke(false);
         }
