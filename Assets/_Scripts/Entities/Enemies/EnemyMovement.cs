@@ -47,6 +47,8 @@ public class EnemyMovement : TargetTracker
             targetDir = target - rgbd.position;
             newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
             targetPos = Vector3.MoveTowards(rgbd.position, target, step);
+
+            
         }
     }
 }
