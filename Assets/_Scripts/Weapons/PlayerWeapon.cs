@@ -11,7 +11,7 @@ public class PlayerWeapon : WeaponBase
     private void OnDisable() => Player.Instance.OnGetShooting -= OnGetShooting;
     private void OnGetShooting(bool value) => isFiring = value;
 
-    private  void CheckForFire()
+    private void CheckForFire()
     {
         if (isFiring) { Shoot(); }
     }

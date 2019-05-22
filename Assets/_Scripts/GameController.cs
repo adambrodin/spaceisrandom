@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     public Bounds bounds;
     private int score;
 
+    [SerializeField]
+    private float backgroundFadeInTime, backgroundFadeOutTime, backgroundFadeDelay;
     private static GameController instance;
     #endregion
     // Singleton
@@ -50,34 +52,63 @@ public class GameController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         StartCoroutine(IncreaseDifficulty());
+        StartCoroutine(FlashHealthStatus(Color.green, 3));
+
+        Health.Instance.OnPlayerHit += PlayerHit;
     }
 
-    public void OnKill(GameObject obj)
+    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes)
+    {
+        // Flash green three times to indicate three hp (full)
+        for (int i = 0; i < amountOfFlashes; i++)
+        {
+            StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, color, backgroundFadeDelay / 2));
+            yield return new WaitForSeconds(backgroundFadeInTime + backgroundFadeOutTime + backgroundFadeDelay / 2);
+        }
+    }
+
+    private void PlayerHit(float health)
+    {
+        switch (health)
+        {
+            case 2:
+                StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, Color.yellow, backgroundFadeDelay));
+                break;
+            case 1:
+                StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, Color.red, backgroundFadeDelay));
+                break;
+            case 0:
+                StartCoroutine(FlashHealthStatus(Color.white, 3));
+                GameOver();
+                break;
+        }
+    }
+
+    private IEnumerator BackgroundFade(float timeToFadeIn, float timeToFadeOut, Color targetColor, float delay)
+    {
+        for (float time = 0f; time < timeToFadeIn; time += 0.01f)
+        {
+            Camera.main.backgroundColor = Color.Lerp(Color.black, targetColor, time / timeToFadeIn);
+            yield return null;
+        }
+        if (delay > 0) yield return new WaitForSeconds(delay);
+        for (float time = 0f; time < timeToFadeOut; time += 0.01f)
+        {
+            Camera.main.backgroundColor = Color.Lerp(targetColor, Color.black, time / timeToFadeOut);
+            yield return null;
+        }
+    }
+
+    public void ObjectKilled(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
         if (killReward > 0) ChangeScore(killReward);
 
-        // If the player has died, end the game
-        if (obj.tag == "Player")
-        {
-            Destroy(obj);
-            GameOver();
-            return;
-        }
-
-        // Destroy the parent object if necessary (to prevent leftover models in scene)
-        try
-        {
-            Destroy(obj.transform.parent.gameObject);
-        }
-        catch (Exception)
-        {
-            Destroy(obj);
-        }
+        // Destroy the object
+        Destroy(obj);
     }
 
     private void GameOver() => OnGameOver?.Invoke();
-
     public void ChangeScore(int value)
     {
         score += value;

@@ -9,7 +9,8 @@ public class TurretMovement : TargetTracker
 {
     #region Variables
     [SerializeField]
-    private float damping, targetZ, boundryOffset, timeBeforeShoot;
+    private float damping, boundryOffset, timeBeforeShoot;
+    public float targetZ;
     private bool reachedTargetZ;
     #endregion
 

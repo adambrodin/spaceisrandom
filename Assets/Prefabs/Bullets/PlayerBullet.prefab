@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 888839252346973062}
   - component: {fileID: 7337745608229899293}
   - component: {fileID: 888839252346973060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 888839252346973066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2078949647308813310}
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 7377899790093570695}
   - component: {fileID: 2572453966284679883}
   - component: {fileID: 680588648808359804}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ Transform:
   m_GameObject: {fileID: 6009636122055888832}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 2, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 888839252346973062}
   m_RootOrder: 0

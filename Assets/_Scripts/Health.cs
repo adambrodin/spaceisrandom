@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+#pragma warning disable CS0649 // Disable incorrect warnings in the console caused by private variables with [SerializeField]
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
@@ -13,11 +14,14 @@ public class Health : MonoBehaviour, IKillable<float>
     public float KillReward { get => killReward; set => killReward = value; }
     private float startHealth, currentHealth, killReward;
 
-    public event Action<GameObject> EntityKilled;
-    public EntityEffect[] effects;
-
+    public event Action<GameObject> OnObjectKilled;
+    public event Action<float> OnPlayerHit;
     private MeshRenderer meshRen, childMeshRen;
     private static Health instance;
+
+    private Color[] eCols, eChildCols;
+    [SerializeField]
+    private float blinkTime;
     #endregion
 
     public static Health Instance
@@ -40,36 +44,21 @@ public class Health : MonoBehaviour, IKillable<float>
         catch (Exception) { return; }
 
         CurrentHealth = StartHealth;
-        EntityKilled += GameController.Instance.OnKill;
+        OnObjectKilled += GameController.Instance.ObjectKilled;
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
-
-        if (effects.Length > 0) { PlayEffect(effects[0]); }
+        if (gameObject.tag == "Player") { OnPlayerHit?.Invoke(CurrentHealth); }
+        StartCoroutine(ColorBlink(blinkTime));
         if (IsDead()) { Die(); }
-    }
-
-    public void PlayEffect(EntityEffect e)
-    {
-        if (e != null)
-        {
-            switch (e.effectType)
-            {
-                case EntityEffect.EffectType.colorBlink:
-                    StartCoroutine(ColorBlink(e.blinkTime));
-                    break;
-                case EntityEffect.EffectType.explosion:
-                    break;
-            }
-        }
     }
 
     public IEnumerator ColorBlink(float blinkTime)
     {
-        Color[] eCol = GetComponent<EntityBase>().entityColors;
-
+        if (GetComponent<EntityBase>().entityColors != null) { eCols = GetComponent<EntityBase>().entityColors; }
+        if (GetComponent<EntityBase>().entityColors != null) { eChildCols = GetComponent<EntityBase>().entityChildColors; }
         if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
         if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
 
@@ -81,7 +70,6 @@ public class Health : MonoBehaviour, IKillable<float>
                 meshRen.materials[i].SetColor("_BaseColor", InvertColor(meshRen.materials[i].color));
             }
         }
-
         if (childMeshRen != null)
         {
             for (int i = 0; i < childMeshRen.materials.Length; i++)
@@ -92,14 +80,19 @@ public class Health : MonoBehaviour, IKillable<float>
         yield return new WaitForSeconds(blinkTime);
 
         // Set the materials colors back to how they originally were
-        for (int i = 0; i < eCol.Length; i++)
+        for (int i = 0; i < eCols.Length; i++)
         {
-            if (meshRen != null) meshRen.materials[i].SetColor("_BaseColor", eCol[i]);
-            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_BaseColor", eCol[i]);
+            if (meshRen != null) meshRen.materials[i].SetColor("_BaseColor", eCols[i]);
+            if (meshRen != null) meshRen.materials[i].SetColor("_EmissionColor", eCols[i]);
+        }
+        for (int i = 0; i < eChildCols.Length; i++)
+        {
+            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_BaseColor", eChildCols[i]);
+            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_EmissionColor", eChildCols[i]);
         }
     }
 
-    public void Die() => EntityKilled?.Invoke(gameObject);
+    public void Die() => OnObjectKilled?.Invoke(gameObject);
     public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed

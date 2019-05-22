@@ -15,5 +15,5 @@ MonoBehaviour:
   moveSpeed: 60
   startHealth: 5
   weaponCooldown: 0
-  killReward: 10
+  killReward: 100
   type: 1

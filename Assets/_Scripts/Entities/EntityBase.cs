@@ -7,9 +7,16 @@ public abstract class EntityBase : MonoBehaviour
 {
     public EntityStats stats;
     [HideInInspector]
-    public Color[] entityColors;
+    public Color[] entityColors, entityChildColors;
+    protected MeshRenderer meshRen, childMeshRen;
 
-    protected virtual void Awake() => RandomizeColors();
+    protected virtual void Awake()
+    {
+        if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
+        if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
+
+        RandomizeColors();
+    }
 
     /// <summary>
     /// Finds the correct MeshRenderer and sets a randomized color
@@ -17,23 +24,28 @@ public abstract class EntityBase : MonoBehaviour
     /// </summary>
     protected void RandomizeColors()
     {
-        MeshRenderer meshRen;
-        if (GetComponent<MeshRenderer>() != null)
-        {
-            meshRen = GetComponent<MeshRenderer>();
-        }
-        else
-        {
-            meshRen = GetComponentInChildren<MeshRenderer>();
-        }
-
-        entityColors = new Color[meshRen.materials.Length];
         RandomColorRange r = GameController.Instance.randomColorRange;
 
-        for (int i = 0; i < entityColors.Length; i++)
+        if (meshRen != null)
         {
-            entityColors[i] = Random.ColorHSV(r.hueMin, r.hueMax, r.saturationMin, r.saturationMax, r.valueMin, r.valueMax, r.alphaMin, r.alphaMax);
-            meshRen.materials[i].SetColor("_BaseColor", entityColors[i]);
+            entityColors = new Color[meshRen.materials.Length];
+            for (int i = 0; i < entityColors.Length; i++)
+            {
+                entityColors[i] = Random.ColorHSV(r.hueMin, r.hueMax, r.saturationMin, r.saturationMax, r.valueMin, r.valueMax, r.alphaMin, r.alphaMax);
+                meshRen.materials[i].SetColor("_BaseColor", entityColors[i]);
+                meshRen.materials[i].SetColor("_EmissionColor", entityColors[i]);
+            }
+        }
+
+        if (childMeshRen != null)
+        {
+            entityChildColors = new Color[childMeshRen.materials.Length];
+            for (int i = 0; i < entityChildColors.Length; i++)
+            {
+                entityChildColors[i] = Random.ColorHSV(r.hueMin, r.hueMax, r.saturationMin, r.saturationMax, r.valueMin, r.valueMax, r.alphaMin, r.alphaMax);
+                childMeshRen.materials[i].SetColor("_BaseColor", entityChildColors[i]);
+                childMeshRen.materials[i].SetColor("_EmissionColor", entityChildColors[i]);
+            }
         }
     }
 }

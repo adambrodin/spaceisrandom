@@ -27,28 +27,20 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     private void OnTriggerEnter(Collider col)
     {
-        IKillable<float> killable = null;
-        try
+        if (col.GetComponent<IKillable<float>>() != null && IsTargetTag(col.gameObject.tag))
         {
-            killable = col.GetComponent<IKillable<float>>();
-        }
-        catch (Exception) { }
-
-        if (IsTargetTag(col.gameObject))
-        {
-            killable.TakeDamage(stats.projectileDamage);
-
+            col.GetComponent<IKillable<float>>().TakeDamage(stats.projectileDamage);
             // Destroy the bullet after impact
             Destroy(gameObject);
         }
         return;
     }
 
-    private bool IsTargetTag(GameObject obj)
+    private bool IsTargetTag(String targetTag)
     {
         foreach (string tag in targetTags)
         {
-            if (obj.gameObject.tag == tag)
+            if (tag == targetTag)
             {
                 return true;
             }

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 100
   startHealth: 3
-  weaponCooldown: 0.01
+  weaponCooldown: 0.1
   killReward: 0
   type: 0
