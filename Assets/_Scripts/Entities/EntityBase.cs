@@ -9,7 +9,7 @@ public abstract class EntityBase : MonoBehaviour
     [HideInInspector]
     public Color[] entityColors;
 
-    protected virtual void Start() => RandomizeColors();
+    protected virtual void Awake() => RandomizeColors();
 
     /// <summary>
     /// Finds the correct MeshRenderer and sets a randomized color

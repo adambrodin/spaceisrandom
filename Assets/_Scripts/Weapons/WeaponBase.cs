@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 /* 
  * Developed by Adam Brodin
@@ -28,12 +29,10 @@ public abstract class WeaponBase : MonoBehaviour
     protected int firepointToUse; // Firepoint to fire fram, default: 0 = first one in array
     #endregion
 
+
     private void Start()
     {
-        if (changeBulletToParentColor)
-        {
-            // TODO change bullet color
-        }
+
     }
 
     protected IEnumerator Cooldown()
@@ -55,7 +54,15 @@ public abstract class WeaponBase : MonoBehaviour
             // Shoot from each firepoint in order
             if (firingMode == FireMode.cycling)
             {
-                Instantiate(bulletObj, firepoints[firepointToUse].transform.position, firepoints[firepointToUse].transform.rotation);
+                GameObject clone = Instantiate(bulletObj, firepoints[firepointToUse].transform.position, firepoints[firepointToUse].transform.rotation);
+
+                if (changeBulletToParentColor)
+                {
+                    Material m = new Material(clone.GetComponentInChildren<MeshRenderer>().sharedMaterial);
+                    m.SetColor("_Basecolor", GetComponent<EntityBase>().entityColors[0]);
+                    m.SetColor("_EmissionColor", GetComponent<EntityBase>().entityColors[0]);
+                    clone.GetComponentInChildren<MeshRenderer>().material = m;
+                }
 
                 firepointToUse++;
                 if (firepointToUse >= firepoints.Length) { firepointToUse = 0; } // Prevent going out of array bounds

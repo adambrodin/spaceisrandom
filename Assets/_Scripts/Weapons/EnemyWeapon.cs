@@ -7,13 +7,11 @@ using UnityEngine;
 
 public class EnemyWeapon : WeaponBase
 {
-    private void Start()
-    {
-        StartCoroutine(StartShooting());
-    }
+    private void Start() => StartCoroutine(StartShooting());
 
     private IEnumerator StartShooting()
     {
+        // Start shooting when the Enemy appears within the screen bounds
         yield return new WaitUntil(() => GetComponent<Rigidbody>().position.z <= GameController.Instance.bounds.zMax);
         Shoot();
     }

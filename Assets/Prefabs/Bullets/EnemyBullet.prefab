@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 888839252346973062}
   - component: {fileID: 7337745608229899293}
   - component: {fileID: 888839252346973060}
-  m_Layer: 0
-  m_Name: PlayerBullet
-  m_TagString: PlayerBullet
+  m_Layer: 8
+  m_Name: EnemyBullet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 888839252346973066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2078949647308813310}
   m_Father: {fileID: 0}
@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f536bab260ae74d8f1d90c7fb790aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 18377bba9fd804a40b7b06bb2c18c5dc, type: 2}
+  stats: {fileID: 11400000, guid: e5dd960db2315f44ea9d98f9a6ce63b1, type: 2}
   targetTags:
-  - Enemy
+  - Player
   selfDestructTime: 2
-  addForce: 1
+  addForce: 0
 --- !u!54 &888839252346973060
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 7377899790093570695}
   - component: {fileID: 2572453966284679883}
   - component: {fileID: 680588648808359804}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb4cfa716466c2742a8a0f73f4cdd6b0, type: 2}
+  - {fileID: 2100000, guid: f745643061f006a4ca05bcdf7e6d7451, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

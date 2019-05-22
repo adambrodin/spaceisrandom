@@ -18,6 +18,8 @@ public class BulletBase : MonoBehaviour, IMoveable
     public float MoveSpeed { get => stats.projectileSpeed; set => stats.projectileSpeed = value; }
     [SerializeField]
     protected float selfDestructTime;
+    [SerializeField]
+    protected bool addForce;
     #endregion
 
     // Destroy self automatically after selfDestructTime seconds
@@ -56,7 +58,11 @@ public class BulletBase : MonoBehaviour, IMoveable
         return false;
     }
 
-    public void Move() => Rgbd.AddRelativeForce(Vector3.forward * MoveSpeed, ForceMode.VelocityChange);
+    public void Move()
+    {
+        if (addForce) { Rgbd.AddForce(transform.forward * MoveSpeed, ForceMode.VelocityChange); }
+        else { Rgbd.velocity = transform.forward * MoveSpeed; }
+    }
     private void FixedUpdate() => Move();
 
     // Destroy self when out of rendered area

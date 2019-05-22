@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6932a3416722f9429128816d6061073, type: 3}
-  m_Name: TurretBullet
+  m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
+  m_Name: Enemy_Moving_Following
   m_EditorClassIdentifier: 
-  projectileSpeed: 5
-  projectileDamage: 1
+  moveSpeed: 60
+  startHealth: 5
+  weaponCooldown: 0
+  killReward: 10
+  type: 1

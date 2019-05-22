@@ -27,7 +27,7 @@ public class EnemyMovement : TargetTracker
             newPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step * slowSpeedMultiplier);
         }
 
-        else if ((Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance) || !followPlayer)
+        else if (targetRgbd != null && ((Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance) || !followPlayer))
         {
             Vector3 target = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin - boundsOffset);
             targetDir = target - rgbd.position;

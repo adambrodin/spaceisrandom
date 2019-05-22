@@ -306,16 +306,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 463730150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_RepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_Touches: []
+  m_TrackedDevices: []
 --- !u!114 &463730152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &855500810
 GameObject:
@@ -497,7 +512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1355905800
 GameObject:
@@ -529,7 +544,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1355905802
 MonoBehaviour:
@@ -546,13 +561,13 @@ MonoBehaviour:
   enemies:
   - gObject: {fileID: 6192401850424276424, guid: 3ac57a6a1700bb3478fba6f803ac7175,
       type: 3}
-    spawnChance: 30
-  - gObject: {fileID: 3384302382684526262, guid: 36d017e7f6163684b841b8ab394a914e,
+    spawnChance: 33
+  - gObject: {fileID: 456389986084073274, guid: 36d017e7f6163684b841b8ab394a914e,
       type: 3}
-    spawnChance: 50
-  - gObject: {fileID: 112263170020122674, guid: efbe14906f0445a4396e1d47a535e018,
+    spawnChance: 33
+  - gObject: {fileID: 7177235640690953462, guid: efbe14906f0445a4396e1d47a535e018,
       type: 3}
-    spawnChance: 20
+    spawnChance: 33
   minCooldown: 0.25
   maxCooldown: 3
   spawnMaxOffset: 150
@@ -582,8 +597,8 @@ MonoBehaviour:
   minIncrease: 0.01
   maxIncrease: 0.05
   bounds:
-    xMin: -150
-    xMax: 150
+    xMin: -170
+    xMax: 170
     zMin: -90
     zMax: 90
 --- !u!1 &1394086561
@@ -678,7 +693,7 @@ RectTransform:
   m_Children:
   - {fileID: 30877881}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -776,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoShoot: 0
-  changeBulletToParentColor: 0
+  changeBulletToParentColor: 1
   bulletObj: {fileID: 888839252346973066, guid: 6b24dab3661ce0042be139df7b391897,
     type: 3}
   firepoints:

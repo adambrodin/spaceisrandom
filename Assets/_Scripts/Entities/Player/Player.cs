@@ -25,8 +25,10 @@ public class Player : EntityBase, InputController.IPlayerActions
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Set this as a receiver for all player inputs
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
