@@ -27,14 +27,12 @@ public class GameController : MonoBehaviour
     public event Action<float> OnChangeDifficulty;
     public event Action OnGameStart, OnGameOver;
     public RandomColorRange randomColorRange;
-    public float increaseDifficultyTime, minIncrease, maxIncrease;
     public Bounds bounds;
     private int score;
 
     [SerializeField]
-    private float backgroundFadeInTime, backgroundFadeOutTime, backgroundFadeDelay;
+    private float backgroundFadeInTime, backgroundFadeOutTime, backgroundFadeDelay, increaseDifficultyTime, minIncrease, maxIncrease;
     private static GameController instance;
-    private bool gameRunning;
     #endregion
     // Singleton
     public static GameController Instance
@@ -47,7 +45,6 @@ public class GameController : MonoBehaviour
     }
 
     public void Restart() => SceneManager.LoadScene("Level");
-
     private void Start()
     {
         // Hide the cursor on release build
@@ -58,17 +55,15 @@ public class GameController : MonoBehaviour
         }
         Health.Instance.OnPlayerHit += PlayerHit;
 
-        StartCoroutine(FlashHealthStatus(Color.green, 1, 1.0f));
+        FindObjectOfType<AudioManager>().Play("BackgroundMusic");
         StartCoroutine(StartGame());
+        StartCoroutine(FlashHealthStatus(Color.green, 1, 1.0f));
         StartCoroutine(IncreaseDifficulty());
     }
 
     private IEnumerator StartGame()
     {
-        gameRunning = true;
-
         yield return new WaitForSeconds(1f);
-
         OnGameStart?.Invoke();
     }
 
@@ -94,7 +89,7 @@ public class GameController : MonoBehaviour
                 break;
             case 0:
                 StartCoroutine(FlashHealthStatus(Color.white, 3, 0.33f));
-                SceneManager.LoadScene("Level"); // TODO REMOVE - IMPLEMENT BETTER
+                Restart(); // TODO implement better
                 GameOver();
                 break;
         }

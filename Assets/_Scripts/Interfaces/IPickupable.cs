@@ -8,6 +8,5 @@
 public interface IPickupable<T>
 {
     event Action<T> OnPickUp;
-
     void PlayPickUpEffect();
 }

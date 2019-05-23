@@ -3,17 +3,12 @@
 [CreateAssetMenu(fileName = "Entity", menuName = "Entity")]
 public class EntityStats : ScriptableObject
 {
-    public float
-        moveSpeed,
-        startHealth,
-        weaponCooldown,
-        killReward;
-
+    public float moveSpeed, startHealth, weaponCooldown, killReward;
     public enum EntityType
     {
         Player,
         Enemy,
     }
 
-    public EntityType type; // Referring to the enum
+    public EntityType type;
 }

@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3727319322011259639}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.966339, y: 0, z: 200}
+  m_LocalPosition: {x: 54.24137, y: 0, z: 200}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children:
   - {fileID: 3886454103881453499}
@@ -160,15 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a7418b313ad764b885b485bf786bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playFireSound: 1
   autoShoot: 1
   changeBulletToParentColor: 1
+  playFireSound: 1
   bulletObj: {fileID: 888839252346973066, guid: 8a319d4b0d31a3544ad979c4c7490a02,
     type: 3}
   firepoints:
   - {fileID: 2111462798950759559}
-  fireSound: {fileID: 8300000, guid: b683ab52dc7537541a3b9045c6e17d15, type: 3}
-  fireSoundVolume: 0.25
+  fireSoundName: EnemyShoot
   firingMode: 0
 --- !u!1 &3886454103881094043
 GameObject:

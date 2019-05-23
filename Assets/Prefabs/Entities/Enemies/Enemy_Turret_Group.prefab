@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6856785350573047296}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -74.43347, y: 0, z: 200}
+  m_LocalPosition: {x: 142.89432, y: 0, z: 200}
   m_LocalScale: {x: 2, y: 2, z: -2}
   m_Children:
   - {fileID: 6856785350573269540}
@@ -192,16 +192,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a95acb43c2c4e040b7425c5f8e294a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playFireSound: 1
   autoShoot: 1
   changeBulletToParentColor: 1
+  playFireSound: 1
   bulletObj: {fileID: 888839252346973066, guid: 9842c017a6d0ca540891621e78605b8e,
     type: 3}
   firepoints:
   - {fileID: 3172759661118394616}
   - {fileID: 3172759661173312453}
-  fireSound: {fileID: 8300000, guid: b683ab52dc7537541a3b9045c6e17d15, type: 3}
-  fireSoundVolume: 0.25
+  fireSoundName: EnemyShoot
   firingMode: 0
   allFireChance: 20
 --- !u!114 &6856785350573047325
@@ -216,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836278ef18acc24891e3290b40f0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 0}
+  explosion: {fileID: 100000, guid: e6ab56e4714ff4154ac034cf28db78b2, type: 3}
   blinkTime: 0.2
 --- !u!54 &6856785350573047299
 Rigidbody:
@@ -245,7 +244,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7, y: 8, z: 5}
+  m_Size: {x: 5, y: 8, z: 5}
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &6856785350573047300
 GameObject:

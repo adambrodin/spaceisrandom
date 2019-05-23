@@ -3,7 +3,5 @@
 [CreateAssetMenu(fileName = "Bullet", menuName = "Bullet")]
 public class Bullet : ScriptableObject
 {
-    public float
-        projectileSpeed,
-        projectileDamage;
+    public float projectileSpeed, projectileDamage;
 }

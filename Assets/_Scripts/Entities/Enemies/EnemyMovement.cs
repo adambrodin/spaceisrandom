@@ -14,12 +14,10 @@ public class EnemyMovement : TargetTracker
     #endregion
 
     private void Start() => moveSpeed = GetComponent<EntityBase>().stats.moveSpeed;
-
     protected override void CalculateMovement()
     {
         // If the enemy is outside of the screen
         if (rgbd.position.z <= GameController.Instance.bounds.zMin - boundsOffset) { Destroy(gameObject); }
-
         if ((distanceToTarget <= followMaxDistance && distanceToTarget > slowDownDistance) && followPlayer)
         {
             targetDir = targetRgbd.position - rgbd.position;

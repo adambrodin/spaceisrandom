@@ -21,8 +21,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private EnemyObject[] enemies;
     [SerializeField]
-    private float minCooldown, maxCooldown, enemyGroupOffset;
-    private float difficulty = 0;
+    private float difficulty, minCooldown, maxCooldown, enemyGroupOffset;
     [SerializeField]
     private int enemiesInGroupMin, enemiesInGroupMax;
     private static System.Random randomizer;
@@ -64,7 +63,6 @@ public class EnemySpawner : MonoBehaviour
         {
             return true;
         }
-
         return false;
     }
 
@@ -72,8 +70,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemies.Length > 0)
         {
-            GameObject gameObj = null;
-            int objMaxSpawnOffset = 0;
+            GameObject gameObj = default;
+            int objMaxSpawnOffset = default;
 
             while (gameObj == null)
             {

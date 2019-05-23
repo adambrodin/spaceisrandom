@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
 using UnityEngine;
 /* 
  * Developed by Adam Brodin
@@ -10,18 +9,14 @@ public abstract class WeaponBase : MonoBehaviour
     #region Variables
     protected bool canShoot = true;
     [SerializeField]
-    protected bool playFireSound = true;
-    [SerializeField]
-    protected bool autoShoot, changeBulletToParentColor;
+    protected bool autoShoot, changeBulletToParentColor, playFireSound = true;
     [SerializeField]
     protected GameObject bulletObj;
     [SerializeField]
     protected GameObject[] firepoints;
     protected float WeaponCooldown => GetComponent<EntityBase>().stats.weaponCooldown;
     [SerializeField]
-    protected AudioClip fireSound;
-    [SerializeField]
-    protected float fireSoundVolume = 0.25f; // How loud the fire/shoot sound will play
+    protected string fireSoundName;
 
     // To fire the bullet(s) at the firepoints in order or all at all of them at once
     protected enum FireMode { cycling, multiple }
@@ -67,7 +62,7 @@ public abstract class WeaponBase : MonoBehaviour
     {
         GameObject spawnedObj = Instantiate(obj, pos, rot);
         if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
-        if (playFireSound && fireSound != null) { SoundManager.Play(fireSound, fireSoundVolume); }
+        if (playFireSound && fireSoundName != null && fireSoundName != "") { FindObjectOfType<AudioManager>().Play(fireSoundName); }
     }
 
     private void BulletToParentColor(GameObject obj)

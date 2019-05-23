@@ -25,7 +25,6 @@ public abstract class EntityBase : MonoBehaviour
     protected void RandomizeColors()
     {
         RandomColorRange r = GameController.Instance.randomColorRange;
-
         if (meshRen != null)
         {
             entityColors = new Color[meshRen.materials.Length];

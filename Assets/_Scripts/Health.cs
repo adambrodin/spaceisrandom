@@ -17,13 +17,13 @@ public class Health : MonoBehaviour, IKillable<float>
     public event Action<GameObject> OnObjectKilled;
     public event Action<float> OnPlayerHit;
     private MeshRenderer meshRen, childMeshRen;
-    private static Health instance;
     [SerializeField]
     private GameObject explosion;
 
     private Color[] eCols, eChildCols;
     [SerializeField]
     private float blinkTime;
+    private static Health instance;
     #endregion
 
     public static Health Instance
@@ -100,6 +100,7 @@ public class Health : MonoBehaviour, IKillable<float>
         {
             GameObject g = Instantiate(explosion, transform.position, transform.rotation);
             g.SetActive(true);
+            FindObjectOfType<AudioManager>().Play("Explosion");
         }
         OnObjectKilled?.Invoke(gameObject);
     }
@@ -115,9 +116,9 @@ public class Health : MonoBehaviour, IKillable<float>
 
     private Color InvertColor(Color orgColor)
     {
-        Color.RGBToHSV(orgColor, out float H, out float S, out float V);
+        //Color.RGBToHSV(orgColor, out float H, out float S, out float V);
 
-        H -= 0.5f;
+        //H -= 0.5f;
 
         //return Color.HSVToRGB(H, S, V);
 

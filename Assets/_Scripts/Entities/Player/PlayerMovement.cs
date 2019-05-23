@@ -1,29 +1,27 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviour, IMoveable
 {
     #region Variables
-    public float tiltValue;
+    [SerializeField]
+    private float tiltValue;
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
     private Vector3 movement, direction;
     #endregion
 
-    private void Start() => MoveSpeed = Player.Instance.GetComponent<EntityBase>().stats.moveSpeed;
-
+    private void Start() => MoveSpeed = GetComponent<EntityBase>().stats.moveSpeed;
     private void OnEnable() => Player.Instance.OnGetMovement += OnGetMovement;
-
     private void OnDisable() => Player.Instance.OnGetMovement -= OnGetMovement;
 
     // Get the input vector2 values
     private void OnGetMovement(Vector2 dir) => direction = dir;
-
     private void FixedUpdate() => Move();
 
     public void Move()

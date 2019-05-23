@@ -19,12 +19,11 @@ public class BulletBase : MonoBehaviour, IMoveable
     [SerializeField]
     protected float selfDestructTime;
     [SerializeField]
-    protected bool addForce;
+    protected bool useAcceleration;
     #endregion
 
     // Destroy self automatically after selfDestructTime seconds
     private void Start() => Invoke("OnBecameInvisible", selfDestructTime);
-
     private void OnTriggerEnter(Collider col)
     {
         if (col.GetComponent<IKillable<float>>() != null && IsTargetTag(col.gameObject.tag))
@@ -52,8 +51,8 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     public void Move()
     {
-        if (addForce) { Rgbd.AddForce(transform.forward * MoveSpeed, ForceMode.VelocityChange); }
-        else { Rgbd.velocity = transform.forward * MoveSpeed; }
+        if (useAcceleration) { Rgbd.AddForce(transform.forward * MoveSpeed, ForceMode.VelocityChange); }
+        else { Rgbd.velocity += transform.forward * MoveSpeed; }
     }
     private void FixedUpdate() => Move();
 
