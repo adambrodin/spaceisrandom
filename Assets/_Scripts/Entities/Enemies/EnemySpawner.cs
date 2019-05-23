@@ -31,10 +31,11 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         GameController.Instance.OnChangeDifficulty += ChangeDifficulty;
+        GameController.Instance.OnGameStart += GameStart;
         GameController.Instance.OnGameOver += GameOver;
-        StartCoroutine(SpawnEnemies());
     }
 
+    private void GameStart() { StartCoroutine(SpawnEnemies()); }
     private void ChangeDifficulty(float value) => difficulty += value;
 
     private void GameOver()

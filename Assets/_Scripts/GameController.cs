@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 #pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
 /* 
@@ -21,9 +22,9 @@ public class Bounds
 public class GameController : MonoBehaviour
 {
     #region Variables
-    public TMPro.TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreText;
     public event Action<float> OnChangeDifficulty;
-    public event Action OnGameOver;
+    public event Action OnGameStart, OnGameOver;
     public RandomColorRange randomColorRange;
     public float increaseDifficultyTime, minIncrease, maxIncrease;
     public Bounds bounds;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private float backgroundFadeInTime, backgroundFadeOutTime, backgroundFadeDelay;
     private static GameController instance;
+    private bool gameRunning;
     #endregion
     // Singleton
     public static GameController Instance
@@ -51,10 +53,20 @@ public class GameController : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-        StartCoroutine(IncreaseDifficulty());
-        StartCoroutine(FlashHealthStatus(Color.green, 3, 1.0f));
-
         Health.Instance.OnPlayerHit += PlayerHit;
+
+        StartCoroutine(FlashHealthStatus(Color.green, 1, 1.0f));
+        StartCoroutine(StartGame());
+        StartCoroutine(IncreaseDifficulty());
+    }
+
+    private IEnumerator StartGame()
+    {
+        gameRunning = true;
+
+        yield return new WaitForSeconds(1f);
+
+        OnGameStart?.Invoke();
     }
 
     private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier)
@@ -72,7 +84,7 @@ public class GameController : MonoBehaviour
         switch (health)
         {
             case 2:
-                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.75f));
+                StartCoroutine(FlashHealthStatus(Color.yellow, 1, 0.75f));
                 break;
             case 1:
                 StartCoroutine(FlashHealthStatus(Color.red, 1, 0.5f));
@@ -102,12 +114,14 @@ public class GameController : MonoBehaviour
     public void ObjectKilled(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
-        if (killReward > 0) ChangeScore(killReward);
+        if (killReward > 0)
+        {
+            ChangeScore(killReward);
+        }
 
         // Destroy the object
         Destroy(obj);
     }
-
     private void GameOver() => OnGameOver?.Invoke();
     public void ChangeScore(int value)
     {

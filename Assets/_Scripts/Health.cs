@@ -18,6 +18,8 @@ public class Health : MonoBehaviour, IKillable<float>
     public event Action<float> OnPlayerHit;
     private MeshRenderer meshRen, childMeshRen;
     private static Health instance;
+    [SerializeField]
+    private GameObject explosion;
 
     private Color[] eCols, eChildCols;
     [SerializeField]
@@ -40,6 +42,11 @@ public class Health : MonoBehaviour, IKillable<float>
             var stats = GetComponent<EntityBase>().stats;
             StartHealth = stats.startHealth;
             KillReward = stats.killReward;
+
+            if (GetComponent<EntityBase>().entityColors != null) { eCols = GetComponent<EntityBase>().entityColors; }
+            if (GetComponent<EntityBase>().entityColors != null) { eChildCols = GetComponent<EntityBase>().entityChildColors; }
+            if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
+            if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
         }
         catch (Exception) { return; }
 
@@ -57,11 +64,6 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public IEnumerator ColorBlink(float blinkTime)
     {
-        if (GetComponent<EntityBase>().entityColors != null) { eCols = GetComponent<EntityBase>().entityColors; }
-        if (GetComponent<EntityBase>().entityColors != null) { eChildCols = GetComponent<EntityBase>().entityChildColors; }
-        if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
-        if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
-
         // Fetch all colors in all materials from the MeshRenderer
         if (meshRen != null)
         {
@@ -92,7 +94,16 @@ public class Health : MonoBehaviour, IKillable<float>
         }
     }
 
-    public void Die() => OnObjectKilled?.Invoke(gameObject);
+    public void Die()
+    {
+        if (explosion != null)
+        {
+            GameObject g = Instantiate(explosion, transform.position, transform.rotation);
+            g.SetActive(true);
+        }
+        OnObjectKilled?.Invoke(gameObject);
+    }
+
     public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed
