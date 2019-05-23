@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
@@ -52,18 +52,18 @@ public class GameController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         StartCoroutine(IncreaseDifficulty());
-        StartCoroutine(FlashHealthStatus(Color.green, 3));
+        StartCoroutine(FlashHealthStatus(Color.green, 3, 1.0f));
 
         Health.Instance.OnPlayerHit += PlayerHit;
     }
 
-    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes)
+    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier)
     {
         // Flash green three times to indicate three hp (full)
         for (int i = 0; i < amountOfFlashes; i++)
         {
-            StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, color, backgroundFadeDelay / 2));
-            yield return new WaitForSeconds(backgroundFadeInTime + backgroundFadeOutTime + backgroundFadeDelay / 2);
+            StartCoroutine(BackgroundFade((backgroundFadeInTime * timeMultiplier), (backgroundFadeOutTime * timeMultiplier), color, (backgroundFadeDelay / 2)));
+            yield return new WaitForSeconds((backgroundFadeInTime * timeMultiplier) + (backgroundFadeOutTime * timeMultiplier) + (backgroundFadeDelay * timeMultiplier) / 2);
         }
     }
 
@@ -72,13 +72,13 @@ public class GameController : MonoBehaviour
         switch (health)
         {
             case 2:
-                StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, Color.yellow, backgroundFadeDelay));
+                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.75f));
                 break;
             case 1:
-                StartCoroutine(BackgroundFade(backgroundFadeInTime, backgroundFadeOutTime, Color.red, backgroundFadeDelay));
+                StartCoroutine(FlashHealthStatus(Color.red, 1, 0.5f));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(Color.white, 3));
+                StartCoroutine(FlashHealthStatus(Color.white, 3, 0.33f));
                 GameOver();
                 break;
         }

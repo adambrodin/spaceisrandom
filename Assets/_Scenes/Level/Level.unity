@@ -505,7 +505,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223806087}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
   m_Name: 
@@ -680,9 +680,9 @@ MonoBehaviour:
     xMax: 170
     zMin: -90
     zMax: 90
-  backgroundFadeInTime: 1
+  backgroundFadeInTime: 0.5
   backgroundFadeOutTime: 0.5
-  backgroundFadeDelay: 0.5
+  backgroundFadeDelay: 0.2
 --- !u!1 &1394086561
 GameObject:
   m_ObjectHideFlags: 0

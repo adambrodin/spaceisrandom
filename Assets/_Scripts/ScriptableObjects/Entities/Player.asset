@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff376a3d3645e349b05af6f5c76981b, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 125
   startHealth: 3
   weaponCooldown: 0.1
   killReward: 0
