@@ -604,8 +604,6 @@ MonoBehaviour:
   backgroundFadeInTime: 0.4
   backgroundFadeOutTime: 0.4
   backgroundFadeDelay: 0.4
-  popupText: {fileID: 1420190127276652907, guid: 1d1d8dab5b6ab914480377fdba6a845a,
-    type: 3}
 --- !u!1 &1394086561
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
 /* 
  * Developed by Adam Brodin
@@ -44,6 +45,8 @@ public class GameController : MonoBehaviour
             return instance;
         }
     }
+
+    public void Restart() => SceneManager.LoadScene("Level");
 
     private void Start()
     {
@@ -91,6 +94,7 @@ public class GameController : MonoBehaviour
                 break;
             case 0:
                 StartCoroutine(FlashHealthStatus(Color.white, 3, 0.33f));
+                SceneManager.LoadScene("Level"); // TODO REMOVE - IMPLEMENT BETTER
                 GameOver();
                 break;
         }
