@@ -16,13 +16,11 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public event Action<GameObject> OnObjectKilled;
     public event Action<float> OnPlayerHit;
-    private MeshRenderer meshRen, childMeshRen;
     [SerializeField]
     private GameObject explosion;
-
-    private Color[] eCols, eChildCols;
     [SerializeField]
     private float blinkTime;
+    private EntityBase entity;
     private static Health instance;
     #endregion
 
@@ -39,14 +37,9 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         try
         {
-            var stats = GetComponent<EntityBase>().stats;
-            StartHealth = stats.startHealth;
-            KillReward = stats.killReward;
-
-            if (GetComponent<EntityBase>().entityColors != null) { eCols = GetComponent<EntityBase>().entityColors; }
-            if (GetComponent<EntityBase>().entityColors != null) { eChildCols = GetComponent<EntityBase>().entityChildColors; }
-            if (GetComponent<MeshRenderer>() != null) meshRen = GetComponent<MeshRenderer>();
-            if (GetComponentInChildren<MeshRenderer>() != null) childMeshRen = GetComponentInChildren<MeshRenderer>();
+            entity = GetComponent<EntityBase>();
+            StartHealth = entity.stats.startHealth;
+            KillReward = entity.stats.killReward;
         }
         catch (Exception) { return; }
 
@@ -58,53 +51,71 @@ public class Health : MonoBehaviour, IKillable<float>
     {
         CurrentHealth -= damage;
         if (gameObject.tag == "Player") { OnPlayerHit?.Invoke(CurrentHealth); }
-        StartCoroutine(ColorBlink(blinkTime));
+        StartCoroutine(ColorBlink());
         if (IsDead()) { Die(); }
     }
 
-    public IEnumerator ColorBlink(float blinkTime)
+    public IEnumerator ColorBlink()
     {
-        // Fetch all colors in all materials from the MeshRenderer
-        if (meshRen != null)
+        for (int rend = 0; rend < entity.renderers.Length; rend++)
         {
-            for (int i = 0; i < meshRen.materials.Length; i++)
+            for (int mat = 0; mat < entity.renderers[rend].materials.Length; mat++)
             {
-                meshRen.materials[i].SetColor("_BaseColor", InvertColor(meshRen.materials[i].color));
+                entity.renderers[rend].materials[mat].SetColor("_BaseColor", InvertColor(Color.white));
+                entity.renderers[rend].materials[mat].SetColor("_EmissionColor", InvertColor(Color.white));
             }
         }
-        if (childMeshRen != null)
-        {
-            for (int i = 0; i < childMeshRen.materials.Length; i++)
-            {
-                childMeshRen.materials[i].SetColor("_BaseColor", InvertColor(childMeshRen.materials[i].color));
-            }
-        }
+
         yield return new WaitForSeconds(blinkTime);
 
-        // Set the materials colors back to how they originally were
-        for (int i = 0; i < eCols.Length; i++)
+        for (int rend = 0; rend < entity.renderers.Length; rend++)
         {
-            if (meshRen != null) meshRen.materials[i].SetColor("_BaseColor", eCols[i]);
-            if (meshRen != null) meshRen.materials[i].SetColor("_EmissionColor", eCols[i]);
-        }
-        for (int i = 0; i < eChildCols.Length; i++)
-        {
-            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_BaseColor", eChildCols[i]);
-            if (childMeshRen != null) childMeshRen.materials[i].SetColor("_EmissionColor", eChildCols[i]);
+            for (int mat = 0; mat < entity.renderers[rend].materials.Length; mat++)
+            {
+                entity.renderers[rend].materials[mat].SetColor("_BaseColor", entity.renderersInfo[rend].materials[mat].GetColor("_BaseColor"));
+                entity.renderers[rend].materials[mat].SetColor("_EmissionColor", entity.renderersInfo[rend].materials[mat].GetColor("_EmissionColor"));
+            }
         }
     }
 
     public void Die()
     {
+        //SpawnExplosion();
+        OnObjectKilled?.Invoke(gameObject);
+    }
+
+    /* private void SpawnExplosion()
+    {
         if (explosion != null)
         {
             GameObject g = Instantiate(explosion, transform.position, transform.rotation);
             g.SetActive(true);
-            FindObjectOfType<AudioManager>().Play("Explosion");
-        }
-        OnObjectKilled?.Invoke(gameObject);
-    }
 
+            if (g.GetComponent<ParticleSystem>().GetComponent<Renderer>() != null)
+            {
+                Renderer rend = g.GetComponent<ParticleSystem>().GetComponent<Renderer>();
+                if (eCols != null && eChildCols != null)
+                {
+                    rend.material.SetColor("_BaseColor", eCols[0]);
+                    rend.material.SetColor("_EmissionColor", eChildCols[0]);
+                }
+                else if (eCols != null && eChildCols == null)
+                {
+                    rend.material.SetColor("_BaseColor", eCols[0]);
+                    if (eCols[1] != null) rend.material.SetColor("_EmissionColor", eCols[0]);
+                    else { rend.material.SetColor("_EmissionColor", eCols[0]); }
+                }
+                else if (eCols == null && eChildCols != null)
+                {
+                    rend.material.SetColor("_BaseColor", eChildCols[0]);
+                    if (eChildCols[1] != null) rend.material.SetColor("_EmissionColor", eChildCols[0]);
+                    else { rend.material.SetColor("_EmissionColor", eChildCols[0]); }
+                }
+            }
+            else { if (Debug.isDebugBuild) { print("Explosion renderer not found."); } }
+            FindObjectOfType<AudioManager>().SetPlaying("Explosion", true);
+        }
+    } */
     public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed

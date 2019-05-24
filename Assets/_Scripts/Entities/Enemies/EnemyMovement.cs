@@ -20,9 +20,12 @@ public class EnemyMovement : TargetTracker
         if (rgbd.position.z <= GameController.Instance.bounds.zMin - boundsOffset) { Destroy(gameObject); }
         if ((distanceToTarget <= followMaxDistance && distanceToTarget > slowDownDistance) && followPlayer)
         {
-            targetDir = targetRgbd.position - rgbd.position;
-            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
-            newPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step * slowSpeedMultiplier);
+            if (targetRgbd != null)
+            {
+                targetDir = targetRgbd.position - rgbd.position;
+                newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+                newPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, step * slowSpeedMultiplier);
+            }
         }
 
         else if (targetRgbd != null && ((Vector3.Distance(rgbd.position, targetRgbd.position) > followMaxDistance) || !followPlayer))

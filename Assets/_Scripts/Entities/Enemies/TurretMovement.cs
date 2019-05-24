@@ -26,22 +26,26 @@ public class TurretMovement : TargetTracker
         newPos = new Vector3(rgbd.position.x, rgbd.position.y, targetZ);
 
         // IF the target has been reached, rotate the turret towards the player
-        if (reachedTargetZ && targetRgbd != null)
+
+        if (targetRgbd != null)
         {
-            targetDir = targetRgbd.position - rgbd.position;
-            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
-        }
+            if (reachedTargetZ)
+            {
+                targetDir = targetRgbd.position - rgbd.position;
+                newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+            }
 
-        // When the target is first reached
-        if (rgbd.position.z == targetZ && !reachedTargetZ)
-        {
-            reachedTargetZ = true;
+            // When the target is first reached
+            if (rgbd.position.z == targetZ && !reachedTargetZ)
+            {
+                reachedTargetZ = true;
 
-            targetDir = targetRgbd.position - rgbd.position;
-            newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
+                targetDir = targetRgbd.position - rgbd.position;
+                newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
 
-            // Starts the automatic shooting after a small delay
-            GetComponent<TurretWeapon>().Invoke("Shoot", timeBeforeShoot);
+                // Starts the automatic shooting after a small delay
+                GetComponent<TurretWeapon>().Invoke("Shoot", timeBeforeShoot);
+            }
         }
     }
 }

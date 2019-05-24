@@ -34,9 +34,8 @@ public class EnemySpawner : MonoBehaviour
         GameController.Instance.OnGameOver += GameOver;
     }
 
-    private void GameStart() { StartCoroutine(SpawnEnemies()); }
     private void ChangeDifficulty(float value) => difficulty += value;
-
+    private void GameStart() { StartCoroutine(SpawnEnemies()); }
     private void GameOver()
     {
         // Destroy self, stop spawning enemies

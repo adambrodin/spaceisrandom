@@ -28,12 +28,10 @@ public abstract class WeaponBase : MonoBehaviour
     protected IEnumerator Cooldown()
     {
         if (canShoot) { canShoot = false; }
-        // Exit the couroutine to prevent unnecessary compiling
-        else { yield break; }
+        else { yield break; } // Exit the couroutine to prevent unnecessary compiling
 
         yield return new WaitForSeconds(WeaponCooldown);
         canShoot = true;
-
         if (autoShoot) { Shoot(); }
     }
 
@@ -61,11 +59,16 @@ public abstract class WeaponBase : MonoBehaviour
     private void SpawnBullet(GameObject obj, Vector3 pos, Quaternion rot)
     {
         GameObject spawnedObj = Instantiate(obj, pos, rot);
-        if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
-        if (playFireSound && fireSoundName != null && fireSoundName != "") { FindObjectOfType<AudioManager>().Play(fireSoundName); }
+        //if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
+        if (playFireSound && fireSoundName != null && fireSoundName != "")
+        {
+            float randomPitch = UnityEngine.Random.Range(0.8f, 1f);
+            FindObjectOfType<AudioManager>().Set(fireSoundName, randomPitch, 1f);
+            FindObjectOfType<AudioManager>().SetPlaying(fireSoundName, true);
+        }
     }
 
-    private void BulletToParentColor(GameObject obj)
+    /* private void BulletToParentColor(GameObject obj)
     {
         Material m = new Material(obj.GetComponentInChildren<MeshRenderer>().sharedMaterial);
         if (GetComponent<EntityBase>().entityColors != null && GetComponent<EntityBase>().entityColors.Length > 0)
@@ -79,5 +82,5 @@ public abstract class WeaponBase : MonoBehaviour
             m.SetColor("_EmissionColor", GetComponent<EntityBase>().entityChildColors[0]);
         }
         obj.GetComponentInChildren<MeshRenderer>().material = m;
-    }
+    }*/
 }

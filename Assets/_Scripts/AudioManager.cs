@@ -16,7 +16,9 @@ public class Sound
     [HideInInspector]
     public AudioSource source;
     [Range(0f, 1f)]
-    public float volume, pitch;
+    public float volume;
+    [Range(0f, 2f)]
+    public float pitch;
     #endregion
 }
 
@@ -38,15 +40,30 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(string name)
+    private Sound GetSound(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
             if (Debug.isDebugBuild) { print($"Sound: {name} not found."); }
-            return;
+            return null;
         }
+        return s;
+    }
 
-        s.source.Play();
+    public void Set(string name, float pitch, float volume)
+    {
+        Sound sound = GetSound(name);
+        if (sound != null)
+        {
+            if (sound.source.pitch != pitch) sound.source.pitch = pitch;
+            if (sound.source.volume != volume) sound.source.volume *= volume;
+        }
+    }
+
+    public void SetPlaying(string name, bool shouldPlay)
+    {
+        if (shouldPlay) GetSound(name).source.Play();
+        if (!shouldPlay) GetSound(name).source.Stop();
     }
 }

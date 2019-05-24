@@ -55,9 +55,11 @@ public class GameController : MonoBehaviour
         }
         Health.Instance.OnPlayerHit += PlayerHit;
 
-        FindObjectOfType<AudioManager>().Play("BackgroundMusic");
+        FindObjectOfType<AudioManager>().SetPlaying("BackgroundMusic", true);
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", UnityEngine.Random.Range(0.9f, 1f), 1f);
+
         StartCoroutine(StartGame());
-        StartCoroutine(FlashHealthStatus(Color.green, 1, 1.0f));
+        StartCoroutine(FlashHealthStatus(Color.green, 3, 1.0f));
         StartCoroutine(IncreaseDifficulty());
     }
 
@@ -73,6 +75,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < amountOfFlashes; i++)
         {
             StartCoroutine(BackgroundFade((backgroundFadeInTime * timeMultiplier), (backgroundFadeOutTime * timeMultiplier), color, (backgroundFadeDelay / 2)));
+            FindObjectOfType<AudioManager>().SetPlaying("HealthIndicator", true);
             yield return new WaitForSeconds((backgroundFadeInTime * timeMultiplier) + (backgroundFadeOutTime * timeMultiplier) + (backgroundFadeDelay * timeMultiplier) / 2);
         }
     }
@@ -82,15 +85,15 @@ public class GameController : MonoBehaviour
         switch (health)
         {
             case 2:
-                StartCoroutine(FlashHealthStatus(Color.yellow, 1, 0.75f));
+                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.75f));
                 break;
             case 1:
                 StartCoroutine(FlashHealthStatus(Color.red, 1, 0.5f));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(Color.white, 3, 0.33f));
-                Restart(); // TODO implement better
-                GameOver();
+                StartCoroutine(FlashHealthStatus(Color.white, 5, 0.1f));
+                // Restart(); // TODO implement better
+                StartCoroutine(GameOver());
                 break;
         }
     }
@@ -121,7 +124,14 @@ public class GameController : MonoBehaviour
         // Destroy the object
         Destroy(obj);
     }
-    private void GameOver() => OnGameOver?.Invoke();
+    private IEnumerator GameOver()
+    {
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.25f);
+        FindObjectOfType<AudioManager>().SetPlaying("GameOver", true);
+        yield return new WaitForSeconds(2f);
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 4f);
+        //OnGameOver?.Invoke();
+    }
     public void ChangeScore(int value)
     {
         score += value;

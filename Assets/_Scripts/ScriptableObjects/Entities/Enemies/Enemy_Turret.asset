@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Turret
   m_EditorClassIdentifier: 
   moveSpeed: 65
-  startHealth: 5
+  startHealth: 7
   weaponCooldown: 2
   killReward: 250
   type: 1
