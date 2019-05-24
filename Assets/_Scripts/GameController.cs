@@ -8,13 +8,12 @@ using UnityEngine.SceneManagement;
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-[Serializable]
+[System.Serializable]
 public class RandomColorRange
 {
     public float hueMin, hueMax, saturationMin, saturationMax, valueMin, valueMax, alphaMin = 1f, alphaMax = 1f;
 }
-
-[Serializable]
+[System.Serializable]
 public class Bounds
 {
     public float xMin, xMax, zMin, zMax;
@@ -23,7 +22,10 @@ public class Bounds
 public class GameController : MonoBehaviour
 {
     #region Variables
-    public TextMeshProUGUI scoreText;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private GameObject gameOverPanel;
     public event Action<float> OnChangeDifficulty;
     public event Action OnGameStart, OnGameOver;
     public RandomColorRange randomColorRange;
@@ -43,8 +45,6 @@ public class GameController : MonoBehaviour
             return instance;
         }
     }
-
-    public void Restart() => SceneManager.LoadScene("Level");
     private void Start()
     {
         // Hide the cursor on release build
@@ -56,26 +56,27 @@ public class GameController : MonoBehaviour
         Health.Instance.OnPlayerHit += PlayerHit;
 
         FindObjectOfType<AudioManager>().SetPlaying("BackgroundMusic", true);
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", UnityEngine.Random.Range(0.9f, 1f), 1f);
+        //FindObjectOfType<AudioManager>().Set("BackgroundMusic", UnityEngine.Random.Range(0.95f, 1f), 1f); // TODO FIX
 
         StartCoroutine(StartGame());
-        StartCoroutine(FlashHealthStatus(Color.green, 3, 1.0f));
         StartCoroutine(IncreaseDifficulty());
     }
 
     private IEnumerator StartGame()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(FlashHealthStatus(Color.green, 3, 1f, 0.25f));
         OnGameStart?.Invoke();
     }
 
-    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier)
+    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier, float volumeScale)
     {
         // Flash green three times to indicate three hp (full)
         for (int i = 0; i < amountOfFlashes; i++)
         {
             StartCoroutine(BackgroundFade((backgroundFadeInTime * timeMultiplier), (backgroundFadeOutTime * timeMultiplier), color, (backgroundFadeDelay / 2)));
             FindObjectOfType<AudioManager>().SetPlaying("HealthIndicator", true);
+            //FindObjectOfType<AudioManager>().Set("HealthIndicator", 1f, volumeScale); TODO FIX
             yield return new WaitForSeconds((backgroundFadeInTime * timeMultiplier) + (backgroundFadeOutTime * timeMultiplier) + (backgroundFadeDelay * timeMultiplier) / 2);
         }
     }
@@ -85,13 +86,13 @@ public class GameController : MonoBehaviour
         switch (health)
         {
             case 2:
-                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.75f));
+                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.66f, 0.5f));
                 break;
             case 1:
-                StartCoroutine(FlashHealthStatus(Color.red, 1, 0.5f));
+                StartCoroutine(FlashHealthStatus(Color.red, 1, 0.33f, 0.85f));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(Color.white, 5, 0.1f));
+                StartCoroutine(FlashHealthStatus(Color.white, 5, 0.1f, 1f));
                 // Restart(); // TODO implement better
                 StartCoroutine(GameOver());
                 break;
@@ -126,11 +127,12 @@ public class GameController : MonoBehaviour
     }
     private IEnumerator GameOver()
     {
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.25f);
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.1f);
         FindObjectOfType<AudioManager>().SetPlaying("GameOver", true);
-        yield return new WaitForSeconds(2f);
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 4f);
-        //OnGameOver?.Invoke();
+        yield return new WaitForSeconds(3f);
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 1.0f);
+        gameOverPanel.SetActive(true);
+        OnGameOver?.Invoke();
     }
     public void ChangeScore(int value)
     {
@@ -142,7 +144,6 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(increaseDifficultyTime);
         OnChangeDifficulty?.Invoke(UnityEngine.Random.Range(minIncrease, maxIncrease));
-
         StartCoroutine(IncreaseDifficulty());
     }
 }

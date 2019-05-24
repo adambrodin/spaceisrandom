@@ -1,46 +1,42 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-public class RendererInfo
-{
-    public Renderer renderer;
-    public Material[] materials;
 
-    public RendererInfo(Renderer rend, Material[] mats)
-    {
-        this.renderer = rend;
-        this.materials = mats;
-    }
-}
 public abstract class EntityBase : MonoBehaviour
 {
+    #region Variables
     public EntityStats stats;
     [HideInInspector]
     public Renderer[] renderers;
-    public RendererInfo[] renderersInfo;
 
     protected virtual void Awake() => RandomizeColors();
 
+    /// <param name="int">Renderer Index</param>
+    public Dictionary<int, Material[]> originalMaterials = new Dictionary<int, Material[]>();
+    #endregion
+
     /// <summary>
-    /// Finds the correct MeshRenderer and sets a randomized color
-    /// based on a set color scheme (RandomColorRange) for all materials in the renderer
+    /// Loops through each Renderer in the object and sets the color(s) of the material(s) based on a set color scheme (RandomColorRange) 
     /// </summary>
     protected void RandomizeColors()
     {
-        renderers = new Renderer[FindObjectsOfType<Renderer>().Length];
-        renderersInfo = new RendererInfo[renderers.Length];
-
+        renderers = new Renderer[GetComponentsInChildren<Renderer>().Length];
         for (int rend = 0; rend < renderers.Length; rend++)
         {
-            renderers[rend] = FindObjectsOfType<Renderer>()[rend];
+            renderers[rend] = GetComponentsInChildren<Renderer>()[rend];
             for (int mat = 0; mat < renderers[rend].materials.Length; mat++)
             {
-                renderersInfo[rend] = new RendererInfo(renderers[rend], renderers[rend].materials);
-                renderersInfo[rend].materials[mat].SetColor("_BaseColor", RandomizedColor());
-                renderersInfo[rend].materials[mat].SetColor("_EmissionColor", RandomizedColor());
+                Color randomizedColor = RandomizedColor();
+                renderers[rend].materials[mat].SetColor("_BaseColor", randomizedColor);
+                renderers[rend].materials[mat].SetColor("_EmissionColor", randomizedColor);
             }
+
+            Material[] originalMatArray = new Material[renderers[rend].materials.Length];
+            for (int i = 0; i < originalMatArray.Length; i++) { originalMatArray[i] = new Material(renderers[rend].materials[i]); }
+            originalMaterials.Add(rend, originalMatArray);
         }
     }
 

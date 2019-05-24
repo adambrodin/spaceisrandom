@@ -49,7 +49,7 @@ MonoBehaviour:
   targetTags:
   - Player
   selfDestructTime: 2
-  addForce: 1
+  useAcceleration: 0
 --- !u!54 &888839252346973060
 Rigidbody:
   m_ObjectHideFlags: 0

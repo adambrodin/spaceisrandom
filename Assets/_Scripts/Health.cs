@@ -39,11 +39,11 @@ public class Health : MonoBehaviour, IKillable<float>
         {
             entity = GetComponent<EntityBase>();
             StartHealth = entity.stats.startHealth;
+            CurrentHealth = StartHealth;
             KillReward = entity.stats.killReward;
         }
         catch (Exception) { return; }
 
-        CurrentHealth = StartHealth;
         OnObjectKilled += GameController.Instance.ObjectKilled;
     }
 
@@ -61,61 +61,37 @@ public class Health : MonoBehaviour, IKillable<float>
         {
             for (int mat = 0; mat < entity.renderers[rend].materials.Length; mat++)
             {
-                entity.renderers[rend].materials[mat].SetColor("_BaseColor", InvertColor(Color.white));
-                entity.renderers[rend].materials[mat].SetColor("_EmissionColor", InvertColor(Color.white));
+                entity.renderers[rend].materials[mat].SetColor("_BaseColor", InvertColor(entity.renderers[rend].materials[mat].GetColor("_BaseColor")));
+                entity.renderers[rend].materials[mat].SetColor("_EmissionColor", InvertColor(entity.renderers[rend].materials[mat].GetColor("_EmissionColor")));
             }
         }
-
         yield return new WaitForSeconds(blinkTime);
-
-        for (int rend = 0; rend < entity.renderers.Length; rend++)
-        {
-            for (int mat = 0; mat < entity.renderers[rend].materials.Length; mat++)
-            {
-                entity.renderers[rend].materials[mat].SetColor("_BaseColor", entity.renderersInfo[rend].materials[mat].GetColor("_BaseColor"));
-                entity.renderers[rend].materials[mat].SetColor("_EmissionColor", entity.renderersInfo[rend].materials[mat].GetColor("_EmissionColor"));
-            }
-        }
+        for (int i = 0; i < entity.originalMaterials.Count; i++) { entity.renderers[i].materials = entity.originalMaterials[i]; }
     }
 
     public void Die()
     {
-        //SpawnExplosion();
+        SpawnExplosion();
         OnObjectKilled?.Invoke(gameObject);
     }
 
-    /* private void SpawnExplosion()
+    private void SpawnExplosion()
     {
         if (explosion != null)
         {
             GameObject g = Instantiate(explosion, transform.position, transform.rotation);
             g.SetActive(true);
-
             if (g.GetComponent<ParticleSystem>().GetComponent<Renderer>() != null)
             {
                 Renderer rend = g.GetComponent<ParticleSystem>().GetComponent<Renderer>();
-                if (eCols != null && eChildCols != null)
-                {
-                    rend.material.SetColor("_BaseColor", eCols[0]);
-                    rend.material.SetColor("_EmissionColor", eChildCols[0]);
-                }
-                else if (eCols != null && eChildCols == null)
-                {
-                    rend.material.SetColor("_BaseColor", eCols[0]);
-                    if (eCols[1] != null) rend.material.SetColor("_EmissionColor", eCols[0]);
-                    else { rend.material.SetColor("_EmissionColor", eCols[0]); }
-                }
-                else if (eCols == null && eChildCols != null)
-                {
-                    rend.material.SetColor("_BaseColor", eChildCols[0]);
-                    if (eChildCols[1] != null) rend.material.SetColor("_EmissionColor", eChildCols[0]);
-                    else { rend.material.SetColor("_EmissionColor", eChildCols[0]); }
-                }
+                entity.originalMaterials.TryGetValue(0, out Material[] parentMaterials);
+                rend.material.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+                rend.material.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
             }
-            else { if (Debug.isDebugBuild) { print("Explosion renderer not found."); } }
+            else if (Debug.isDebugBuild) { print("Explosion renderer not found."); }
             FindObjectOfType<AudioManager>().SetPlaying("Explosion", true);
         }
-    } */
+    }
     public bool IsDead() => CurrentHealth <= 0;
 
     // Make sure the values remain the same whenever they are changed
@@ -127,13 +103,9 @@ public class Health : MonoBehaviour, IKillable<float>
 
     private Color InvertColor(Color orgColor)
     {
-        //Color.RGBToHSV(orgColor, out float H, out float S, out float V);
-
-        //H -= 0.5f;
-
-        //return Color.HSVToRGB(H, S, V);
-
-        // TODO FIX PROPER INVERTION
-        return Color.white;
+        // Return the opposite color (color wheel)
+        Color.RGBToHSV(orgColor, out float H, out float S, out float V);
+        H -= 0.5f;
+        return Color.HSVToRGB(H, S, V);
     }
 }

@@ -59,7 +59,7 @@ public abstract class WeaponBase : MonoBehaviour
     private void SpawnBullet(GameObject obj, Vector3 pos, Quaternion rot)
     {
         GameObject spawnedObj = Instantiate(obj, pos, rot);
-        //if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
+        if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
         if (playFireSound && fireSoundName != null && fireSoundName != "")
         {
             float randomPitch = UnityEngine.Random.Range(0.8f, 1f);
@@ -68,19 +68,12 @@ public abstract class WeaponBase : MonoBehaviour
         }
     }
 
-    /* private void BulletToParentColor(GameObject obj)
+    private void BulletToParentColor(GameObject obj)
     {
         Material m = new Material(obj.GetComponentInChildren<MeshRenderer>().sharedMaterial);
-        if (GetComponent<EntityBase>().entityColors != null && GetComponent<EntityBase>().entityColors.Length > 0)
-        {
-            m.SetColor("_BaseColor", GetComponent<EntityBase>().entityColors[0]);
-            m.SetColor("_EmissionColor", GetComponent<EntityBase>().entityColors[0]);
-        }
-        if (GetComponent<EntityBase>().entityChildColors != null && GetComponent<EntityBase>().entityChildColors.Length > 0)
-        {
-            m.SetColor("_BaseColor", GetComponent<EntityBase>().entityChildColors[0]);
-            m.SetColor("_EmissionColor", GetComponent<EntityBase>().entityChildColors[0]);
-        }
+        GetComponent<EntityBase>().originalMaterials.TryGetValue(0, out Material[] parentMaterials);
+        m.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+        m.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
         obj.GetComponentInChildren<MeshRenderer>().material = m;
-    }*/
+    }
 }

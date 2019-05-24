@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
@@ -38,7 +39,6 @@ public class PlayerMovement : MonoBehaviour, IMoveable
         movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
         Rgbd.velocity = movement * MoveSpeed;
         Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
-
         // Add score whenever the player moves inside the level
         MoveScore();
     }
@@ -59,10 +59,6 @@ public class PlayerMovement : MonoBehaviour, IMoveable
             // Avoid constantly changing score by 0 when not moving
             if (moveScore != 0) GameController.Instance.ChangeScore(moveScore);
         }
-        else
-        {
-            // Outside of level bounds
-            return;
-        }
+        else { return; } // Out of bounds
     }
 }
