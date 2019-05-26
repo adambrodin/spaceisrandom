@@ -37,13 +37,7 @@ public class BulletBase : MonoBehaviour, IMoveable
 
     private bool IsTargetTag(String targetTag)
     {
-        foreach (string tag in targetTags)
-        {
-            if (tag == targetTag)
-            {
-                return true;
-            }
-        }
+        foreach (string tag in targetTags) { if (tag == targetTag) { return true; } }
 
         // If no tag similarity is found
         return false;

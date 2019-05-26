@@ -5,6 +5,7 @@
  * https://github.com/AdamBrodin
  */
 
+[RequireComponent(typeof(Turret))]
 public class TurretMovement : TargetTracker
 {
     #region Variables
@@ -24,7 +25,6 @@ public class TurretMovement : TargetTracker
     {
         // Move downwards to targetZ position
         newPos = new Vector3(rgbd.position.x, rgbd.position.y, targetZ);
-
         // IF the target has been reached, rotate the turret towards the player
 
         if (targetRgbd != null)

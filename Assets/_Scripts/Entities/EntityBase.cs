@@ -12,11 +12,14 @@ public abstract class EntityBase : MonoBehaviour
     [HideInInspector]
     public Renderer[] renderers;
 
-    protected virtual void Awake() => RandomizeColors();
-
     /// <param name="int">Renderer Index</param>
     public Dictionary<int, Material[]> originalMaterials = new Dictionary<int, Material[]>();
     #endregion
+
+    protected virtual void Awake()
+    {
+        RandomizeColors();
+    }
 
     /// <summary>
     /// Loops through each Renderer in the object and sets the color(s) of the material(s) based on a set color scheme (RandomColorRange) 

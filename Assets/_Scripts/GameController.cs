@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
     public event Action<float> OnChangeDifficulty;
-    public event Action OnGameStart, OnGameOver;
+    public event Action OnGameStart;
     public RandomColorRange randomColorRange;
     public Bounds bounds;
     private int score;
@@ -56,8 +56,6 @@ public class GameController : MonoBehaviour
         Health.Instance.OnPlayerHit += PlayerHit;
 
         FindObjectOfType<AudioManager>().SetPlaying("BackgroundMusic", true);
-        //FindObjectOfType<AudioManager>().Set("BackgroundMusic", UnityEngine.Random.Range(0.95f, 1f), 1f); // TODO FIX
-
         StartCoroutine(StartGame());
         StartCoroutine(IncreaseDifficulty());
     }
@@ -65,18 +63,18 @@ public class GameController : MonoBehaviour
     private IEnumerator StartGame()
     {
         yield return new WaitForSeconds(2f);
-        StartCoroutine(FlashHealthStatus(Color.green, 3, 1f, 0.25f));
+        StartCoroutine(FlashHealthStatus(Color.green, 3, 1f, 1f));
         OnGameStart?.Invoke();
     }
 
-    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier, float volumeScale)
+    private IEnumerator FlashHealthStatus(Color color, int amountOfFlashes, float timeMultiplier, float volume)
     {
         // Flash green three times to indicate three hp (full)
         for (int i = 0; i < amountOfFlashes; i++)
         {
             StartCoroutine(BackgroundFade((backgroundFadeInTime * timeMultiplier), (backgroundFadeOutTime * timeMultiplier), color, (backgroundFadeDelay / 2)));
+            FindObjectOfType<AudioManager>().Set("HealthIndicator", FindObjectOfType<AudioManager>().GetSound("HealthIndicator").pitch, volume);
             FindObjectOfType<AudioManager>().SetPlaying("HealthIndicator", true);
-            //FindObjectOfType<AudioManager>().Set("HealthIndicator", 1f, volumeScale); TODO FIX
             yield return new WaitForSeconds((backgroundFadeInTime * timeMultiplier) + (backgroundFadeOutTime * timeMultiplier) + (backgroundFadeDelay * timeMultiplier) / 2);
         }
     }
@@ -92,8 +90,7 @@ public class GameController : MonoBehaviour
                 StartCoroutine(FlashHealthStatus(Color.red, 1, 0.33f, 0.85f));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(Color.white, 5, 0.1f, 1f));
-                // Restart(); // TODO implement better
+                StartCoroutine(FlashHealthStatus(Color.white, 15, 0.15f, 1f));
                 StartCoroutine(GameOver());
                 break;
         }
@@ -104,13 +101,11 @@ public class GameController : MonoBehaviour
         for (float time = 0f; time < timeToFadeIn; time += 0.01f)
         {
             Camera.main.backgroundColor = Color.Lerp(Color.black, targetColor, time / timeToFadeIn);
-            yield return null;
         }
-        if (delay > 0) yield return new WaitForSeconds(delay);
+        if (delay > 0) { yield return new WaitForSeconds(delay); }
         for (float time = 0f; time < timeToFadeOut; time += 0.01f)
         {
             Camera.main.backgroundColor = Color.Lerp(targetColor, Color.black, time / timeToFadeOut);
-            yield return null;
         }
     }
 
@@ -130,9 +125,13 @@ public class GameController : MonoBehaviour
         FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.1f);
         FindObjectOfType<AudioManager>().SetPlaying("GameOver", true);
         yield return new WaitForSeconds(3f);
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 1.0f);
+        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.8f);
         gameOverPanel.SetActive(true);
-        OnGameOver?.Invoke();
+
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(g.gameObject);
+        }
     }
     public void ChangeScore(int value)
     {

@@ -31,29 +31,10 @@ public class EnemySpawner : MonoBehaviour
     {
         GameController.Instance.OnChangeDifficulty += ChangeDifficulty;
         GameController.Instance.OnGameStart += GameStart;
-        GameController.Instance.OnGameOver += GameOver;
     }
 
     private void ChangeDifficulty(float value) => difficulty += value;
     private void GameStart() { StartCoroutine(SpawnEnemies()); }
-    private void GameOver()
-    {
-        // Destroy self, stop spawning enemies
-        GameObject[] enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemiesInScene)
-        {
-            try
-            {
-                Destroy(enemy.transform.parent.gameObject);
-            }
-            catch (Exception)
-            {
-                Destroy(enemy);
-            }
-        }
-
-        Destroy(gameObject);
-    }
 
     private bool ChanceChecker(int chance)
     {

@@ -20,17 +20,27 @@ public class TurretWeapon : WeaponBase
             firingMode = FireMode.multiple;
         }
         else { firingMode = FireMode.cycling; }
+
+        if (bulletObj.GetComponent<TrailRenderer>() != null && GetComponent<EntityBase>() != null)
+        {
+            if ((bulletObj.GetComponent<TrailRenderer>().sharedMaterial) != null)
+            {
+                GetComponent<EntityBase>().originalMaterials.TryGetValue(0, out Material[] parentMaterials);
+                Material trailMaterial = new Material(bulletObj.GetComponent<TrailRenderer>().sharedMaterial);
+                trailMaterial.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+                trailMaterial.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
+                bulletObj.GetComponent<TrailRenderer>().material = trailMaterial;
+            }
+        }
     }
 
     private bool ChanceChecker(float chance)
     {
         if (randomizer == null) { randomizer = new System.Random(); }
-
         if (randomizer.Next(100) < chance)
         {
             return true;
         }
-
         return false;
     }
 }

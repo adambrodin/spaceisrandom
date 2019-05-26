@@ -53,7 +53,6 @@ public abstract class WeaponBase : MonoBehaviour
             // Wait before firing again
             if (WeaponCooldown > 0) StartCoroutine(Cooldown());
         }
-        else { return; }
     }
 
     private void SpawnBullet(GameObject obj, Vector3 pos, Quaternion rot)
@@ -62,8 +61,8 @@ public abstract class WeaponBase : MonoBehaviour
         if (changeBulletToParentColor) { BulletToParentColor(spawnedObj); }
         if (playFireSound && fireSoundName != null && fireSoundName != "")
         {
-            float randomPitch = UnityEngine.Random.Range(0.8f, 1f);
-            FindObjectOfType<AudioManager>().Set(fireSoundName, randomPitch, 1f);
+            float randomPitch = UnityEngine.Random.Range(0.9f, 1f);
+            FindObjectOfType<AudioManager>().Set(fireSoundName, randomPitch, FindObjectOfType<AudioManager>().GetSound(fireSoundName).source.volume);
             FindObjectOfType<AudioManager>().SetPlaying(fireSoundName, true);
         }
     }

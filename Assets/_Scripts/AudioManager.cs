@@ -26,6 +26,8 @@ public class AudioManager : MonoBehaviour
 {
     #region Variables
     public Sound[] sounds;
+    [SerializeField]
+    private bool globalMute;
     #endregion
 
     private void Awake()
@@ -40,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private Sound GetSound(string name)
+    public Sound GetSound(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
@@ -57,13 +59,13 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             if (sound.source.pitch != pitch) sound.source.pitch = pitch;
-            if (sound.source.volume != volume) sound.source.volume *= volume;
+            if (sound.source.volume != volume) sound.source.volume = volume;
         }
     }
 
     public void SetPlaying(string name, bool shouldPlay)
     {
-        if (shouldPlay) GetSound(name).source.Play();
+        if (shouldPlay && !globalMute) GetSound(name).source.Play();
         if (!shouldPlay) GetSound(name).source.Stop();
     }
 }

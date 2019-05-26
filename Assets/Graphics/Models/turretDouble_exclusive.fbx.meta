@@ -1,27 +1,78 @@
 fileFormatVersion: 2
 guid: da1721f86c7652648aacbcb82859fc4b
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: turretWeapon_left
-    100004: turretWeapon_right
-    400000: //RootNode
-    400002: turretWeapon_left
-    400004: turretWeapon_right
-    2100000: _defaultMat
-    2100002: glass
-    2100004: metal
-    2300000: //RootNode
-    2300002: turretWeapon_left
-    2300004: turretWeapon_right
-    3300000: //RootNode
-    3300002: turretWeapon_left
-    3300004: turretWeapon_right
-    4300000: turretDouble_exclusive
-    4300002: turretWeapon_left
-    4300004: turretWeapon_right
-  externalObjects: {}
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: turretWeapon_left
+  - first:
+      1: 100004
+    second: turretWeapon_right
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: turretWeapon_left
+  - first:
+      4: 400004
+    second: turretWeapon_right
+  - first:
+      21: 2100000
+    second: _defaultMat
+  - first:
+      21: 2100002
+    second: glass
+  - first:
+      21: 2100004
+    second: metal
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      23: 2300002
+    second: turretWeapon_left
+  - first:
+      23: 2300004
+    second: turretWeapon_right
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      33: 3300002
+    second: turretWeapon_left
+  - first:
+      33: 3300004
+    second: turretWeapon_right
+  - first:
+      43: 4300000
+    second: turretDouble_exclusive
+  - first:
+      43: 4300002
+    second: turretWeapon_left
+  - first:
+      43: 4300004
+    second: turretWeapon_right
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _defaultMat
+    second: {fileID: 2100000, guid: 4ba945424acbfc940a6897ae9af90468, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass
+    second: {fileID: 2100000, guid: 06be344523ad74743af7a25b6e06d5e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 886905dff0bb8424d8d829061ca87c28, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -63,18 +114,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -83,10 +135,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -96,6 +149,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
