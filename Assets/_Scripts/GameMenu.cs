@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {

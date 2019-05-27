@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Collider))]
 public class Enemy : EntityBase

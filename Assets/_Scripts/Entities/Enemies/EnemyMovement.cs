@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : TargetTracker
 {
@@ -13,11 +13,7 @@ public class EnemyMovement : TargetTracker
     protected bool followPlayer;
     #endregion
 
-    private void Start()
-    {
-        moveSpeed = GetComponent<EntityBase>().stats.moveSpeed;
-    }
-
+    private void Start() => moveSpeed = GetComponent<EntityBase>().stats.moveSpeed;
     protected override void CalculateMovement()
     {
         // If the enemy is outside of the screen
@@ -29,7 +25,7 @@ public class EnemyMovement : TargetTracker
                 targetDir = targetRgbd.position - rgbd.position;
                 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
                 float speed = step;
-                if (distanceToTarget < slowDownDistance) { speed *= slowSpeedMultiplier; }
+                if (distanceToTarget <= slowDownDistance) { speed *= slowSpeedMultiplier; }
                 newPos = Vector3.MoveTowards(rgbd.position, targetRgbd.position, speed);
             }
             else

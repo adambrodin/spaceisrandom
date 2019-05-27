@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
+using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Player))]
 public class PlayerMovement : MonoBehaviour, IMoveable
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
             int moveScore = (int)(Mathf.Abs(direction.x) + Mathf.Abs(direction.y));
 
             // Avoid constantly changing score by 0 when not moving
-            if (moveScore != 0) GameController.Instance.ChangeScore(moveScore);
+            if (moveScore != 0) GameController.Instance.AddScore(moveScore);
         }
         else { return; } // Out of bounds
     }

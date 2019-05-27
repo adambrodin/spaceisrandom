@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-#pragma warning disable CS0649 // Disable incorrect warnings in the console caused by private variables with [SerializeField]
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warnings in the console caused by private variables with [SerializeField]
+using System;
+using System.Collections;
+using UnityEngine;
 public class Health : MonoBehaviour, IKillable<float>
 {
     #region Variables

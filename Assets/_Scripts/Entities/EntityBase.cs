@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class EntityBase : MonoBehaviour
 {

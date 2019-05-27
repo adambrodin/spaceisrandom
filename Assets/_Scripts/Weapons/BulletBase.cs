@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using System;
+using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class BulletBase : MonoBehaviour, IMoveable
 {
@@ -20,6 +20,7 @@ public class BulletBase : MonoBehaviour, IMoveable
     protected float selfDestructTime;
     [SerializeField]
     protected bool useAcceleration;
+    public bool oneShotKill;
     #endregion
 
     // Destroy self automatically after selfDestructTime seconds
@@ -28,7 +29,8 @@ public class BulletBase : MonoBehaviour, IMoveable
     {
         if (col.GetComponent<IKillable<float>>() != null && IsTargetTag(col.gameObject.tag))
         {
-            col.GetComponent<IKillable<float>>().TakeDamage(stats.projectileDamage);
+            if (oneShotKill) { col.GetComponent<IKillable<float>>().TakeDamage(col.GetComponent<IKillable<float>>().CurrentHealth); }
+            else { col.GetComponent<IKillable<float>>().TakeDamage(stats.projectileDamage); }
             // Destroy the bullet after impact
             Destroy(gameObject);
         }

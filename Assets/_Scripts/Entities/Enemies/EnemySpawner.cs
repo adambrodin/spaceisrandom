@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
+using System;
+using System.Collections;
+using UnityEngine;
 [Serializable]
 public class EnemyObject
 {
@@ -31,10 +31,12 @@ public class EnemySpawner : MonoBehaviour
     {
         GameController.Instance.OnChangeDifficulty += ChangeDifficulty;
         GameController.Instance.OnGameStart += GameStart;
+        GameController.Instance.OnGameOver += GameOver;
     }
 
     private void ChangeDifficulty(float value) => difficulty += value;
     private void GameStart() { StartCoroutine(SpawnEnemies()); }
+    private void GameOver() { StopCoroutine(SpawnEnemies()); }
 
     private bool ChanceChecker(int chance)
     {

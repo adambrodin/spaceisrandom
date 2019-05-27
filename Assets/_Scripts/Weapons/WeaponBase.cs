@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using System.Collections;
+using UnityEngine;
 public abstract class WeaponBase : MonoBehaviour
 {
     #region Variables

@@ -1,10 +1,10 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.InputSystem;
-/* 
+﻿/* 
 * Developed by Adam Brodin
 * https://github.com/AdamBrodin
 */
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 public class Player : EntityBase, InputController.IPlayerActions
 {
     #region Variables
@@ -33,6 +33,22 @@ public class Player : EntityBase, InputController.IPlayerActions
         playerInput = new InputController();
         playerInput.Player.SetCallbacks(this);
     }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col == null) { return; }
+        if (col.gameObject.tag == "Pickup")
+        {
+            try
+            {
+                col.gameObject.GetComponent<PickupBase>().PickUp();
+            }
+            catch { }
+        }
+    }
+
+    private void Start() => HealthPickup.OnChangePlayerHealth += ChangeHealth;
+    private void ChangeHealth(int value) => GetComponent<Health>().CurrentHealth += value;
 
     // Whenever any movement input is received
     public void OnMovement(InputAction.CallbackContext context) => OnGetMovement?.Invoke(context.ReadValue<Vector2>());

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warnings in the console caused by private variables with [SerializeField]
+using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyMovement_SideToSide : MonoBehaviour, IMoveable

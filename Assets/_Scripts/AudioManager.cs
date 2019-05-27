@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
-using System;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
+using UnityEngine;
+using System;
 [System.Serializable]
 public class Sound
 {
@@ -25,9 +25,19 @@ public class Sound
 public class AudioManager : MonoBehaviour
 {
     #region Variables
-    public Sound[] sounds;
     [SerializeField]
     private bool globalMute;
+    public Sound[] sounds;
+
+    private static AudioManager instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (instance == null) { instance = FindObjectOfType<AudioManager>(); }
+            return instance;
+        }
+    }
     #endregion
 
     private void Awake()

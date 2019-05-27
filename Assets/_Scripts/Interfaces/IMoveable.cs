@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using UnityEngine;
 
 public interface IMoveable
 {

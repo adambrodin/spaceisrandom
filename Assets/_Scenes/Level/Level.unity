@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 1.0717734, g: 1.0717734, b: 1.0717734, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -745,6 +745,7 @@ GameObject:
   - component: {fileID: 1355905802}
   - component: {fileID: 1355905803}
   - component: {fileID: 1355905804}
+  - component: {fileID: 1355905805}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -863,6 +864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbd2bd4890338b41be66e0dbb0ee202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalMute: 0
   sounds:
   - name: BackgroundMusic
     loop: 0
@@ -900,7 +902,32 @@ MonoBehaviour:
     source: {fileID: 0}
     volume: 1
     pitch: 0.4
-  globalMute: 0
+  - name: Pickup
+    loop: 0
+    clip: {fileID: 8300000, guid: 179d60f309baee0439d9854a0fceeb29, type: 3}
+    source: {fileID: 0}
+    volume: 0.75
+    pitch: 1
+--- !u!114 &1355905805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355905800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdca7eee9bb5cc44789e85c863c34035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickups:
+  - {fileID: 1457917340253368389, guid: 8f395cef3b8b3294fb27cd07bd28ccb3, type: 3}
+  - {fileID: 1457917340253368389, guid: 3a919286a5e14c2479d1eb61dd7174cf, type: 3}
+  - {fileID: 1457917340253368389, guid: 26417cf4e98572e4293f783a6cd31125, type: 3}
+  minCooldown: 10
+  maxCooldown: 30
+  startSpawnDelay: 3
+  boundsOffset: 0
 --- !u!1 &1394086561
 GameObject:
   m_ObjectHideFlags: 0

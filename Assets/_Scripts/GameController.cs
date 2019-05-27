@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
     public event Action<float> OnChangeDifficulty;
-    public event Action OnGameStart;
+    public event Action OnGameStart, OnGameOver;
     public RandomColorRange randomColorRange;
     public Bounds bounds;
     private int score;
@@ -55,15 +55,16 @@ public class GameController : MonoBehaviour
         }
         Health.Instance.OnPlayerHit += PlayerHit;
 
-        FindObjectOfType<AudioManager>().SetPlaying("BackgroundMusic", true);
+        AudioManager.Instance.SetPlaying("BackgroundMusic", true);
         StartCoroutine(StartGame());
         StartCoroutine(IncreaseDifficulty());
     }
 
     private IEnumerator StartGame()
     {
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(FlashHealthStatus(Color.green, 3, 1f, 1f));
+        yield return new WaitForSeconds(1f);
+        HealthBlinker(3);
+        yield return new WaitForSeconds(1f);
         OnGameStart?.Invoke();
     }
 
@@ -73,24 +74,28 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < amountOfFlashes; i++)
         {
             StartCoroutine(BackgroundFade((backgroundFadeInTime * timeMultiplier), (backgroundFadeOutTime * timeMultiplier), color, (backgroundFadeDelay / 2)));
-            FindObjectOfType<AudioManager>().Set("HealthIndicator", FindObjectOfType<AudioManager>().GetSound("HealthIndicator").pitch, volume);
-            FindObjectOfType<AudioManager>().SetPlaying("HealthIndicator", true);
+            AudioManager.Instance.Set("HealthIndicator", AudioManager.Instance.GetSound("HealthIndicator").pitch, volume);
+            AudioManager.Instance.SetPlaying("HealthIndicator", true);
             yield return new WaitForSeconds((backgroundFadeInTime * timeMultiplier) + (backgroundFadeOutTime * timeMultiplier) + (backgroundFadeDelay * timeMultiplier) / 2);
         }
     }
 
-    private void PlayerHit(float health)
+    private void PlayerHit(float health) => HealthBlinker(health);
+    private void HealthBlinker(float health)
     {
         switch (health)
         {
+            case 3:
+                StartCoroutine(FlashHealthStatus(Color.green, 3, 1f, 1f));
+                break;
             case 2:
-                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 0.66f, 0.5f));
+                StartCoroutine(FlashHealthStatus(Color.yellow, 2, 1f, 1f));
                 break;
             case 1:
-                StartCoroutine(FlashHealthStatus(Color.red, 1, 0.33f, 0.85f));
+                StartCoroutine(FlashHealthStatus(Color.red, 1, 1f, 1f));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(Color.white, 15, 0.15f, 1f));
+                StartCoroutine(FlashHealthStatus(Color.white, 10, 0.2f, 1f));
                 StartCoroutine(GameOver());
                 break;
         }
@@ -112,28 +117,34 @@ public class GameController : MonoBehaviour
     public void ObjectKilled(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
-        if (killReward > 0)
-        {
-            ChangeScore(killReward);
-        }
+        if (killReward > 0) { AddScore(killReward); }
 
         // Destroy the object
         Destroy(obj);
     }
     private IEnumerator GameOver()
     {
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.1f);
-        FindObjectOfType<AudioManager>().SetPlaying("GameOver", true);
+        AudioManager.Instance.Set("BackgroundMusic", 1.0f, 0.1f);
+        AudioManager.Instance.SetPlaying("GameOver", true);
         yield return new WaitForSeconds(3f);
-        FindObjectOfType<AudioManager>().Set("BackgroundMusic", 1.0f, 0.8f);
+        AudioManager.Instance.Set("BackgroundMusic", 1.0f, 0.8f);
         gameOverPanel.SetActive(true);
+        OnGameOver?.Invoke();
+        DestroyObjectsInScene();
+    }
 
+    private void DestroyObjectsInScene()
+    {
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             Destroy(g.gameObject);
         }
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Pickup"))
+        {
+            Destroy(g.gameObject);
+        }
     }
-    public void ChangeScore(int value)
+    public void AddScore(int value)
     {
         score += value;
         scoreText.text = score.ToString();

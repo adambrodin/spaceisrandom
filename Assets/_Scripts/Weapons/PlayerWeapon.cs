@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+using System.Collections;
+using UnityEngine;
 public class PlayerWeapon : WeaponBase
 {
     private bool isFiring;
@@ -13,4 +14,14 @@ public class PlayerWeapon : WeaponBase
 
     private void CheckForFire() { if (isFiring) { Shoot(); } }
     private void Update() => CheckForFire();
+    private void Start() => OneShotKillPickup.OnOneShotKill += OneShotKill;
+
+    private void OneShotKill(float duration) => StartCoroutine(OneShotKillTimer(duration));
+
+    private IEnumerator OneShotKillTimer(float duration)
+    {
+        bulletObj.GetComponent<BulletBase>().oneShotKill = true;
+        yield return new WaitForSeconds(duration);
+        bulletObj.GetComponent<BulletBase>().oneShotKill = false;
+    }
 }

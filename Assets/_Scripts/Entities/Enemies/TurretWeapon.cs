@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+#pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
+using UnityEngine;
 
 public class TurretWeapon : WeaponBase
 {

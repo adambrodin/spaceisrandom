@@ -1,12 +1,9 @@
-﻿using System;
-
-/* 
+﻿/* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
-
-public interface IPickupable<T>
+public interface IPickupable
 {
-    event Action<T> OnPickUp;
-    void PlayPickUpEffect();
+    string PickupSoundName { get; }
+    void PickUp();
 }
