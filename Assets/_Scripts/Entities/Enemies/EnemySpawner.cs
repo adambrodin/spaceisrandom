@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void ChangeDifficulty(float value) => difficulty += value;
     private void GameStart() { StartCoroutine(SpawnEnemies()); }
-    private void GameOver() { StopCoroutine(SpawnEnemies()); }
+    private void GameOver() { StopAllCoroutines(); }
 
     private bool ChanceChecker(int chance)
     {

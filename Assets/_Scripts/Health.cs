@@ -104,8 +104,10 @@ public class Health : MonoBehaviour, IKillable<float>
     private Color InvertColor(Color orgColor)
     {
         // Return the opposite color (color wheel)
-        Color.RGBToHSV(orgColor, out float H, out float S, out float V);
-        H -= 0.5f;
-        return Color.HSVToRGB(H, S, V);
+        //Color.RGBToHSV(orgColor, out float H, out float S, out float V);
+        //H -= 0.5f;
+        //return Color.HSVToRGB(H, S, V);
+
+        return Color.white;
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3450491452656196921}
   - component: {fileID: 3450317233143541629}
   m_Layer: 0
-  m_Name: Explosion_Small
+  m_Name: ExplosionSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 2.5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

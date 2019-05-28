@@ -20,9 +20,12 @@ public class PickupSpawner : MonoBehaviour
     private void Start()
     {
         GameController.Instance.OnGameStart += GameStart;
+        GameController.Instance.OnGameOver += GameOver;
         PickupBase.OnPickup += PickedUp;
     }
+
     private void GameStart() => StartCoroutine(GameStartDelay());
+    private void GameOver() => StopAllCoroutines();
     private void PickedUp() => StartCoroutine(SpawnPickup());
 
     private IEnumerator GameStartDelay()

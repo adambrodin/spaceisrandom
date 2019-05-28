@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour, IMoveable
 {
     #region Variables
     [SerializeField]
-    private float tiltValue;
+    private float tiltSpeed, minTilt, maxTilt;
     public float MoveSpeed { get; set; }
 
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
@@ -29,16 +29,16 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     {
         // Set movement boundries for the level
         Rgbd.position = new Vector3
-        (
-            Mathf.Clamp(Rgbd.position.x, GameController.Instance.bounds.xMin, GameController.Instance.bounds.xMax),
-            Rgbd.position.y,
-            Mathf.Clamp(Rgbd.position.z, GameController.Instance.bounds.zMin, GameController.Instance.bounds.zMax)
-        );
+       (
+           Mathf.Clamp(Rgbd.position.x, GameController.Instance.bounds.xMin, GameController.Instance.bounds.xMax),
+           Rgbd.position.y,
+           Mathf.Clamp(Rgbd.position.z, GameController.Instance.bounds.zMin, GameController.Instance.bounds.zMax)
+       );
 
         // Move the player
         movement = new Vector3(direction.x, Rgbd.velocity.y, direction.y);
         Rgbd.velocity = movement * MoveSpeed;
-        Rgbd.rotation = Quaternion.Euler(0, 0, Rgbd.velocity.x * -tiltValue);
+        Rgbd.rotation = Quaternion.Euler(Rgbd.rotation.x, Rgbd.rotation.y, Mathf.Clamp(Rgbd.velocity.x * -tiltSpeed, minTilt, maxTilt));
         // Add score whenever the player moves inside the level
         MoveScore();
     }
