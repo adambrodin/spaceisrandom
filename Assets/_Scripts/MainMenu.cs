@@ -8,6 +8,6 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     // Loads the next scene in order
-    public void PlayButton() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    public void PlayButton() => SceneManager.LoadScene("Level");
     public void QuitButton() => Application.Quit();
 }
