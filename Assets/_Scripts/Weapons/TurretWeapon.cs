@@ -20,17 +20,18 @@ public class TurretWeapon : WeaponBase
 
         if (bulletObj.GetComponent<TrailRenderer>() != null && GetComponent<EntityBase>() != null)
         {
-            if ((bulletObj.GetComponent<TrailRenderer>().sharedMaterial) != null)
+            if (bulletObj.GetComponent<TrailRenderer>().sharedMaterial != null)
             {
                 GetComponent<EntityBase>().originalMaterials.TryGetValue(0, out Material[] parentMaterials);
-                Material trailMaterial = new Material(bulletObj.GetComponent<TrailRenderer>().sharedMaterial);
-                //trailMaterial.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
-                //trailMaterial.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
-                bulletObj.GetComponent<TrailRenderer>().material.SetColor("_BaseColor",
-                parentMaterials[0].GetColor("_BaseColor"));
+                bulletObj.GetComponent<TrailRenderer>().sharedMaterial = new Material(bulletObj.GetComponent<TrailRenderer>().sharedMaterial);
+                bulletObj.GetComponent<TrailRenderer>().sharedMaterial.SetColor("_Color", parentMaterials[0].GetColor("_Color"));
+                bulletObj.GetComponent<TrailRenderer>().sharedMaterial.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+                bulletObj.GetComponent<TrailRenderer>().sharedMaterial.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
+                // bulletObj.GetComponent<TrailRenderer>().material.SetColor("_BaseColor",
+                // parentMaterials[0].GetColor("_BaseColor"));
 
-                bulletObj.GetComponent<TrailRenderer>().material.SetColor("_EmissionColor",
-                parentMaterials[0].GetColor("_EmissionColor"));
+                // bulletObj.GetComponent<TrailRenderer>().material.SetColor("_EmissionColor",
+                // parentMaterials[0].GetColor("_EmissionColor"));
             }
         }
     }
