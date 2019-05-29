@@ -15,10 +15,7 @@ public class TurretWeapon : WeaponBase
 
     private void Start()
     {
-        if (ChanceChecker(allFireChance))
-        {
-            firingMode = FireMode.multiple;
-        }
+        if (ChanceChecker(allFireChance)) { firingMode = FireMode.multiple; }
         else { firingMode = FireMode.cycling; }
 
         if (bulletObj.GetComponent<TrailRenderer>() != null && GetComponent<EntityBase>() != null)
@@ -27,9 +24,13 @@ public class TurretWeapon : WeaponBase
             {
                 GetComponent<EntityBase>().originalMaterials.TryGetValue(0, out Material[] parentMaterials);
                 Material trailMaterial = new Material(bulletObj.GetComponent<TrailRenderer>().sharedMaterial);
-                trailMaterial.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
-                trailMaterial.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
-                bulletObj.GetComponent<TrailRenderer>().material = trailMaterial;
+                //trailMaterial.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+                //trailMaterial.SetColor("_EmissionColor", parentMaterials[0].GetColor("_EmissionColor"));
+                bulletObj.GetComponent<TrailRenderer>().material.SetColor("_BaseColor",
+                parentMaterials[0].GetColor("_BaseColor"));
+
+                bulletObj.GetComponent<TrailRenderer>().material.SetColor("_EmissionColor",
+                parentMaterials[0].GetColor("_EmissionColor"));
             }
         }
     }
