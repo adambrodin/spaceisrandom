@@ -39,16 +39,15 @@ public class Player : EntityBase, InputController.IPlayerActions
         if (col == null) { return; }
         if (col.gameObject.tag == "Pickup")
         {
-            try
-            {
-                col.gameObject.GetComponent<PickupBase>().PickUp();
-            }
-            catch { }
+            //try
+            //{
+            col.gameObject.GetComponent<PickupBase>().PickUp();
+            //}
+            //catch { }
         }
     }
 
-    private void Start() => HealthPickup.OnChangePlayerHealth += ChangeHealth;
-    private void ChangeHealth(int value) => GetComponent<Health>().CurrentHealth += value;
+    public void ChangeHealth(int value) => GetComponent<Health>().CurrentHealth += value;
 
     // Whenever any movement input is received
     public void OnMovement(InputAction.CallbackContext context) => OnGetMovement?.Invoke(context.ReadValue<Vector2>());

@@ -14,14 +14,14 @@ public class PlayerWeapon : WeaponBase
 
     private void CheckForFire() { if (isFiring) { Shoot(); } }
     private void Update() => CheckForFire();
-    private void Start() => OneShotKillPickup.OnOneShotKill += OneShotKill;
-
-    private void OneShotKill(float duration) => StartCoroutine(OneShotKillTimer(duration));
+    public void OneShotKill(float duration) => StartCoroutine(OneShotKillTimer(duration));
 
     private IEnumerator OneShotKillTimer(float duration)
     {
+        print("ONESHOTKILL ACTIVATED");
         bulletObj.GetComponent<BulletBase>().oneShotKill = true;
         yield return new WaitForSeconds(duration);
         bulletObj.GetComponent<BulletBase>().oneShotKill = false;
+        print("ONESHOTKILL DEACTIVATED");
     }
 }

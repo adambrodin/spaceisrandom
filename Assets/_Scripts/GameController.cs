@@ -135,15 +135,10 @@ public class GameController : MonoBehaviour
 
     private void DestroyObjectsInScene()
     {
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            Destroy(g.gameObject);
-        }
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Pickup"))
-        {
-            Destroy(g.gameObject);
-        }
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) { Destroy(enemy.gameObject); }
+        foreach (GameObject pickup in GameObject.FindGameObjectsWithTag("Pickup")) { Destroy(pickup.gameObject); }
     }
+
     public void AddScore(int value)
     {
         score += value;

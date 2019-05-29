@@ -12,7 +12,7 @@ public class EnemyObject
     // The object to spawn
     public GameObject gObject;
     // Spawn chance (0-100%)
-    public int spawnChance, maxSpawnOffset; // Max offset defaults to x screen bounds 
+    public int spawnChance, maxSpawnOffset; // Max offset (compared to bounds of screen)
 }
 
 public class EnemySpawner : MonoBehaviour
@@ -35,8 +35,8 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private void ChangeDifficulty(float value) => difficulty += value;
-    private void GameStart() { StartCoroutine(SpawnEnemies()); }
-    private void GameOver() { StopAllCoroutines(); }
+    private void GameStart() => StartCoroutine(SpawnEnemies());
+    private void GameOver() => StopAllCoroutines();
 
     private bool ChanceChecker(int chance)
     {

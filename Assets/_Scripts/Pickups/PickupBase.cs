@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class PickupBase : MonoBehaviour, IPickupable
 {
     #region Variables
-    public static Action OnPickup;
+    public Action OnPickup;
     public string PickupSoundName => pickupSoundName;
     [SerializeField]
     protected string pickupSoundName;
@@ -16,9 +16,9 @@ public abstract class PickupBase : MonoBehaviour, IPickupable
 
     public void PickUp()
     {
-        OnPickup?.Invoke();
         PickupEffect();
         AudioManager.Instance.SetPlaying(pickupSoundName, true);
+        OnPickup?.Invoke();
         Destroy(gameObject);
     }
 
