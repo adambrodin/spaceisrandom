@@ -3,6 +3,7 @@
 * https://github.com/AdamBrodin
 */
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player : EntityBase, InputController.IPlayerActions
@@ -37,14 +38,7 @@ public class Player : EntityBase, InputController.IPlayerActions
     private void OnTriggerEnter(Collider col)
     {
         if (col == null) { return; }
-        if (col.gameObject.tag == "Pickup")
-        {
-            //try
-            //{
-            col.gameObject.GetComponent<PickupBase>().PickUp();
-            //}
-            //catch { }
-        }
+        if (col.gameObject.tag == "Pickup") { col.gameObject.GetComponent<PickupBase>().PickUp(); }
     }
 
     public void ChangeHealth(int value) => GetComponent<Health>().CurrentHealth += value;

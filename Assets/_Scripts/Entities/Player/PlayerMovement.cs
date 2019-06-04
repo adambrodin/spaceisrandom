@@ -3,6 +3,7 @@
  * https://github.com/AdamBrodin
  */
 #pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
+using System.Collections;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Player))]
@@ -12,7 +13,6 @@ public class PlayerMovement : MonoBehaviour, IMoveable
     [SerializeField]
     private float tiltSpeed, minTilt, maxTilt;
     public float MoveSpeed { get; set; }
-
     public Rigidbody Rgbd => GetComponent<Rigidbody>();
     private Vector3 movement, direction;
     #endregion

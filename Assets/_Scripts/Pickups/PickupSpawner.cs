@@ -33,8 +33,8 @@ public class PickupSpawner : MonoBehaviour
 
     private IEnumerator SpawnPickup()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(minCooldown, maxCooldown));
         GameObject randomPickup = RandomPickup();
+        yield return new WaitForSeconds(UnityEngine.Random.Range(minCooldown, maxCooldown));
         Instantiate(randomPickup, randomPickup.transform.position, randomPickup.transform.rotation);
     }
 
@@ -42,9 +42,14 @@ public class PickupSpawner : MonoBehaviour
     {
         if (pickups.Length > 0)
         {
-            GameObject gObj = pickups[UnityEngine.Random.Range(0, pickups.Length)];
-            gObj.GetComponent<PickupBase>().OnPickup += PickedUp;
+            GameObject gObj;
+            do
+            {
+                gObj = pickups[UnityEngine.Random.Range(0, pickups.Length)];
+            } while (gObj.name.Contains("HealthPickup") && Player.Instance.GetComponent<Health>().CurrentHealth >= 3);
 
+            // Link the events properly
+            gObj.GetComponent<PickupBase>().OnPickup += PickedUp;
             if (gObj.GetComponent<HealthPickup>() != null)
             { gObj.GetComponent<HealthPickup>().OnChangePlayerHealth += FindObjectOfType<Player>().ChangeHealth; }
             else if (gObj.GetComponent<OneShotKillPickup>() != null)

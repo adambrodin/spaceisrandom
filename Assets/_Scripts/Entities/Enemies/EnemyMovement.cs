@@ -22,6 +22,7 @@ public class EnemyMovement : TargetTracker
         {
             if (distanceToTarget < followMaxDistance && followPlayer && (Mathf.Abs(transform.position.z - GameController.Instance.bounds.zMin) > minDistanceToZBoundry))
             {
+                // Move and rotate towards the player
                 targetDir = targetRgbd.position - rgbd.position;
                 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
                 float speed = step;
@@ -30,6 +31,7 @@ public class EnemyMovement : TargetTracker
             }
             else
             {
+                // Move and rotate straight down
                 Vector3 target = new Vector3(rgbd.position.x, rgbd.position.y, GameController.Instance.bounds.zMin - boundsOffset);
                 targetDir = target - rgbd.position;
                 newDir = Vector3.Lerp(Vector3.back, targetDir, damping * Time.deltaTime);
