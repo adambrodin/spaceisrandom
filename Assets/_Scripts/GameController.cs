@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 #pragma warning disable CS0649 // Disable incorrect warning caused by private field with [SerializeField]
 /* 
@@ -49,12 +50,6 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        // Hide the cursor on release build
-        if (!Debug.isDebugBuild)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
         Health.Instance.OnPlayerHit += PlayerHit;
 
         AudioManager.Instance.SetPlaying("BackgroundMusic", true);
@@ -149,16 +144,14 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         AudioManager.Instance.Set("BackgroundMusic", 1.0f, 0.45f);
         gameOverPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartButton"), new BaseEventData(EventSystem.current));
         DestroyObjectsInScene();
         OnGameOver?.Invoke();
 
         // Adds a new highscore with a randomized char name/id
         string[] alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         string randomName = "";
-        for (int i = 0; i < UnityEngine.Random.Range(2, 6); i++)
-        {
-            randomName = randomName + alphabet[UnityEngine.Random.Range(0, alphabet.Length)];
-        }
+        for (int i = 0; i < UnityEngine.Random.Range(2, 6); i++) { randomName = randomName + alphabet[UnityEngine.Random.Range(0, alphabet.Length)]; }
 
         HighscoreTable.Instance.AddHighscoreEntry(score, randomName);
         scoreText.text = $"{scoreText.text}: <color=#00ffffff>{randomName}";

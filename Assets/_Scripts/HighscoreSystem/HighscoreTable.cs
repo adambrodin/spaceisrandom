@@ -97,6 +97,9 @@ public class HighscoreTable : MonoBehaviour
 
     public void Spawn()
     {
+        Sort();
+
+        // Spawn new table
         for (int i = 0; i < maxHighscoreEntries; i++)
         {
             if (maxHighscoreEntries > entryList.Count) { return; }
@@ -123,18 +126,21 @@ public class HighscoreTable : MonoBehaviour
     {
         try
         {
-            Transform newEntry = Instantiate(entryTemplate, container);
-            RectTransform entryPosition = newEntry.GetComponent<RectTransform>();
+            if (transformList.Count < maxHighscoreEntries)
+            {
+                Transform newEntry = Instantiate(entryTemplate, container);
+                RectTransform entryPosition = newEntry.GetComponent<RectTransform>();
 
-            float newYPos = entryPosition.position.y - (entryHeightOffset * transformList.Count);
-            entryPosition.anchoredPosition = new Vector2(entryPosition.position.x, newYPos);
+                float newYPos = entryPosition.position.y - (entryHeightOffset * transformList.Count);
+                entryPosition.anchoredPosition = new Vector2(entryPosition.position.x, newYPos);
 
-            newEntry.gameObject.SetActive(true);
-            if (newEntry.Find("Position").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Position").GetComponent<TextMeshProUGUI>().text = (transformList.Count + 1).ToString();
-            if (newEntry.Find("Score").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Score").GetComponent<TextMeshProUGUI>().text = entry.score.ToString();
-            if (newEntry.Find("Name").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Name").GetComponent<TextMeshProUGUI>().text = entry.name;
+                newEntry.gameObject.SetActive(true);
+                if (newEntry.Find("Position").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Position").GetComponent<TextMeshProUGUI>().text = (transformList.Count + 1).ToString();
+                if (newEntry.Find("Score").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Score").GetComponent<TextMeshProUGUI>().text = entry.score.ToString();
+                if (newEntry.Find("Name").GetComponent<TextMeshProUGUI>() != null) newEntry.Find("Name").GetComponent<TextMeshProUGUI>().text = entry.name;
 
-            transformList.Add(newEntry);
+                transformList.Add(newEntry);
+            }
         }
         catch { }
     }

@@ -27,6 +27,7 @@ public class GameMenu : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    private void Start() => EventSystem.current.SetSelectedGameObject(GameObject.Find("PlayButton"), new BaseEventData(EventSystem.current));
     public void HighscoreViewer()
     {
         if (!highscoreTable.activeSelf)

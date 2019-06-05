@@ -22,6 +22,7 @@ public class Health : MonoBehaviour, IKillable<float>
     private float blinkTime;
     private EntityBase entity;
     private static Health instance;
+    private bool invincible;
     #endregion
 
     public static Health Instance
@@ -49,10 +50,24 @@ public class Health : MonoBehaviour, IKillable<float>
 
     public void TakeDamage(float damage)
     {
-        CurrentHealth -= damage;
-        if (gameObject.tag == "Player") { OnPlayerHit?.Invoke(CurrentHealth); }
-        StartCoroutine(ColorBlink());
-        if (IsDead()) { Die(); }
+        if (!invincible)
+        {
+            CurrentHealth -= damage;
+            if (gameObject.tag == "Player")
+            {
+                OnPlayerHit?.Invoke(CurrentHealth);
+                StartCoroutine(Invicible(1f));
+            }
+            StartCoroutine(ColorBlink());
+            if (IsDead()) { Die(); }
+        }
+    }
+
+    private IEnumerator Invicible(float duration)
+    {
+        invincible = true;
+        yield return new WaitForSeconds(duration);
+        invincible = false;
     }
 
     public IEnumerator ColorBlink()

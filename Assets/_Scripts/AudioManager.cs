@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
     #region Variables
     [SerializeField]
     private bool globalMute;
+    private float globalVolume;
     public Sound[] sounds;
 
     private static AudioManager instance;
@@ -40,13 +41,15 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    private void Awake()
+    private void Awake() => UpdateSounds();
+    public void UpdateSounds()
     {
+        globalVolume = PlayerPrefs.GetFloat("GlobalVolume", 1.0f);
         foreach (Sound sound in sounds)
         {
-            sound.source = gameObject.AddComponent<AudioSource>();
+            if (sound.source == null) { sound.source = gameObject.AddComponent<AudioSource>(); }
             sound.source.clip = sound.clip;
-            sound.source.volume = sound.volume;
+            sound.source.volume = (sound.volume * globalVolume);
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
         }
@@ -69,7 +72,7 @@ public class AudioManager : MonoBehaviour
         if (sound != null)
         {
             if (sound.source.pitch != pitch) sound.source.pitch = pitch;
-            if (sound.source.volume != volume) sound.source.volume = volume;
+            if (sound.source.volume != volume) sound.source.volume = (volume * globalVolume);
         }
     }
 
