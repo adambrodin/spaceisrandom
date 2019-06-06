@@ -7,8 +7,9 @@ using System;
 public class HealthPickup : PickupBase
 {
     #region Variables
-    public Action<int> OnChangePlayerHealth;
+    public event Action<int> OnChangePlayerHealth;
     #endregion
 
+    private void Awake() => OnChangePlayerHealth += FindObjectOfType<Player>().ChangeHealth;
     protected override void PickupEffect() => OnChangePlayerHealth?.Invoke(1);
 }

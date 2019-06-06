@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -99,7 +99,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 112000000, guid: 963380d6200aba4498c0e7c570e51ad0,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -615,10 +615,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_NormalColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2163,6 +2163,7 @@ GameObject:
   - component: {fileID: 1223806092}
   - component: {fileID: 1223806088}
   - component: {fileID: 1223806091}
+  - component: {fileID: 1223806093}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -2310,6 +2311,20 @@ MonoBehaviour:
   highscoreTable: {fileID: 1381571393}
   gameoverPanel: {fileID: 786889151}
   changeSceneWaitTime: 0.4
+--- !u!114 &1223806093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223806087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cadfc1dbba8af46b35fd5d306257cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entryHeightOffset: 60
+  maxHighscoreEntries: 10
 --- !u!1 &1266314536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,7 +2429,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 10
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -2422,7 +2437,7 @@ ParticleSystem:
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
-  autoRandomSeed: 1
+  autoRandomSeed: 0
   useRigidbodyForVelocity: 1
   startDelay:
     serializedVersion: 2
@@ -2540,7 +2555,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 50
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2972,7 +2987,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10000
+    maxNumParticles: 1000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -3237,7 +3252,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -7157,10 +7172,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_NormalColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -7478,7 +7493,7 @@ MonoBehaviour:
       type: 3}
     spawnChance: 12
     maxSpawnOffset: 165
-  - gObject: {fileID: 6856785350573047296, guid: 4cbceb1e4fc62b24286c6ca9c9b36693,
+  - gObject: {fileID: 6856785350573047296, guid: 2baf16576086c6e4db91fdc87ec9d3e5,
       type: 3}
     spawnChance: 8
     maxSpawnOffset: 165
@@ -7487,11 +7502,13 @@ MonoBehaviour:
     spawnChance: 15
     maxSpawnOffset: 165
   difficulty: 0
-  minCooldown: 0.25
-  maxCooldown: 2
+  minCooldown: 0.4
+  maxCooldown: 1
   enemyGroupOffset: 20
   enemiesInGroupMin: 2
   enemiesInGroupMax: 4
+  maxTurretsInScene: 5
+  maxEnemiesInScene: 30
 --- !u!114 &1355905803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7506,14 +7523,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 30877882}
   gameOverPanel: {fileID: 786889151}
+  popupText: {fileID: 631844670768275240, guid: dfa17ded6ebf186489b11bdf9531a0ad,
+    type: 3}
   randomColorRange:
     hueMin: 0
     hueMax: 1
-    saturationMin: 1
+    saturationMin: 0.98
     saturationMax: 1
-    valueMin: 0.7
+    valueMin: 0.75
     valueMax: 1
-    alphaMin: 1
+    alphaMin: 0.95
     alphaMax: 1
   bounds:
     xMin: -170
@@ -7523,7 +7542,7 @@ MonoBehaviour:
   backgroundFadeInTime: 0.25
   backgroundFadeOutTime: 0.25
   backgroundFadeDelay: 0.5
-  increaseDifficultyTime: 1
+  increaseDifficultyTime: 1.8
   minIncrease: 0.005
   maxIncrease: 0.02
   healthIndicator:
@@ -7585,9 +7604,9 @@ MonoBehaviour:
     pitch: 0.4
   - name: Pickup
     loop: 0
-    clip: {fileID: 8300000, guid: 179d60f309baee0439d9854a0fceeb29, type: 3}
+    clip: {fileID: 8300000, guid: 7bab09e002e781f4082adea1bec88ccc, type: 3}
     source: {fileID: 0}
-    volume: 0.45
+    volume: 0.5
     pitch: 0.6
   - name: PlayerExplosion
     loop: 0
@@ -7613,6 +7632,18 @@ MonoBehaviour:
     source: {fileID: 0}
     volume: 0.2
     pitch: 1.5
+  - name: Pickup2
+    loop: 0
+    clip: {fileID: 8300000, guid: a40e69986eb317c48950d577a300384a, type: 3}
+    source: {fileID: 0}
+    volume: 0.5
+    pitch: 0.6
+  - name: Pickup3
+    loop: 0
+    clip: {fileID: 8300000, guid: 63216a68f1a94d440b7784f63011b588, type: 3}
+    source: {fileID: 0}
+    volume: 0.5
+    pitch: 0.6
 --- !u!114 &1355905805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7629,9 +7660,9 @@ MonoBehaviour:
   - {fileID: 1457917340253368389, guid: 8f395cef3b8b3294fb27cd07bd28ccb3, type: 3}
   - {fileID: 1457917340253368389, guid: 3a919286a5e14c2479d1eb61dd7174cf, type: 3}
   - {fileID: 1457917340253368389, guid: 26417cf4e98572e4293f783a6cd31125, type: 3}
-  minCooldown: 6
-  maxCooldown: 18
-  startSpawnDelay: 3
+  minCooldown: 5
+  maxCooldown: 15
+  startSpawnDelay: 5
   boundsOffset: 10
 --- !u!114 &1355905806
 MonoBehaviour:
@@ -7996,6 +8027,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 1741727043009834368, guid: 5e2feac08f6566e45bcb2b2815ebb0af,
     type: 3}
+  impactEffect: {fileID: 2078749870960490992, guid: 6a95205dda110ed46810ec1b9224d2c0,
+    type: 3}
   blinkTime: 0.4
 --- !u!114 &1649926122
 MonoBehaviour:
@@ -8109,10 +8142,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_NormalColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8716,10 +8749,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_NormalColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8977,10 +9010,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_NormalColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

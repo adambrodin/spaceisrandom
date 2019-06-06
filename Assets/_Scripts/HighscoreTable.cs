@@ -55,10 +55,7 @@ public class HighscoreTable : MonoBehaviour
             GameObject.Find("HighscoreTable").SetActive(false);
         }
         catch { }
-    }
 
-    private void Start()
-    {
         // Default values
         if (PlayerPrefs.GetString("Highscores") == null || PlayerPrefs.GetString("Highscores") == "")
         {

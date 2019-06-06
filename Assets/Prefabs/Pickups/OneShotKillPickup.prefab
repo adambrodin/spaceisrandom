@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457917340253368389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.32167, y: 2, z: -31.558584}
+  m_LocalPosition: {x: 99.12247, y: 2, z: 51.45701}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,6 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931e406db89ad17488c0ea71138d0327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupSoundName: Pickup
+  pickupSounds:
+  - Pickup
+  - Pickup2
+  - Pickup3
   minDuration: 2
   maxDuration: 4

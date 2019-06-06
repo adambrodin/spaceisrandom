@@ -23,9 +23,10 @@ public class Bounds
 public class GameController : MonoBehaviour
 {
     #region Variables
-    public TextMeshProUGUI scoreText;
     [SerializeField]
-    private GameObject gameOverPanel;
+    private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private GameObject gameOverPanel, popupText;
     public event Action<float> OnChangeDifficulty;
     public event Action OnGameStart, OnGameOver;
     public RandomColorRange randomColorRange;
@@ -66,17 +67,17 @@ public class GameController : MonoBehaviour
         OnGameStart?.Invoke();
     }
 
-    private IEnumerator FlashHealthStatus(Color targetColor, bool inOut, float timeToFadeIn, float timeToFadeOut, float delay, float volume, int amountOfFlashes)
+    private IEnumerator FlashHealthStatus(Color targetColor, bool inOut, float timeToFadeIn, float timeToFadeOut, float delay, int amountOfFlashes)
     {
         StopCoroutine(BackgroundFade(targetColor, inOut, timeToFadeIn, timeToFadeOut, delay));
+        StartCoroutine(BackgroundFade(targetColor, inOut, timeToFadeIn, timeToFadeOut, delay));
 
         // Flash green three times to indicate three hp (full)
         for (int i = 0; i < amountOfFlashes; i++)
         {
-            StartCoroutine(BackgroundFade(targetColor, inOut, timeToFadeIn, timeToFadeOut, delay));
-            AudioManager.Instance.Set("HealthIndicator", AudioManager.Instance.GetSound("HealthIndicator").pitch, volume);
+            AudioManager.Instance.Set("HealthIndicator", AudioManager.Instance.GetSound("HealthIndicator").pitch, AudioManager.Instance.GetSound("HealthIndicator").volume);
             AudioManager.Instance.SetPlaying("HealthIndicator", true);
-            yield return new WaitForSeconds(timeToFadeIn + timeToFadeOut + delay);
+            yield return new WaitForSeconds(AudioManager.Instance.GetSound("HealthIndicator").clip.length / amountOfFlashes);
         }
     }
 
@@ -86,22 +87,22 @@ public class GameController : MonoBehaviour
         switch (health)
         {
             case 5:
-                StartCoroutine(FlashHealthStatus(healthIndicator[5], true, 0.07f, 0.07f, 0.07f, 1f, 5));
+                StartCoroutine(FlashHealthStatus(healthIndicator[5], true, 0.07f, 0.07f, 0.07f, 5));
                 break;
             case 4:
-                StartCoroutine(FlashHealthStatus(healthIndicator[4], true, 0.1f, 0.1f, 0.1f, 1f, 4));
+                StartCoroutine(FlashHealthStatus(healthIndicator[4], true, 0.1f, 0.1f, 0.1f, 4));
                 break;
             case 3:
-                StartCoroutine(FlashHealthStatus(healthIndicator[3], true, 0.15f, 0.15f, 0.15f, 1f, 3));
+                StartCoroutine(FlashHealthStatus(healthIndicator[3], true, 0.15f, 0.15f, 0.15f, 3));
                 break;
             case 2:
-                StartCoroutine(FlashHealthStatus(healthIndicator[2], true, 0.175f, 0.175f, 0.175f, 1f, 2));
+                StartCoroutine(FlashHealthStatus(healthIndicator[2], true, 0.175f, 0.175f, 0.175f, 2));
                 break;
             case 1:
-                StartCoroutine(FlashHealthStatus(healthIndicator[1], true, 0.075f, 0.075f, 0.075f, 1f, 5));
+                StartCoroutine(FlashHealthStatus(healthIndicator[1], true, 0.075f, 0.075f, 0.075f, 5));
                 break;
             case 0:
-                StartCoroutine(FlashHealthStatus(healthIndicator[0], true, 1, 0.5f, 0.5f, 1f, 1));
+                StartCoroutine(FlashHealthStatus(healthIndicator[0], true, 1, 0.5f, 0.5f, 1));
                 StartCoroutine(GameOver());
                 break;
         }
@@ -130,7 +131,11 @@ public class GameController : MonoBehaviour
     public void ObjectKilled(GameObject obj)
     {
         int killReward = (int)obj.GetComponent<IKillable<float>>().KillReward;
-        if (killReward > 0) { AddScore(killReward); }
+        if (killReward > 0)
+        {
+            AddScore(killReward);
+            SpawnPopupText($"{killReward}", obj.transform.position, Quaternion.identity);
+        }
 
         // Destroy the object
         Destroy(obj);
@@ -138,14 +143,15 @@ public class GameController : MonoBehaviour
     private IEnumerator GameOver()
     {
         AudioManager.Instance.SetPlaying("PlayerExplosion", true);
+        DestroyObjectsInScene();
         yield return new WaitForSeconds(3f);
         AudioManager.Instance.Set("BackgroundMusic", 1.0f, 0.1f);
         AudioManager.Instance.SetPlaying("GameOver", true);
         yield return new WaitForSeconds(2f);
         AudioManager.Instance.Set("BackgroundMusic", 1.0f, 0.45f);
+
         gameOverPanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartButton"), new BaseEventData(EventSystem.current));
-        DestroyObjectsInScene();
         OnGameOver?.Invoke();
 
         // Adds a new highscore with a randomized char name/id
@@ -167,6 +173,20 @@ public class GameController : MonoBehaviour
     {
         score += value;
         scoreText.text = score.ToString();
+    }
+
+    public void SpawnPopupText(string txt, Vector3 pos, Quaternion rot)
+    {
+        GameObject g = Instantiate(popupText, pos, rot);
+        g.GetComponent<TextMeshPro>().text = txt;
+    }
+
+    public void SpawnPopupText(string txt, Vector3 pos, Quaternion rot, Color clr, int size)
+    {
+        GameObject g = Instantiate(popupText, pos, rot);
+        g.GetComponent<TextMeshPro>().text = txt;
+        g.GetComponent<TextMeshPro>().color = clr;
+        g.GetComponent<TextMeshPro>().fontSize = size;
     }
 
     private IEnumerator IncreaseDifficulty()

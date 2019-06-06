@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6856785350573047296}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -27.236465, y: 0, z: 200}
+  m_LocalPosition: {x: 160.08066, y: 0, z: 200}
   m_LocalScale: {x: 2, y: 2, z: -2}
   m_Children:
   - {fileID: 6856785350573269540}
@@ -176,7 +176,7 @@ MonoBehaviour:
   distanceToTarget: 0
   targetName: Player
   damping: 15
-  boundryOffset: 75
+  boundryOffset: 25
   timeBeforeShoot: 0.25
   targetZ: 0
 --- !u!114 &6856785350573047324
@@ -214,7 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836278ef18acc24891e3290b40f0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 100000, guid: e6ab56e4714ff4154ac034cf28db78b2, type: 3}
+  explosion: {fileID: 9013761121812613548, guid: 0f195d1d61baafe4d93bee218cba2ae8,
+    type: 3}
+  impactEffect: {fileID: 2078749870960490992, guid: 6a95205dda110ed46810ec1b9224d2c0,
+    type: 3}
   blinkTime: 0.2
 --- !u!54 &6856785350573047299
 Rigidbody:

@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private float difficulty, minCooldown, maxCooldown, enemyGroupOffset;
     [SerializeField]
-    private int enemiesInGroupMin, enemiesInGroupMax;
+    private int enemiesInGroupMin, enemiesInGroupMax, maxTurretsInScene, maxEnemiesInScene;
     private static System.Random randomizer;
     #endregion
 
@@ -100,23 +100,58 @@ public class EnemySpawner : MonoBehaviour
                 // Get the current position, spawn an enemy add offset and repeat
                 for (int i = 0; i < numberOfEnemies; i++)
                 {
-                    Vector3 spawnPos = new Vector3(spawnPosX, transform.position.y, transform.position.z);
-                    GameObject spawnedObj = Instantiate(enemy, spawnPos, enemy.transform.rotation);
-                    spawnPosZ = (int)spawnedObj.transform.position.z;
-                    // Set the target of the turrets destination to this targetZ (so the group sticks together)
-                    spawnedObj.GetComponent<TurretMovement>().targetZ = targetZ;
-                    // Don't spawn another enemy until there's a minimum position offset between them (to stop them from spawning inside eachother)
-                    yield return new WaitUntil(() => (spawnPosZ - spawnedObj.transform.position.z) >= enemyGroupOffset);
-                    // Add offset
-                    spawnPosX += (UnityEngine.Random.Range(-enemyGroupOffset, enemyGroupOffset));
+                    if ((EnemiesInScene(true) >= maxTurretsInScene) || EnemiesInScene(false) >= maxEnemiesInScene)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Vector3 spawnPos = new Vector3(spawnPosX, transform.position.y, transform.position.z);
+                        GameObject spawnedObj = Instantiate(enemy, spawnPos, enemy.transform.rotation);
+                        spawnPosZ = (int)spawnedObj.transform.position.z;
+                        // Set the target of the turrets destination to this targetZ (so the group sticks together)
+                        spawnedObj.GetComponent<TurretMovement>().targetZ = targetZ;
+                        // Don't spawn another enemy until there's a minimum position offset between them (to stop them from spawning inside eachother)
+                        yield return new WaitUntil(() => (spawnPosZ - spawnedObj.transform.position.z) >= enemyGroupOffset);
+                        // Add offset
+                        spawnPosX += (UnityEngine.Random.Range(-enemyGroupOffset, enemyGroupOffset));
+                    }
                 }
                 break;
             default:
                 // Spawn a enemy the normal way
-                Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
-                break;
+                if (enemy.GetComponent<Turret>() && (EnemiesInScene(true) >= maxTurretsInScene) || EnemiesInScene(false) >= maxEnemiesInScene)
+                {
+                    break;
+                }
+                else
+                {
+                    Instantiate(enemy, enemy.transform.position, enemy.transform.rotation);
+                    break;
+                }
         }
         StartCoroutine(SpawnEnemies());
+    }
+
+    private int EnemiesInScene(bool checkForTurrets)
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (checkForTurrets)
+        {
+            int numberOfTurrets = default;
+            foreach (GameObject g in enemies)
+            {
+                if (g.GetComponent<Turret>())
+                {
+                    numberOfTurrets++;
+                }
+            }
+            return numberOfTurrets;
+        }
+        else
+        {
+            return enemies.Length;
+        }
     }
 }
 

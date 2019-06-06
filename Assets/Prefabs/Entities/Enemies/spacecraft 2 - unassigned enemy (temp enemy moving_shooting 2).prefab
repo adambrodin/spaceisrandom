@@ -92,7 +92,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3415277130895779245}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 69.690254, y: 0, z: 200}
+  m_LocalPosition: {x: 104.407166, y: 0, z: 200}
   m_LocalScale: {x: 0.75, y: 0.75, z: -0.75}
   m_Children:
   - {fileID: 3415277130604066683}
@@ -191,6 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 3253641529351978265, guid: 4701002ac0a2f354a90dcaf07140cacd,
     type: 3}
+  impactEffect: {fileID: 2078749870960490992, guid: 6a95205dda110ed46810ec1b9224d2c0,
+    type: 3}
   blinkTime: 0.2
 --- !u!114 &3415277130895779233
 MonoBehaviour:
@@ -226,8 +228,8 @@ MonoBehaviour:
   slowSpeedMultiplier: 0
   followMaxDistance: 0
   damping: 15
-  boundsOffset: 50
-  minDistanceToZBoundry: 0
+  boundsOffset: 25
+  minDistanceToZBoundry: 30
   followPlayer: 0
 --- !u!114 &3415277130895779235
 MonoBehaviour:

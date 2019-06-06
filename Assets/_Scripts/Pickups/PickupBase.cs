@@ -8,17 +8,18 @@ using UnityEngine;
 public abstract class PickupBase : MonoBehaviour, IPickupable
 {
     #region Variables
-    public Action OnPickup;
-    public string PickupSoundName => pickupSoundName;
+    public event Action OnPickup;
+    public string[] PickupSounds => pickupSounds;
     [SerializeField]
-    protected string pickupSoundName;
+    protected string[] pickupSounds;
     #endregion
 
+    private void Start() => OnPickup += FindObjectOfType<PickupSpawner>().PickedUp;
     public void PickUp()
     {
-        PickupEffect();
-        AudioManager.Instance.SetPlaying(pickupSoundName, true);
+        if (pickupSounds.Length > 0) { AudioManager.Instance.SetPlaying(PickupSounds[UnityEngine.Random.Range(0, PickupSounds.Length)], true); }
         OnPickup?.Invoke();
+        PickupEffect();
         Destroy(gameObject);
     }
 

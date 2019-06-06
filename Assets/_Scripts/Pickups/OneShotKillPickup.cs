@@ -11,8 +11,9 @@ public class OneShotKillPickup : PickupBase
     #region Variables
     [SerializeField]
     private float minDuration, maxDuration;
-    public Action<float> OnOneShotKill;
+    public event Action<float> OnOneShotKill;
     #endregion
 
+    private void Awake() => OnOneShotKill += FindObjectOfType<PlayerWeapon>().OneShotKill;
     protected override void PickupEffect() => OnOneShotKill?.Invoke(UnityEngine.Random.Range(minDuration, maxDuration));
 }

@@ -23,7 +23,7 @@ public class PickupSpawner : MonoBehaviour
 
     private void GameStart() => StartCoroutine(GameStartDelay());
     private void GameOver() => StopAllCoroutines();
-    private void PickedUp() => StartCoroutine(SpawnPickup());
+    public void PickedUp() => StartCoroutine(SpawnPickup());
 
     private IEnumerator GameStartDelay()
     {
@@ -40,20 +40,14 @@ public class PickupSpawner : MonoBehaviour
 
     private GameObject RandomPickup()
     {
+
         if (pickups.Length > 0)
         {
             GameObject gObj;
             do
             {
                 gObj = pickups[UnityEngine.Random.Range(0, pickups.Length)];
-            } while (gObj.name.Contains("HealthPickup") && Player.Instance.GetComponent<Health>().CurrentHealth >= 3);
-
-            // Link the events properly
-            gObj.GetComponent<PickupBase>().OnPickup += PickedUp;
-            if (gObj.GetComponent<HealthPickup>() != null)
-            { gObj.GetComponent<HealthPickup>().OnChangePlayerHealth += FindObjectOfType<Player>().ChangeHealth; }
-            else if (gObj.GetComponent<OneShotKillPickup>() != null)
-            { gObj.GetComponent<OneShotKillPickup>().OnOneShotKill += FindObjectOfType<PlayerWeapon>().OneShotKill; }
+            } while (gObj.name.Contains("HealthPickup") && Player.Instance.GetComponent<Health>().CurrentHealth >= 5);
 
             float randomX = UnityEngine.Random.Range(GameController.Instance.bounds.xMin + boundsOffset, GameController.Instance.bounds.xMax - boundsOffset);
             float randomZ = UnityEngine.Random.Range(GameController.Instance.bounds.zMin + boundsOffset, GameController.Instance.bounds.zMax - boundsOffset);
@@ -64,5 +58,6 @@ public class PickupSpawner : MonoBehaviour
         }
 
         return null;
+
     }
 }

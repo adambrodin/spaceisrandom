@@ -20,7 +20,7 @@ public class GameMenu : MonoBehaviour
     public void ClickSound() => FindObjectOfType<AudioManager>().SetPlaying("ClickedSound", true);
     public void Restart() => StartCoroutine(LoadSceneWait("Level", changeSceneWaitTime));
     public void MainMenu() => StartCoroutine(LoadSceneWait("MainMenu", changeSceneWaitTime));
-    public void Quit() => Application.Quit();
+    public void Quit() => System.Diagnostics.Process.GetCurrentProcess().Kill();
     private IEnumerator LoadSceneWait(string name, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);

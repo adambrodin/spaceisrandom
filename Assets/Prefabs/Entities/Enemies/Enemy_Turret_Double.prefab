@@ -203,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8485815137541788779}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -87.85373, y: 0, z: 200}
+  m_LocalPosition: {x: -62.076553, y: 0, z: 200}
   m_LocalScale: {x: 2.25, y: 2.25, z: -2.25}
   m_Children:
   - {fileID: 8485815137541294153}
@@ -358,7 +358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4836278ef18acc24891e3290b40f0cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1015576372813440, guid: fbdb0b280789440678aa36806de97767, type: 3}
+  explosion: {fileID: 1524741579411556029, guid: d12c70a861ffb9f45964ae1dbed59bff,
+    type: 3}
+  impactEffect: {fileID: 2078749870960490992, guid: 6a95205dda110ed46810ec1b9224d2c0,
+    type: 3}
   blinkTime: 0.1
 --- !u!1 &8485815137541788783
 GameObject:

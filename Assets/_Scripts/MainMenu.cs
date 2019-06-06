@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(name);
     }
-    public void QuitButton() => Application.Quit();
+    public void QuitButton() => System.Diagnostics.Process.GetCurrentProcess().Kill();
 
     public void VolumeSlider()
     {
@@ -57,10 +57,28 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         volumeSlider.GetComponent<Slider>().value = PlayerPrefs.GetFloat("GlobalVolume", 1.0f);
         FindObjectOfType<AudioManager>().SetPlaying("AmbientSounds", true);
-        HighscoreTable table = FindObjectOfType<HighscoreTable>();
-        table.Sort();
-        int score = table.getPositionInformation(0).score;
-        string name = table.getPositionInformation(0).name;
-        numberOneText.text = $"#1 - <color=#00ffffff>{name} - <color=#FFD700>{score}";
+
+        try
+        {
+            HighscoreTable table = FindObjectOfType<HighscoreTable>();
+            table.Sort();
+            int score = table.getPositionInformation(0).score;
+            string name = table.getPositionInformation(0).name;
+
+            if (score == 0 || name == "-")
+            {
+                numberOneText.text = "HELLO";
+                numberOneText.fontSize = 4;
+            }
+            else
+            {
+                numberOneText.text = $"#1 - <color=#00ffffff>{name}  <color=#FFFFFF> - <color=#FFD700>{score}";
+            }
+        }
+        catch
+        {
+            numberOneText.text = "HELLO";
+            numberOneText.fontSize = 4;
+        }
     }
 }

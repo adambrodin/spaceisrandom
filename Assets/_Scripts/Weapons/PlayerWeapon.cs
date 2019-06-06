@@ -18,10 +18,8 @@ public class PlayerWeapon : WeaponBase
 
     private IEnumerator OneShotKillTimer(float duration)
     {
-        print("ONESHOTKILL ACTIVATED");
         bulletObj.GetComponent<BulletBase>().oneShotKill = true;
         yield return new WaitForSeconds(duration);
         bulletObj.GetComponent<BulletBase>().oneShotKill = false;
-        print("ONESHOTKILL DEACTIVATED");
     }
 }

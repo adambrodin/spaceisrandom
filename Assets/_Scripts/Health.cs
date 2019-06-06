@@ -17,7 +17,7 @@ public class Health : MonoBehaviour, IKillable<float>
     public event Action<GameObject> OnObjectKilled;
     public event Action<float> OnPlayerHit;
     [SerializeField]
-    private GameObject explosion;
+    private GameObject explosion, impactEffect;
     [SerializeField]
     private float blinkTime;
     private EntityBase entity;
@@ -53,10 +53,16 @@ public class Health : MonoBehaviour, IKillable<float>
         if (!invincible)
         {
             CurrentHealth -= damage;
+            if (impactEffect != null)
+            {
+                entity.originalMaterials.TryGetValue(0, out Material[] parentMaterials);
+                GameObject g = Instantiate(impactEffect, transform.position, transform.rotation);
+                g.GetComponent<ParticleSystem>().GetComponent<Renderer>().material.SetColor("_BaseColor", parentMaterials[0].GetColor("_BaseColor"));
+            }
             if (gameObject.tag == "Player")
             {
                 OnPlayerHit?.Invoke(CurrentHealth);
-                StartCoroutine(Invicible(1f));
+                StartCoroutine(Invicible(blinkTime));
             }
             StartCoroutine(ColorBlink());
             if (IsDead()) { Die(); }

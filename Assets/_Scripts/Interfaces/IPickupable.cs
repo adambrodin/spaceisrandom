@@ -4,6 +4,6 @@
  */
 public interface IPickupable
 {
-    string PickupSoundName { get; }
+    string[] PickupSounds { get; }
     void PickUp();
 }
